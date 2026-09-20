@@ -1,0 +1,173 @@
+/* Reseta margens para a tela da TV */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0f172a; /* Azul muito escuro, quase preto, visual premium */
+    color: #f8fafc; /* Texto quase branco */
+    overflow: hidden; /* Evita barras de rolagem na TV */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* O Layout Principal: 70% Salão, 30% Widgets */
+.container-tv {
+    display: flex;
+    flex: 1; /* Ocupa todo o espaço menos o rodapé */
+}
+
+/* --- ZONA PRINCIPAL --- */
+.zona-principal {
+    width: 70%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 2px solid #1e293b;
+}
+
+.cabecalho-salao h1 {
+    font-size: 3.5rem;
+    color: #eab308; /* Dourado */
+    letter-spacing: 2px;
+}
+
+.cabecalho-salao h2 {
+    font-size: 1.5rem;
+    color: #94a3b8;
+}
+
+.area-video-placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    margin: 30px 0;
+    border-radius: 12px;
+    border: 1px dashed #334155;
+    text-align: center;
+}
+
+.area-video-placeholder p {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.area-video-placeholder .toque-final {
+    font-size: 1.5rem;
+    color: #eab308;
+    margin-top: 10px;
+}
+
+.tabela-precos {
+    font-size: 2rem;
+}
+
+.item-preco {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 5px;
+}
+
+/* --- ZONA DA BARRA EXECUTIVA --- */
+.barra-executiva {
+    width: 30%;
+    background-color: #1e293b;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.widget-clima {
+    background-color: #0f172a;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.clima-info .cidade {
+    display: block;
+    font-size: 1.2rem;
+    color: #94a3b8;
+}
+
+.clima-info .temperatura {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #38bdf8;
+}
+
+.anuncio-parceiro {
+    background-color: #0f172a;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1; /* Faz o anúncio ocupar o espaço vazio */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-left: 4px solid #eab308;
+}
+
+.etiqueta-ad {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.anuncio-parceiro h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.contato-ad {
+    margin-top: 20px;
+    color: #eab308;
+    font-weight: bold;
+}
+
+.area-conversao {
+    text-align: center;
+}
+
+.qrcode-placeholder {
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.marca-startup {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-top: 10px;
+}
+
+/* --- RODAPÉ DA BOLSA --- */
+.rodape-bolsa {
+    background-color: #020617;
+    padding: 15px 0;
+    font-size: 1.5rem;
+    font-family: monospace;
+    color: #22c55e; /* Verde estilo bolsa de valores */
+    border-top: 2px solid #334155;
+}
