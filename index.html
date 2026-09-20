@@ -36,19 +36,20 @@
         <aside class="barra-executiva">
             
             <!-- Widget de Clima (Placeholder para Belém) -->
+            <!-- Widget de Clima Real -->
             <div class="widget-clima">
-                <div class="clima-info">
-                    <span class="cidade">Belém, PA</span>
-                    <span class="temperatura">29°C</span>
-                </div>
+                <a class="weatherwidget-io" href="https://forecast7.com/pt/n1d46n48d50/belem/" data-label_1="BELÉM" data-label_2="PREVISÃO" data-font="Verdana" data-icons="Climacons Animated" data-theme="dark" data-basecolor="#0f172a" >BELÉM PREVISÃO</a>
+                <script>
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                </script>
             </div>
 
             <!-- Espaço para Anunciante/Parceiro -->
+           <!-- Espaço Dinâmico de Notícias -->
             <div class="anuncio-parceiro">
-                <div class="etiqueta-ad">ESPAÇO DO PATROCINADOR</div>
-                <h3>VIVA REAL IMÓVEIS LUXO</h3>
-                <p>Apartamentos de 3 suítes no Umarizal.</p>
-                <p class="contato-ad">Fale com a Recepção</p>
+                <div class="etiqueta-ad">ÚLTIMAS NOTÍCIAS</div>
+                <h3 id="manchete-noticia">Carregando manchete...</h3>
+                <p class="contato-ad">Fonte: Agência IBGE</p>
             </div>
 
             <!-- QR Code e Contato -->
@@ -62,11 +63,48 @@
     </div>
 
     <!-- Ticker da Bolsa no Rodapé (Espaço reservado) -->
-    <footer class="rodape-bolsa">
-        <marquee behavior="scroll" direction="left" scrollamount="5">
-            IBOVESPA: +1.2% &nbsp;&nbsp;|&nbsp;&nbsp; DÓLAR: R$ 5,45 &nbsp;&nbsp;|&nbsp;&nbsp; EURO: R$ 6,02 &nbsp;&nbsp;|&nbsp;&nbsp; SELIC: 10,50% &nbsp;&nbsp;|&nbsp;&nbsp; NOTÍCIA: Startup de tecnologia cria novo modelo de mídia indoor.
-        </marquee>
+    <!-- Ticker da Bolsa no Rodapé (TradingView Real) -->
+    <footer class="rodape-bolsa" style="padding: 0; border-top: none;">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+          {
+          "symbols": [
+            { "proName": "BMFBOVESPA:IBOV", "title": "Ibovespa" },
+            { "proName": "FX_IDC:USDBRL", "title": "Dólar" },
+            { "proName": "FX_IDC:EURBRL", "title": "Euro" },
+            { "description": "Selic", "proName": "ECONOMICS:BRINTR" }
+          ],
+          "showSymbolLogo": true,
+          "isTransparent": true,
+          "displayMode": "adaptive",
+          "colorTheme": "dark",
+          "locale": "br"
+        }
+          </script>
+        </div>
     </footer>
+<!-- Script que puxa e gira as notícias na tela -->
+    <script>
+        fetch('https://servicodados.ibge.gov.br/api/v3/noticias/?qtd=5')
+            .then(response => response.json())
+            .then(data => {
+                const noticias = data.items;
+                let contador = 0;
+                
+                // Mostra a primeira notícia imediatamente
+                document.getElementById('manchete-noticia').innerText = noticias[0].titulo;
 
+                // Troca de notícia a cada 15 segundos
+                setInterval(() => {
+                    contador++;
+                    if (contador >= noticias.length) {
+                        contador = 0; // Volta para a primeira quando acabar
+                    }
+                    document.getElementById('manchete-noticia').innerText = noticias[contador].titulo;
+                }, 15000); 
+            })
+            .catch(erro => console.log("Erro ao carregar notícias: ", erro));
+    </script>
 </body>
 </html>
