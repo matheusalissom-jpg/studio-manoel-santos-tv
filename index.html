@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh a cada 40 minutos para limpeza de cache e liberação de memória -->
+    <!-- Auto-refresh a cada 40 minutos para limpeza e liberação de memória RAM na TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
@@ -52,7 +52,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 48px); /* Deixa livre a barra de cotações */
+            height: calc(100vh - 48px); /* Deixa livre os 48px da barra de cotações */
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
@@ -76,19 +76,10 @@
             object-fit: cover;
         }
 
-        /* --- FASE 2: CLIMA DASHBOARD COMPLETO (HOJE + PRÓXIMOS DIAS) --- */
-        #fase-clima {
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 30px 25px 30px;
-            background: radial-gradient(circle at 50% 10%, #161616 0%, #000000 80%);
-        }
-
-        /* 1. TOPO: LOGO OFICIAL */
+        /* --- COMPONENTES COMPARTILHADOS --- */
         .logo-container {
             width: 100%;
-            max-width: 280px;
+            max-width: 250px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -101,7 +92,29 @@
             object-fit: contain;
         }
 
-        /* 2. DESTAQUE AGORA */
+        .rodape-local {
+            text-align: center;
+            border-top: 1px solid var(--borda-suave);
+            padding-top: 10px;
+            width: 85%;
+        }
+
+        .bodytech-tag {
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            color: var(--texto-muted);
+            text-transform: uppercase;
+        }
+
+        /* --- FASE 2: CLIMA DASHBOARD --- */
+        #fase-clima {
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 35px 30px 20px 30px;
+            background: radial-gradient(circle at 50% 10%, #161616 0%, #000000 80%);
+        }
+
         .clima-agora-box {
             display: flex;
             flex-direction: column;
@@ -110,7 +123,7 @@
         }
 
         .cidade-badge {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--ouro-primario);
@@ -118,17 +131,17 @@
             padding: 5px 20px;
             border-radius: 50px;
             background: rgba(212, 175, 55, 0.08);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .bloco-temperatura {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
         .temp-numero {
-            font-size: 5.5rem;
+            font-size: 5rem;
             font-weight: 900;
             line-height: 1;
             background: var(--ouro-gradiente);
@@ -137,14 +150,14 @@
         }
 
         .temp-grau {
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: var(--ouro-primario);
             align-self: flex-start;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .condicao-agora {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             letter-spacing: 2px;
             color: var(--texto-claro);
             text-transform: uppercase;
@@ -152,18 +165,17 @@
             margin-top: 4px;
         }
 
-        /* 3. BLOCO DO RESTO DO DIA (PREVISÃO HORÁRIA) */
         .secao-previsao {
             width: 100%;
             max-width: 540px;
         }
 
         .secao-titulo {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 3px;
             color: var(--ouro-primario);
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -180,41 +192,40 @@
         .fita-horas {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 8px;
             width: 100%;
         }
 
         .card-hora {
             background-color: var(--fundo-card);
             border: 1px solid var(--borda-dourada);
-            border-radius: 12px;
-            padding: 12px 6px;
+            border-radius: 10px;
+            padding: 10px 4px;
             text-align: center;
         }
 
         .card-hora .hora {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--texto-muted);
             letter-spacing: 1px;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .card-hora .icone {
-            font-size: 1.4rem;
-            margin: 4px 0;
+            font-size: 1.3rem;
+            margin: 2px 0;
         }
 
         .card-hora .temp {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: #ffffff;
         }
 
-        /* 4. BLOCO PRÓXIMOS DIAS (DIÁRIA) */
         .grade-dias {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             width: 100%;
             max-width: 540px;
         }
@@ -222,57 +233,136 @@
         .linha-dia {
             background-color: var(--fundo-card);
             border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 10px;
-            padding: 10px 18px;
+            border-radius: 8px;
+            padding: 8px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .linha-dia .dia-semana {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--texto-claro);
-            width: 85px;
-            letter-spacing: 1px;
+            width: 80px;
         }
 
         .linha-dia .dia-icone-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--texto-muted);
         }
 
         .linha-dia .dia-temperaturas {
             display: flex;
-            gap: 12px;
-            font-size: 0.95rem;
+            gap: 10px;
+            font-size: 0.9rem;
             font-weight: 700;
         }
 
-        .temp-max {
+        .temp-max { color: var(--ouro-primario); }
+        .temp-min { color: #71717a; }
+
+        /* --- FASE 3: PORTAL VISUAL COM IMAGEM & INOVAÇÃO --- */
+        #fase-noticias {
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 25px 20px 25px;
+            background: radial-gradient(circle at 50% 20%, #161616 0%, #000000 85%);
+        }
+
+        .noticia-story-card {
+            width: 100%;
+            max-width: 540px;
+            background: var(--fundo-card);
+            border: 1px solid var(--borda-dourada);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Foto de Alto Impacto */
+        .noticia-imagem-box {
+            width: 100%;
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+            background-color: #1e1e1e;
+        }
+
+        .noticia-imagem-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9);
+            transition: transform 6s ease;
+        }
+
+        .tag-categoria-flutuante {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--ouro-primario);
             color: var(--ouro-primario);
-        }
-
-        .temp-min {
-            color: #71717a;
-        }
-
-        /* RODAPÉ DO CLIMA */
-        .rodape-local {
-            text-align: center;
-            border-top: 1px solid var(--borda-suave);
-            padding-top: 10px;
-            width: 80%;
-        }
-
-        .bodytech-tag {
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            color: var(--texto-muted);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
             text-transform: uppercase;
+        }
+
+        /* Conteúdo Editorial do Card */
+        .noticia-corpo {
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .noticia-editorial-tempo {
+            font-size: 0.75rem;
+            color: var(--ouro-primario);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .noticia-titulo-visual {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.3;
+            min-height: 65px;
+        }
+
+        .noticia-resumo-visual {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #a1a1aa;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .noticia-origem {
+            border-top: 1px solid var(--borda-suave);
+            padding-top: 12px;
+            margin-top: 5px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--texto-muted);
+        }
+
+        .noticia-origem span {
+            color: #ffffff;
+            font-weight: 600;
         }
 
         /* --- TICKER TAPE FINANCEIRO (60 FPS LOOP INFINITO) --- */
@@ -338,22 +428,20 @@
 
     <div class="totem-display">
 
-        <!-- FASE 1: VÍDEO VERTICAL -->
+        <!-- FASE 1: VÍDEO VERTICAL (STUDIO MANOEL SANTOS) -->
         <section class="tela-fase ativa" id="fase-video">
             <video id="player-video" autoplay muted playsinline preload="auto">
                 <source src="video.mp4" type="video/mp4">
             </video>
         </section>
 
-        <!-- FASE 2: DASHBOARD DE CLIMA COMPLETO (HOJE + PRÓXIMOS DIAS) -->
+        <!-- FASE 2: DASHBOARD DE CLIMA COMPLETO -->
         <section class="tela-fase" id="fase-clima">
             
-            <!-- 1. LOGO OFICIAL -->
             <div class="logo-container">
-                <img src="logo.png" alt="Manoel Santos Studio Expresso" id="img-logo" onerror="aplicarLogoSVG(this)">
+                <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
             </div>
 
-            <!-- 2. DESTAQUE ATUAL -->
             <div class="clima-agora-box">
                 <div class="cidade-badge">Belém • Pará</div>
                 <div class="bloco-temperatura">
@@ -363,11 +451,9 @@
                 <div class="condicao-agora" id="condicao-agora">Tempo Firme</div>
             </div>
 
-            <!-- 3. PREVISÃO PARA O RESTO DO DIA -->
             <div class="secao-previsao">
                 <div class="secao-titulo">Resto do Dia</div>
                 <div class="fita-horas" id="container-horas">
-                    <!-- Gerado dinamicamente via JS -->
                     <div class="card-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
                     <div class="card-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
                     <div class="card-hora"><div class="hora">--:00</div><div class="icone">🌧️</div><div class="temp">--°</div></div>
@@ -375,11 +461,9 @@
                 </div>
             </div>
 
-            <!-- 4. PREVISÃO DOS PRÓXIMOS 4 DIAS -->
             <div class="secao-previsao">
                 <div class="secao-titulo">Próximos Dias</div>
                 <div class="grade-dias" id="container-dias">
-                    <!-- Gerado dinamicamente via JS -->
                     <div class="linha-dia">
                         <span class="dia-semana">Amanhã</span>
                         <span class="dia-icone-status">☀️ Sol e Chuva</span>
@@ -388,7 +472,35 @@
                 </div>
             </div>
 
-            <!-- 5. ASSINATURA LOCAL -->
+            <div class="rodape-local">
+                <div class="bodytech-tag">Unidade Bodytech Belém</div>
+            </div>
+
+        </section>
+
+        <!-- FASE 3: PORTAL EXECUTIVO COM FOTOS EM ALTA RESOLUÇÃO -->
+        <section class="tela-fase" id="fase-noticias">
+            
+            <div class="logo-container">
+                <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
+            </div>
+
+            <div class="noticia-story-card">
+                <div class="noticia-imagem-box">
+                    <img id="noticia-foto" src="" alt="Destaque">
+                    <span class="tag-categoria-flutuante" id="noticia-tag">TECNOLOGIA</span>
+                </div>
+                <div class="noticia-corpo">
+                    <div class="noticia-editorial-tempo">VisioFlow Radar • Panorama Global</div>
+                    <h2 class="noticia-titulo-visual" id="noticia-titulo">Carregando pauta executiva...</h2>
+                    <p class="noticia-resumo-visual" id="noticia-resumo">Atualizações sobre tendências, mercado corporativo e avanços globais.</p>
+                    <div class="noticia-origem">
+                        <div>Curadoria: <span>VisioFlow Media</span></div>
+                        <div>Edição Diária</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="rodape-local">
                 <div class="bodytech-tag">Unidade Bodytech Belém</div>
             </div>
@@ -404,7 +516,7 @@
                 <div class="ticker-item"><span class="item-label">SELIC</span> <span class="item-valor">10,75%</span> <span class="item-alta">● Estável</span></div>
                 <div class="ticker-item"><span class="item-label">BITCOIN</span> <span class="item-valor" id="val-btc">R$ 348.000</span> <span class="item-alta">▲ +1.2%</span></div>
 
-                <!-- Clones para continuidade 60fps -->
+                <!-- Clones para fluidez contínua -->
                 <div class="ticker-item"><span class="item-label">IBOV</span> <span class="item-valor">131.840 pts</span> <span class="item-alta">▲ +0.68%</span></div>
                 <div class="ticker-item"><span class="item-label">DÓLAR</span> <span class="item-valor" id="val-dolar-clone">R$ 5,42</span> <span class="item-alta" id="pct-dolar-clone">▲ +0.15%</span></div>
                 <div class="ticker-item"><span class="item-label">EURO</span> <span class="item-valor" id="val-euro-clone">R$ 5,91</span> <span class="item-baixa" id="pct-euro-clone">▼ -0.22%</span></div>
@@ -416,7 +528,7 @@
     </div>
 
     <script>
-        // Fallback gráfico caso a imagem física não carregue
+        // Fallback gráfico caso a imagem da logo física não carregue
         function aplicarLogoSVG(elementoImg) {
             elementoImg.style.display = 'none';
             const container = elementoImg.parentElement;
@@ -430,32 +542,80 @@
         }
 
         // -------------------------------------------------------------
-        // ENGINE METEOROLÓGICA COMPLETA DE BELÉM (OPEN-METEO EXTENDED)
-        // Coordenadas Centrais Belém/PA: Lat -1.4558, Long -48.4902
+        // 1. ENGINE EDITORIAL EXECUTIVA COM FOTOS (SEM POLÍTICA / SEM TRAGÉDIAS)
         // -------------------------------------------------------------
-        async function carregarPrevisaoAvancadaBelem() {
+        const feedExecutivo = [
+            {
+                tag: "INOVAÇÃO & IA",
+                titulo: "Avanço da Inteligência Artificial revoluciona a gestão e produtividade global",
+                resumo: "Novos ecossistemas corporativos impulsionam a eficiência operacional de líderes empresariais em todo o mundo.",
+                imagem: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                tag: "MERCADO & LUXO",
+                titulo: "Mercado imobiliário de alto padrão mantém valorização consistente em 2026",
+                resumo: "Investimentos em arquitetura biofílica e condomínios de conveniência exclusiva atraem novos perfis de investidores.",
+                imagem: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                tag: "SUSTENTABILIDADE",
+                titulo: "Belém consolida projetos estratégicos rumo à agenda verde global",
+                resumo: "Soluções sustentáveis e infraestrutura de ponta colocam a capital paraense no foco dos debates ambientais globais.",
+                imagem: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                tag: "DESIGN & ARQUITETURA",
+                titulo: "Espaços corporativos premium apostam em sofisticação e conforto acústico",
+                resumo: "A transição para lounges executivos com materiais nobres redefine a experiência presencial de networking.",
+                imagem: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                tag: "LIFESTYLE & FOCO",
+                titulo: "Rotina de alta performance alia bem-estar físico e eficiência nos negócios",
+                resumo: "Executivos integram pausas para autocuidado e treinos estratégicos à agenda diária de decisões críticas.",
+                imagem: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80"
+            }
+        ];
+
+        let indiceEditorial = 0;
+
+        function renderizarPautaEditorial() {
+            const pauta = feedExecutivo[indiceEditorial];
+            document.getElementById('noticia-foto').src = pauta.imagem;
+            document.getElementById('noticia-tag').innerText = pauta.tag;
+            document.getElementById('noticia-titulo').innerText = pauta.titulo;
+            document.getElementById('noticia-resumo').innerText = pauta.resumo;
+
+            // Roda a lista para a próxima matéria no próximo ciclo
+            indiceEditorial = (indiceEditorial + 1) % feedExecutivo.length;
+        }
+
+        // -------------------------------------------------------------
+        // 2. METEOROLOGIA COMPLETA DE BELÉM (OPEN-METEO)
+        // -------------------------------------------------------------
+        async function carregarPrevisaoBelem() {
             try {
                 const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America%2FBelem';
                 const res = await fetch(url);
                 const dados = await res.json();
 
-                // 1. Atualiza Tempo Agora
+                // Tempo Agora
                 const tempAtual = Math.round(dados.current.temperature_2m);
                 const codeAtual = dados.current.weather_code;
                 document.getElementById('temp-agora').innerText = tempAtual;
-                document.getElementById('condicao-agora').innerText = obterDescricaoWMO(codeAtual).texto;
+                document.getElementById('condicao-agora').innerText = traduzirWMO(codeAtual).texto;
 
-                // 2. Previsão para o Resto do Dia (Próximos 4 intervalos de 2 horas)
+                // Horas seguintes
                 const horaAtual = new Date().getHours();
                 const containerHoras = document.getElementById('container-horas');
                 containerHoras.innerHTML = '';
 
-                let intervalosAdicionados = 0;
-                for (let i = horaAtual + 2; i < horaAtual + 10 && intervalosAdicionados < 4; i += 2) {
+                let adicionados = 0;
+                for (let i = horaAtual + 2; i < horaAtual + 10 && adicionados < 4; i += 2) {
                     if (dados.hourly.time[i]) {
                         const tempHora = Math.round(dados.hourly.temperature_2m[i]);
                         const codeHora = dados.hourly.weather_code[i];
-                        const iconeHora = obterDescricaoWMO(codeHora).icone;
+                        const iconeHora = traduzirWMO(codeHora).icone;
                         const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
 
                         containerHoras.innerHTML += `
@@ -465,11 +625,11 @@
                                 <div class="temp">${tempHora}°</div>
                             </div>
                         `;
-                        intervalosAdicionados++;
+                        adicionados++;
                     }
                 }
 
-                // 3. Previsão para os Próximos 4 Dias
+                // Próximos 4 Dias
                 const containerDias = document.getElementById('container-dias');
                 containerDias.innerHTML = '';
                 const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
@@ -481,7 +641,7 @@
                         const codeDia = dados.daily.weather_code[d];
                         const maxDia = Math.round(dados.daily.temperature_2m_max[d]);
                         const minDia = Math.round(dados.daily.temperature_2m_min[d]);
-                        const statusDia = obterDescricaoWMO(codeDia);
+                        const statusDia = traduzirWMO(codeDia);
 
                         containerDias.innerHTML += `
                             <div class="linha-dia">
@@ -495,13 +655,12 @@
                         `;
                     }
                 }
-
             } catch (err) {
-                console.error("Falha ao puxar previsão estendida:", err);
+                console.error("Falha ao sincronizar clima:", err);
             }
         }
 
-        function obterDescricaoWMO(c) {
+        function traduzirWMO(c) {
             if (c === 0) return { texto: "Céu Limpo", curto: "Ensolarado", icone: "☀️" };
             if (c <= 3) return { texto: "Parcialmente Nublado", curto: "Sol e Nuvens", icone: "⛅" };
             if (c >= 51 && c <= 67) return { texto: "Chuva Passageira", curto: "Chuva Leve", icone: "🌧️" };
@@ -511,7 +670,7 @@
         }
 
         // -------------------------------------------------------------
-        // CÂMBIO EM TEMPO REAL
+        // 3. CÂMBIO EM TEMPO REAL
         // -------------------------------------------------------------
         async function carregarCambio() {
             try {
@@ -542,39 +701,51 @@
         }
 
         // -------------------------------------------------------------
-        // MÁQUINA DE ESTADOS DA TRANSMISSÃO (VÍDEO ➔ CLIMA ➔ VÍDEO)
+        // 4. MÁQUINA DE TRANSMISSÃO EM 3 FASES
+        // Vídeo ➔ Clima (13s) ➔ Revista Executiva com Foto (13s) ➔ Vídeo
         // -------------------------------------------------------------
         const telaVideo = document.getElementById('fase-video');
         const telaClima = document.getElementById('fase-clima');
+        const telaNoticias = document.getElementById('fase-noticias');
         const videoElement = document.getElementById('player-video');
 
-        // Como a tela agora tem mais informações ricas, 14 segundos é o tempo ideal de leitura
-        const TEMPO_EXIBICAO_CLIMA = 14000; 
+        const TEMPO_EXIBICAO = 13000; // 13 segundos por tela informativa
 
-        function transicionarParaClima() {
+        function irParaClima() {
             telaVideo.classList.remove('ativa');
+            telaNoticias.classList.remove('ativa');
             telaClima.classList.add('ativa');
 
-            carregarPrevisaoAvancadaBelem();
+            carregarPrevisaoBelem();
+
+            setTimeout(irParaNoticias, TEMPO_EXIBICAO);
+        }
+
+        function irParaNoticias() {
+            telaClima.classList.remove('ativa');
+            telaNoticias.classList.add('ativa');
+
+            renderizarPautaEditorial();
 
             setTimeout(() => {
-                telaClima.classList.remove('ativa');
+                telaNoticias.classList.remove('ativa');
                 telaVideo.classList.add('ativa');
                 videoElement.currentTime = 0;
                 videoElement.play();
-            }, TEMPO_EXIBICAO_CLIMA);
+            }, TEMPO_EXIBICAO);
         }
 
-        videoElement.onended = transicionarParaClima;
+        videoElement.onended = irParaClima;
 
         videoElement.onerror = function() {
-            setTimeout(transicionarParaClima, 10000);
+            setTimeout(irParaClima, 10000);
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            carregarPrevisaoAvancadaBelem();
+            renderizarPautaEditorial();
+            carregarPrevisaoBelem();
             carregarCambio();
-            videoElement.play().catch(() => console.log("Aguardando interação"));
+            videoElement.play().catch(() => console.log("Aguardando play"));
             setInterval(carregarCambio, 120000);
         });
     </script>
