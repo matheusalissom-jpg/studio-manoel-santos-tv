@@ -3,42 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh a cada 30 minutos (1800 segundos) para manter o cache da TV limpo -->
-    <meta http-equiv="refresh" content="1800">
-    <title>VisioFlow | Studio Manoel Santos</title>
-    <!-- Link para o arquivo CSS local -->
+    <!-- Auto-refresh a cada 45 minutos (2700s) para prevenção de memory leak na Smart TV -->
+    <meta http-equiv="refresh" content="2700">
+    <title>VisioFlow Media | Totem Vertical</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container-tv">
-        
-        <!-- ZONA A: O CONTEÚDO PRINCIPAL DO SALÃO (70%) -->
-        <main class="zona-principal">
-            <div class="cabecalho-salao">
-                <h1>STUDIO MANOEL SANTOS</h1>
-                <h2>BODYTECH BELÉM</h2>
-            </div>
+    <!-- 1. BARRA SUPERIOR FIXA (Header & Relógio) -->
+    <header class="header-totem">
+        <div class="brand-title">
+            <h1>Studio Manoel Santos</h1>
+            <h2>Bodytech Belém</h2>
+        </div>
+        <div class="totem-clock" id="totem-clock">00:00</div>
+    </header>
 
-            <!-- Espaço reservado para o vídeo institucional em loop -->
-            <div class="area-video-placeholder">
-                <p>CORTE MASCULINO PREMIUM & BARBA</p>
-                <p class="toque-final">O TOQUE FINAL NO CENTRO DE BELÉM</p>
-            </div>
+    <!-- Barra de progresso visual do slot atual -->
+    <div class="playlist-progress-bar" id="progress-bar"></div>
 
-            <!-- Tabela Dinâmica de Serviços e Preços -->
-            <div class="tabela-precos">
-                <div class="item-preco"><span>Corte Executivo</span> <span>R$ 120,00</span></div>
-                <div class="item-preco"><span>Barba Terapia</span> <span>R$ 80,00</span></div>
-                <div class="item-preco"><span>Combo VIP</span> <span>R$ 180,00</span></div>
-            </div>
-        </main>
+    <!-- 2. PALCO PRINCIPAL DE TRANSMISSÃO (Grade Rotativa) -->
+    <main class="totem-stage">
 
-        <!-- ZONA B: A BARRA EXECUTIVA (30%) -->
-        <aside class="barra-executiva">
-            
-            <!-- WIDGET 1: Previsão do Tempo Real (Belém, PA) -->
-            <div class="widget-clima">
+        <!-- SLOT 1: VÍDEO DO SALÃO / TABELA DE SERVIÇOS (Tempo: 30s) -->
+        <section class="screen-slot active" id="slot-1" data-duration="30000">
+            <!-- 
+                Quando tiver o vídeo final hospedado (ex: Cloudinary), substitua a div abaixo por:
+                <video src="URL_DO_VIDEO.mp4" autoplay muted loop playsinline></video>
+            -->
+            <div class="video-placeholder-box">
+                <h3>EXPERIÊNCIA EXCLUSIVA</h3>
+                <div class="service-card-list">
+                    <div class="service-card">
+                        <span>Corte Masculino Executivo</span>
+                        <span>R$ 120</span>
+                    </div>
+                    <div class="service-card">
+                        <span>Barba Terapia com Ozônio</span>
+                        <span>R$ 80</span>
+                    </div>
+                    <div class="service-card">
+                        <span>Combo VIP Bodytech</span>
+                        <span>R$ 180</span>
+                    </div>
+                    <div class="service-card">
+                        <span>Tratamento Capilar Premium</span>
+                        <span>R$ 150</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLOT 2: METEOROLOGIA BELÉM (Tempo: 15s) -->
+        <section class="screen-slot" id="slot-2" data-duration="15000">
+            <div class="weather-header">Previsão em Belém</div>
+            <div class="weather-container-box">
                 <a class="weatherwidget-io" 
                    href="https://forecast7.com/pt/n1d46n48d50/belem/" 
                    data-label_1="BELÉM" 
@@ -47,8 +66,7 @@
                    data-icons="Climacons Animated" 
                    data-theme="pure" 
                    data-basecolor="#0f172a" 
-                   data-textcolor="#f8fafc" 
-                   data-cloudfill="#0f172a">
+                   data-textcolor="#f8fafc">
                    BELÉM TEMPO AGORA
                 </a>
                 <script>
@@ -63,49 +81,136 @@
                 }(document,'script','weatherwidget-io-js');
                 </script>
             </div>
-
-            <!-- Espaço reservado para o Anunciante / Patrocinador -->
-            <div class="anuncio-parceiro">
-                <div class="etiqueta-ad">ESPAÇO DO PATROCINADOR</div>
-                <h3>VIVA REAL IMÓVEIS LUXO</h3>
-                <p>Apartamentos de 3 suítes no Umarizal.</p>
-                <p class="contato-ad">Fale com a Recepção</p>
+            <div class="weather-tip">
+                <h4>Dica VisioFlow:</h4>
+                <p>Mantenha-se hidratado durante o seu treino hoje na Bodytech.</p>
             </div>
+        </section>
 
-            <!-- Call to Action / QR Code de Agendamento -->
-            <div class="area-conversao">
-                <div class="qrcode-placeholder">QR CODE</div>
-                <p>ESCANIE PARA AGENDAR</p>
-                <p class="marca-startup">Powered by VisioFlow Media</p>
+        <!-- SLOT 3: NOTÍCIAS DE NEGÓCIOS EM TEMPO REAL - IBGE (Tempo: 15s) -->
+        <section class="screen-slot" id="slot-3" data-duration="15000">
+            <div class="news-badge">Economia & Mercado</div>
+            <h2 class="news-title" id="news-headline">Carregando manchetes de negócios...</h2>
+            <div class="news-source">Fonte: Agência IBGE Notícias</div>
+        </section>
+
+        <!-- SLOT 4: ESPAÇO PUBLICITÁRIO / ANUNCIANTE (Tempo: 15s) -->
+        <section class="screen-slot" id="slot-4" data-duration="15000">
+            <div class="ad-pill">ESPAÇO PUBLICITÁRIO</div>
+            <div class="ad-content">
+                <h3>VIVA REAL LUXO</h3>
+                <p>Empreendimentos de Alto Padrão no Umarizal e Nazaré.</p>
             </div>
+            <div class="ad-action">
+                <div class="qrcode-box">QR CODE</div>
+                <p>ESCANIE PARA CONHECER</p>
+            </div>
+        </section>
 
-        </aside>
+    </main>
 
-    </div>
-
-    <!-- RODAPÉ: Widget Oficial do TradingView (Cotações em Tempo Real) -->
-    <footer class="rodape-bolsa" style="padding: 0; border-top: none; overflow: hidden; height: 46px;">
-        <!-- TradingView Widget BEGIN -->
+    <!-- 3. RODAPÉ FIXO: TICKER FINANCEIRO (TRADINGVIEW) -->
+    <footer class="totem-ticker">
         <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
             {
                 "symbols": [
-                    { "proName": "BMFBOVESPA:IBOV", "title": "Ibovespa" },
-                    { "proName": "FX_IDC:USDBRL", "title": "Dólar Comercial" },
-                    { "proName": "FX_IDC:EURBRL", "title": "Euro Comercial" },
-                    { "description": "Selic Meta", "proName": "ECONOMICS:BRINTR" }
+                    { "proName": "BMFBOVESPA:IBOV", "title": "IBOV" },
+                    { "proName": "FX_IDC:USDBRL", "title": "Dólar" },
+                    { "proName": "FX_IDC:EURBRL", "title": "Euro" },
+                    { "description": "Selic", "proName": "ECONOMICS:BRINTR" }
                 ],
-                "showSymbolLogo": true,
-                "isTransparent": false,
+                "showSymbolLogo": false,
+                "isTransparent": true,
                 "displayMode": "adaptive",
                 "colorTheme": "dark",
                 "locale": "br"
             }
             </script>
         </div>
-        <!-- TradingView Widget END -->
     </footer>
 
+    <!-- 4. ENGINE DE TRANSMISSÃO E AUTOMAÇÃO JS -->
+    <script>
+        // --- 1. RELÓGIO DIGITAL EM TEMPO REAL ---
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('totem-clock').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // --- 2. INTEGRAÇÃO ASSÍNCRONA DA API DE NOTÍCIAS (IBGE) ---
+        let newsArticles = [];
+        let currentNewsIndex = 0;
+
+        async function fetchIBGENews() {
+            try {
+                const response = await fetch('https://servicodados.ibge.gov.br/api/v3/noticias/?qtd=10');
+                const data = await response.json();
+                if (data.items && data.items.length > 0) {
+                    newsArticles = data.items.map(item => item.titulo);
+                    displayNextNews();
+                }
+            } catch (error) {
+                document.getElementById('news-headline').innerText = "Mercado aquecido: acompanhe as oportunidades de investimentos de 2026.";
+            }
+        }
+
+        function displayNextNews() {
+            if (newsArticles.length > 0) {
+                document.getElementById('news-headline').innerText = newsArticles[currentNewsIndex];
+                currentNewsIndex = (currentNewsIndex + 1) % newsArticles.length;
+            }
+        }
+
+        fetchIBGENews();
+
+        // --- 3. MÁQUINA DE ESTADOS DA PLAYLIST (LOOP INFINITO COM ANIMAÇÃO) ---
+        const slots = Array.from(document.querySelectorAll('.screen-slot'));
+        const progressBar = document.getElementById('progress-bar');
+        let currentSlotIndex = 0;
+        let progressInterval = null;
+
+        function runPlaylist() {
+            const currentSlot = slots[currentSlotIndex];
+            const duration = parseInt(currentSlot.getAttribute('data-duration'), 10);
+
+            // Transição visual: Desativa todos os slots e ativa apenas o corrente
+            slots.forEach(slot => slot.classList.remove('active'));
+            currentSlot.classList.add('active');
+
+            // Se for a tela de notícias, roda a manchete
+            if (currentSlot.id === 'slot-3') {
+                displayNextNews();
+            }
+
+            // Animação da Barra de Progresso Superior
+            let elapsed = 0;
+            const step = 50; // milissegundos
+            clearInterval(progressInterval);
+            progressBar.style.width = '0%';
+
+            progressInterval = setInterval(() => {
+                elapsed += step;
+                const percentage = Math.min((elapsed / duration) * 100, 100);
+                progressBar.style.width = `${percentage}%`;
+
+                if (elapsed >= duration) {
+                    clearInterval(progressInterval);
+                    currentSlotIndex = (currentSlotIndex + 1) % slots.length;
+                    runPlaylist(); // Próximo ciclo
+                }
+            }, step);
+        }
+
+        // Inicia a transmissão automaticamente após carregar a página
+        window.addEventListener('DOMContentLoaded', () => {
+            runPlaylist();
+        });
+    </script>
 </body>
 </html>
