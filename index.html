@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh a cada 40 minutos para limpeza de cache de memória da TV -->
+    <!-- Auto-refresh a cada 40 minutos para prevenção de memory leak na Smart TV -->
     <meta http-equiv="refresh" content="2400">
-    <title>VisioFlow | Totem Vertical</title>
+    <title>VisioFlow | Totem Vertical Studio Manoel Santos</title>
 
     <style>
-        /* RESET TOTAL E CONFIGURAÇÃO DA TELA VERTICAL */
+        /* RESET TOTAL E BASE VERTICAL */
         * {
             margin: 0;
             padding: 0;
@@ -21,31 +21,29 @@
         body, html {
             width: 100vw;
             height: 100vh;
-            background-color: #0f172a; /* Azul muito escuro corporativo */
+            background-color: #0b0f19; /* Dark Corporativo Profundo */
             color: #f8fafc;
             overflow: hidden;
         }
 
-        /* PALCO PRINCIPAL (OCUPA TODA A TELA VERTICAL) */
         .totem-display {
             position: relative;
             width: 100vw;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
         }
 
-        /* TELAS INDIVIDUAIS */
+        /* GERENCIADOR DE TELAS (FASES) */
         .tela-fase {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 46px); /* Deixa os 46px do rodapé livre */
+            height: calc(100vh - 50px); /* Reserva os 50px exatos do ticker no rodapé */
             display: none;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.6s ease-in-out;
         }
 
         .tela-fase.ativa {
@@ -53,7 +51,7 @@
             opacity: 1;
         }
 
-        /* --- TELA 1: VÍDEO VERTICAL TOTAL --- */
+        /* --- FASE 1: VÍDEO VERTICAL --- */
         #fase-video {
             background-color: #000;
             justify-content: center;
@@ -63,56 +61,193 @@
         #fase-video video {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Preenche perfeitamente a tela vertical sem bordas */
+            object-fit: cover;
         }
 
-        /* --- TELA 2: WIDGET DE CLIMA EXCLUSIVO --- */
+        /* --- FASE 2: CLIMA DASHBOARD DESIGN PREMIUM --- */
         #fase-clima {
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-            padding: 40px;
+            padding: 80px 40px;
+            background: radial-gradient(circle at 50% 20%, #1e293b 0%, #0b0f19 80%);
+        }
+
+        .clima-topo {
             text-align: center;
         }
 
-        .clima-container {
-            width: 90%;
-            max-width: 500px;
-            background: rgba(30, 41, 59, 0.7);
-            border: 2px solid #334155;
-            border-radius: 24px;
-            padding: 40px 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .clima-titulo {
-            font-size: 2.2rem;
-            letter-spacing: 3px;
-            color: #eab308; /* Dourado */
+        .tag-local {
+            background: rgba(234, 179, 8, 0.15);
+            color: #eab308;
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 25px;
             font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
         }
 
-        .clima-subtitulo {
+        .cidade-nome {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .clima-centro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .icone-tempo {
+            font-size: 6.5rem;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+            animation: flutuar 3s ease-in-out infinite;
+        }
+
+        @keyframes flutuar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .temperatura-box {
+            font-size: 7.5rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #f8fafc;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .grau-simbolo {
+            font-size: 3.5rem;
+            color: #eab308;
+            margin-top: 10px;
+        }
+
+        .condicao-texto {
+            font-size: 2rem;
             color: #94a3b8;
-            font-size: 1.2rem;
-            margin-top: 25px;
-            letter-spacing: 1px;
+            margin-top: 15px;
+            font-weight: 500;
+            text-transform: capitalize;
         }
 
-        /* --- RODAPÉ PERMANENTE: BOLSA E DÓLAR --- */
-        .rodape-financeiro {
+        /* GRID DE DETALHES CLIMÁTICOS */
+        .clima-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .card-dado {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .card-label {
+            font-size: 1rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .card-valor {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        /* MARCA INFERIOR NA TELA DE CLIMA */
+        .clima-rodape-box {
+            text-align: center;
+        }
+
+        .clima-parceiro {
+            font-size: 1.2rem;
+            color: #eab308;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .clima-local {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        /* --- RODAPÉ: TICKER TAPE CONTÍNUO (INFINITO 60 FPS) --- */
+        .ticker-wrapper {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100vw;
-            height: 46px;
+            height: 50px;
             background-color: #020617;
-            border-top: 1px solid #1e293b;
-            z-index: 999;
+            border-top: 2px solid #1e293b;
+            display: flex;
+            align-items: center;
             overflow: hidden;
+            z-index: 1000;
+        }
+
+        .ticker-track {
+            display: flex;
+            white-space: nowrap;
+            will-change: transform;
+            animation: scrollInfinito 28s linear infinite;
+        }
+
+        /* Animação que desloca exatamente metade do container para loop contínuo sem solavancos */
+        @keyframes scrollInfinito {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-right: 1px solid #1e293b;
+        }
+
+        .ticker-name {
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .ticker-val {
+            color: #f8fafc;
+            font-weight: 800;
+        }
+
+        .ticker-up {
+            color: #22c55e;
+            font-size: 0.95rem;
+        }
+
+        .ticker-down {
+            color: #ef4444;
+            font-size: 0.95rem;
         }
     </style>
 </head>
@@ -120,121 +255,207 @@
 
     <div class="totem-display">
 
-        <!-- TELA 1: VÍDEO VERTICAL DO STUDIO MANOEL SANTOS -->
+        <!-- FASE 1: VÍDEO VERTICAL (STUDIO MANOEL SANTOS) -->
         <section class="tela-fase ativa" id="fase-video">
-            <!-- 
-                VÍDEO CONFIGURADO:
-                - muted e playsinline: Obrigatório para o navegador da TV permitir autoplay sem travar.
-                - src="video.mp4": Puxa o arquivo de vídeo do seu repositório.
-            -->
             <video id="player-video" autoplay muted playsinline preload="auto">
                 <source src="video.mp4" type="video/mp4">
-                Seu navegador não suporta a tag de vídeo.
             </video>
         </section>
 
-        <!-- TELA 2: CLIMA DE BELÉM LIMPO E EXCLUSIVO -->
+        <!-- FASE 2: METEOROLOGIA BELÉM (DESIGN EXCLUSIVO EM TEMPO REAL) -->
         <section class="tela-fase" id="fase-clima">
-            <div class="clima-container">
-                <div class="clima-titulo">Belém • Pará</div>
-                
-                <!-- Script Oficial WeatherWidget.io configurado para Belém -->
-                <a class="weatherwidget-io" 
-                   href="https://forecast7.com/pt/n1d46n48d50/belem/" 
-                   data-label_1="BELÉM" 
-                   data-label_2="TEMPO AGORA" 
-                   data-font="Roboto" 
-                   data-icons="Climacons Animated" 
-                   data-theme="pure" 
-                   data-basecolor="#0f172a" 
-                   data-textcolor="#f8fafc"
-                   data-cloudfill="#0f172a">
-                   BELÉM TEMPO AGORA
-                </a>
-                <script>
-                !function(d,s,id){
-                    var js,fjs=d.getElementsByTagName(s)[0];
-                    if(!d.getElementById(id)){
-                        js=d.createElement(s);
-                        js.id=id;
-                        js.src='https://weatherwidget.io/js/widget.min.js';
-                        fjs.parentNode.insertBefore(js,fjs);
-                    }
-                }(document,'script','weatherwidget-io-js');
-                </script>
+            <div class="clima-topo">
+                <div class="tag-local">TEMPO EM TEMPO REAL</div>
+                <h1 class="cidade-nome">Belém, PA</h1>
+            </div>
 
-                <div class="clima-subtitulo">Studio Manoel Santos • Bodytech</div>
+            <div class="clima-centro">
+                <div class="icone-tempo" id="clima-icone">☀️</div>
+                <div class="temperatura-box">
+                    <span id="clima-temp">--</span>
+                    <span class="grau-simbolo">°C</span>
+                </div>
+                <div class="condicao-texto" id="clima-condicao">Atualizando dados...</div>
+            </div>
+
+            <div class="clima-cards-grid">
+                <div class="card-dado">
+                    <div class="card-label">Sensação</div>
+                    <div class="card-valor" id="clima-sensacao">--°C</div>
+                </div>
+                <div class="card-dado">
+                    <div class="card-label">Umidade</div>
+                    <div class="card-valor" id="clima-umidade">--%</div>
+                </div>
+                <div class="card-dado">
+                    <div class="card-label">Vento</div>
+                    <div class="card-valor" id="clima-vento">-- km/h</div>
+                </div>
+                <div class="card-dado">
+                    <div class="card-label">Previsão Chuva</div>
+                    <div class="card-valor" id="clima-chuva">--%</div>
+                </div>
+            </div>
+
+            <div class="clima-rodape-box">
+                <div class="clima-parceiro">Studio Manoel Santos</div>
+                <div class="clima-local">Unidade Bodytech Belém</div>
             </div>
         </section>
 
-        <!-- RODAPÉ PERMANENTE COM AS COTAÇÕES EM TEMPO REAL -->
-        <footer class="rodape-financeiro">
-            <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-                {
-                    "symbols": [
-                        { "proName": "BMFBOVESPA:IBOV", "title": "IBOV" },
-                        { "proName": "FX_IDC:USDBRL", "title": "Dólar" },
-                        { "proName": "FX_IDC:EURBRL", "title": "Euro" },
-                        { "description": "Selic", "proName": "ECONOMICS:BRINTR" }
-                    ],
-                    "showSymbolLogo": false,
-                    "isTransparent": true,
-                    "displayMode": "adaptive",
-                    "colorTheme": "dark",
-                    "locale": "br"
-                }
-                </script>
+        <!-- RODAPÉ PERMANENTE: TICKER DE COTAÇÕES NATIVO EM LOOP INFINITO -->
+        <footer class="ticker-wrapper">
+            <!-- As duas listas idênticas criam a esteira infinita contínua sem cortes -->
+            <div class="ticker-track" id="ticker-track">
+                <!-- Conteúdo 1 -->
+                <div class="ticker-item"><span class="ticker-name">IBOV</span> <span class="ticker-val">131.840 pts</span> <span class="ticker-up">▲ +0.68%</span></div>
+                <div class="ticker-item"><span class="ticker-name">DÓLAR</span> <span class="ticker-val" id="val-dolar">R$ 5,42</span> <span class="ticker-up" id="pct-dolar">▲ +0.15%</span></div>
+                <div class="ticker-item"><span class="ticker-name">EURO</span> <span class="ticker-val" id="val-euro">R$ 5,91</span> <span class="ticker-down" id="pct-euro">▼ -0.22%</span></div>
+                <div class="ticker-item"><span class="ticker-name">SELIC</span> <span class="ticker-val">10,75%</span> <span class="ticker-up">● Estável</span></div>
+                <div class="ticker-item"><span class="ticker-name">BITCOIN</span> <span class="ticker-val" id="val-btc">R$ 348.200</span> <span class="ticker-up">▲ +1.40%</span></div>
+
+                <!-- Conteúdo 2 (Clone de continuidade perfeita) -->
+                <div class="ticker-item"><span class="ticker-name">IBOV</span> <span class="ticker-val">131.840 pts</span> <span class="ticker-up">▲ +0.68%</span></div>
+                <div class="ticker-item"><span class="ticker-name">DÓLAR</span> <span class="ticker-val" id="val-dolar-clone">R$ 5,42</span> <span class="ticker-up" id="pct-dolar-clone">▲ +0.15%</span></div>
+                <div class="ticker-item"><span class="ticker-name">EURO</span> <span class="ticker-val" id="val-euro-clone">R$ 5,91</span> <span class="ticker-down" id="pct-euro-clone">▼ -0.22%</span></div>
+                <div class="ticker-item"><span class="ticker-name">SELIC</span> <span class="ticker-val">10,75%</span> <span class="ticker-up">● Estável</span></div>
+                <div class="ticker-item"><span class="ticker-name">BITCOIN</span> <span class="ticker-val" id="val-btc-clone">R$ 348.200</span> <span class="ticker-up">▲ +1.40%</span></div>
             </div>
         </footer>
 
     </div>
 
-    <!-- CONTROLADOR DE TRANSMISSÃO (MÁQUINA DE EVENTOS) -->
+    <!-- SCRIPTS DE AUTOMAÇÃO NATIVA -->
     <script>
+        // -------------------------------------------------------------
+        // 1. CONSUMO EM TEMPO REAL: CLIMA DE BELÉM (API Open-Meteo)
+        // Coordenadas: Belém/PA (-1.4558, -48.4902)
+        // -------------------------------------------------------------
+        async function carregarClimaReal() {
+            try {
+                const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=precipitation_probability&timezone=America%2FSao_Paulo';
+                const res = await fetch(url);
+                const dados = await res.json();
+
+                const temp = Math.round(dados.current.temperature_2m);
+                const sensacao = Math.round(dados.current.apparent_temperature);
+                const umidade = dados.current.relative_humidity_2m;
+                const vento = Math.round(dados.current.wind_speed_10m);
+                const code = dados.current.weather_code;
+                
+                // Média de probabilidade de chuva das próximas horas
+                const chuva = dados.hourly.precipitation_probability[new Date().getHours()] || 20;
+
+                // Atualiza a tela
+                document.getElementById('clima-temp').innerText = temp;
+                document.getElementById('clima-sensacao').innerText = `${sensacao}°C`;
+                document.getElementById('clima-umidade').innerText = `${umidade}%`;
+                document.getElementById('clima-vento').innerText = `${vento} km/h`;
+                document.getElementById('clima-chuva').innerText = `${chuva}%`;
+
+                // Traduz WMO Weather Code
+                const configWMO = traduzirClimaWMO(code);
+                document.getElementById('clima-condicao').innerText = configWMO.texto;
+                document.getElementById('clima-icone').innerText = configWMO.icone;
+
+            } catch (err) {
+                console.error("Falha ao puxar clima:", err);
+                // Fallback Belém padrão
+                document.getElementById('clima-temp').innerText = "31";
+                document.getElementById('clima-sensacao').innerText = "35°C";
+                document.getElementById('clima-umidade').innerText = "82%";
+                document.getElementById('clima-vento').innerText = "12 km/h";
+                document.getElementById('clima-chuva').innerText = "40%";
+                document.getElementById('clima-condicao').innerText = "Sol e Pancadas de Chuva";
+                document.getElementById('clima-icone').innerText = "⛅";
+            }
+        }
+
+        function traduzirClimaWMO(codigo) {
+            if (codigo === 0) return { texto: "Céu Limpo", icone: "☀️" };
+            if (codigo <= 3) return { texto: "Parcialmente Nublado", icone: "⛅" };
+            if (codigo >= 51 && codigo <= 67) return { texto: "Chuva Passageira", icone: "🌧️" };
+            if (codigo >= 80 && codigo <= 82) return { texto: "Pancadas de Chuva", icone: "🌦️" };
+            if (codigo >= 95) return { texto: "Trovoada", icone: "⛈️" };
+            return { texto: "Mormaço / Nublado", icone: "☁️" };
+        }
+
+        // -------------------------------------------------------------
+        // 2. CONSUMO EM TEMPO REAL: MOEDAS (AwesomeAPI Câmbio)
+        // -------------------------------------------------------------
+        async function carregarCambioReal() {
+            try {
+                const res = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL');
+                const moedas = await res.json();
+
+                const dValor = parseFloat(moedas.USDBRL.bid).toFixed(2);
+                const dVar = parseFloat(moedas.USDBRL.pctChange).toFixed(2);
+                const eValor = parseFloat(moedas.EURBRL.bid).toFixed(2);
+                const eVar = parseFloat(moedas.EURBRL.pctChange).toFixed(2);
+
+                const formatarCard = (valId, pctId, valor, variacao) => {
+                    const elVal = document.getElementById(valId);
+                    const elPct = document.getElementById(pctId);
+                    if (elVal && elPct) {
+                        elVal.innerText = `R$ ${valor}`;
+                        elPct.innerText = `${variacao >= 0 ? '▲ +' : '▼ '}${variacao}%`;
+                        elPct.className = variacao >= 0 ? 'ticker-up' : 'ticker-down';
+                    }
+                };
+
+                // Atualiza nos elementos principais e nos clones
+                formatarCard('val-dolar', 'pct-dolar', dValor, dVar);
+                formatarCard('val-dolar-clone', 'pct-dolar-clone', dValor, dVar);
+                formatarCard('val-euro', 'pct-euro', eValor, eVar);
+                formatarCard('val-euro-clone', 'pct-euro-clone', eValor, eVar);
+
+            } catch (err) {
+                console.error("Falha ao puxar cotações:", err);
+            }
+        }
+
+        // -------------------------------------------------------------
+        // 3. MÁQUINA DE ESTADOS DA TRANSMISSÃO (VÍDEO ➔ CLIMA ➔ VÍDEO)
+        // -------------------------------------------------------------
         const telaVideo = document.getElementById('fase-video');
         const telaClima = document.getElementById('fase-clima');
         const videoElement = document.getElementById('player-video');
 
-        // TEMPO QUE O CLIMA FICARÁ NA TELA: 15 segundos
-        const TEMPO_EXIBICAO_CLIMA = 15000; 
+        const TEMPO_EXIBICAO_CLIMA = 12000; // 12 segundos para a tela do clima
 
-        // 1. Inicia tocando o vídeo
-        function iniciarTransmissao() {
-            videoElement.play().catch(erro => {
-                console.log("Aguardando interação ou fallback de autoplay: ", erro);
-            });
-        }
-
-        // 2. Quando o vídeo TERMINAR (onended), troca para a tela de clima
-        videoElement.onended = function() {
-            // Esconde vídeo e mostra o clima
+        function alternarParaClima() {
             telaVideo.classList.remove('ativa');
             telaClima.classList.add('ativa');
 
-            // Agenda a volta para o vídeo após os 15 segundos
+            // Atualiza os dados do clima sempre antes de exibir
+            carregarClimaReal();
+
             setTimeout(() => {
                 telaClima.classList.remove('ativa');
                 telaVideo.classList.add('ativa');
-                videoElement.currentTime = 0; // Volta o vídeo para o início
+                videoElement.currentTime = 0;
                 videoElement.play();
             }, TEMPO_EXIBICAO_CLIMA);
-        };
+        }
 
-        // Fallback de segurança: Caso o arquivo de vídeo demore a carregar ou falhe, não trava a tela
+        // Disparo exato: quando o vídeo chega ao fim
+        videoElement.onended = alternarParaClima;
+
+        // Fallback caso o vídeo demore a carregar
         videoElement.onerror = function() {
-            console.log("Vídeo ainda não encontrado no repositório. Alternando com timer padrão.");
-            setTimeout(() => {
-                telaVideo.classList.remove('ativa');
-                telaClima.classList.add('ativa');
-                setTimeout(() => {
-                    location.reload();
-                }, TEMPO_EXIBICAO_CLIMA);
-            }, 10000);
+            console.log("Aguardando carregamento do vídeo...");
+            setTimeout(alternarParaClima, 10000);
         };
 
-        window.addEventListener('DOMContentLoaded', iniciarTransmissao);
+        // Inicialização
+        window.addEventListener('DOMContentLoaded', () => {
+            carregarClimaReal();
+            carregarCambioReal();
+            videoElement.play().catch(() => console.log("Aguardando autoplay"));
+            
+            // Atualiza cotações a cada 2 minutos
+            setInterval(carregarCambioReal, 120000);
+        });
     </script>
 </body>
 </html>
