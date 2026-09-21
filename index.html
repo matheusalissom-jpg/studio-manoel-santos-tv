@@ -3,107 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Auto-refresh a cada 30 minutos (1800 segundos) para manter o cache da TV limpo -->
+    <meta http-equiv="refresh" content="1800">
     <title>VisioFlow | Studio Manoel Santos</title>
-    <meta http-equiv="refresh" content="3600">
-    <!-- Link para o nosso arquivo CSS -->
+    <!-- Link para o arquivo CSS local -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container-tv">
         
-        <!-- ZONA A: O CONTEÚDO PRINCIPAL DO SALÃO -->
+        <!-- ZONA A: O CONTEÚDO PRINCIPAL DO SALÃO (70%) -->
         <main class="zona-principal">
             <div class="cabecalho-salao">
                 <h1>STUDIO MANOEL SANTOS</h1>
                 <h2>BODYTECH BELÉM</h2>
             </div>
-            
-            <!-- Aqui entrará o vídeo em loop futuramente -->
+
+            <!-- Espaço reservado para o vídeo institucional em loop -->
             <div class="area-video-placeholder">
                 <p>CORTE MASCULINO PREMIUM & BARBA</p>
                 <p class="toque-final">O TOQUE FINAL NO CENTRO DE BELÉM</p>
             </div>
 
+            <!-- Tabela Dinâmica de Serviços e Preços -->
             <div class="tabela-precos">
-                <div class="item-preco"><span>Corte Executivo</span> <span>R$ 160,00</span></div>
+                <div class="item-preco"><span>Corte Executivo</span> <span>R$ 120,00</span></div>
                 <div class="item-preco"><span>Barba Terapia</span> <span>R$ 80,00</span></div>
                 <div class="item-preco"><span>Combo VIP</span> <span>R$ 180,00</span></div>
             </div>
         </main>
 
-        <!-- ZONA B: A BARRA EXECUTIVA (WIDGETS) -->
+        <!-- ZONA B: A BARRA EXECUTIVA (30%) -->
         <aside class="barra-executiva">
             
-            <!-- Widget de Clima (Placeholder para Belém) -->
-            <!-- Widget de Clima Real -->
-            <!-- Widget de Clima Real (Versão Anti-Bloqueio) -->
-            <div class="widget-clima" style="background: transparent; padding: 0;">
-                <a href="https://www.accuweather.com/pt/br/belem/43344/weather-forecast/43344" class="aw-widget-legal"></a>
-                <div id="awcc14829393110" class="aw-widget-current"  data-locationkey="43344" data-unit="c" data-route="current" data-basecolor="#0f172a" data-theme="dark" data-textcolor="#f8fafc" data-uid="awcc14829393110"></div>
-                <script type="text/javascript" src="https://oap.accuweather.com/launch.js"></script>
-            </div>
-            <!-- Espaço para Anunciante/Parceiro -->
-           <!-- Espaço Dinâmico de Notícias -->
-            <div class="anuncio-parceiro">
-                <div class="etiqueta-ad">ÚLTIMAS NOTÍCIAS</div>
-                <h3 id="manchete-noticia">Carregando manchete...</h3>
-                <p class="contato-ad">Fonte: Agência IBGE</p>
+            <!-- WIDGET 1: Previsão do Tempo Real (Belém, PA) -->
+            <div class="widget-clima">
+                <a class="weatherwidget-io" 
+                   href="https://forecast7.com/pt/n1d46n48d50/belem/" 
+                   data-label_1="BELÉM" 
+                   data-label_2="TEMPO AGORA" 
+                   data-font="Roboto" 
+                   data-icons="Climacons Animated" 
+                   data-theme="pure" 
+                   data-basecolor="#0f172a" 
+                   data-textcolor="#f8fafc" 
+                   data-cloudfill="#0f172a">
+                   BELÉM TEMPO AGORA
+                </a>
+                <script>
+                !function(d,s,id){
+                    var js,fjs=d.getElementsByTagName(s)[0];
+                    if(!d.getElementById(id)){
+                        js=d.createElement(s);
+                        js.id=id;
+                        js.src='https://weatherwidget.io/js/widget.min.js';
+                        fjs.parentNode.insertBefore(js,fjs);
+                    }
+                }(document,'script','weatherwidget-io-js');
+                </script>
             </div>
 
-            <!-- QR Code e Contato -->
+            <!-- Espaço reservado para o Anunciante / Patrocinador -->
+            <div class="anuncio-parceiro">
+                <div class="etiqueta-ad">ESPAÇO DO PATROCINADOR</div>
+                <h3>VIVA REAL IMÓVEIS LUXO</h3>
+                <p>Apartamentos de 3 suítes no Umarizal.</p>
+                <p class="contato-ad">Fale com a Recepção</p>
+            </div>
+
+            <!-- Call to Action / QR Code de Agendamento -->
             <div class="area-conversao">
                 <div class="qrcode-placeholder">QR CODE</div>
-                <p>ESCANEIE PARA AGENDAR</p>
+                <p>ESCANIE PARA AGENDAR</p>
                 <p class="marca-startup">Powered by VisioFlow Media</p>
             </div>
 
         </aside>
+
     </div>
 
-    <!-- Ticker da Bolsa no Rodapé (Espaço reservado) -->
-    <!-- Ticker da Bolsa no Rodapé (TradingView Real) -->
-    <footer class="rodape-bolsa" style="padding: 0; border-top: none;">
+    <!-- RODAPÉ: Widget Oficial do TradingView (Cotações em Tempo Real) -->
+    <footer class="rodape-bolsa" style="padding: 0; border-top: none; overflow: hidden; height: 46px;">
+        <!-- TradingView Widget BEGIN -->
         <div class="tradingview-widget-container">
-          <div class="tradingview-widget-container__widget"></div>
-          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-          {
-          "symbols": [
-            { "proName": "BMFBOVESPA:IBOV", "title": "Ibovespa" },
-            { "proName": "FX_IDC:USDBRL", "title": "Dólar" },
-            { "proName": "FX_IDC:EURBRL", "title": "Euro" },
-            { "description": "Selic", "proName": "ECONOMICS:BRINTR" }
-          ],
-          "showSymbolLogo": true,
-          "isTransparent": true,
-          "displayMode": "adaptive",
-          "colorTheme": "dark",
-          "locale": "br"
-        }
-          </script>
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+                "symbols": [
+                    { "proName": "BMFBOVESPA:IBOV", "title": "Ibovespa" },
+                    { "proName": "FX_IDC:USDBRL", "title": "Dólar Comercial" },
+                    { "proName": "FX_IDC:EURBRL", "title": "Euro Comercial" },
+                    { "description": "Selic Meta", "proName": "ECONOMICS:BRINTR" }
+                ],
+                "showSymbolLogo": true,
+                "isTransparent": false,
+                "displayMode": "adaptive",
+                "colorTheme": "dark",
+                "locale": "br"
+            }
+            </script>
         </div>
+        <!-- TradingView Widget END -->
     </footer>
-<!-- Script que puxa e gira as notícias na tela -->
-    <script>
-        fetch('https://servicodados.ibge.gov.br/api/v3/noticias/?qtd=5')
-            .then(response => response.json())
-            .then(data => {
-                const noticias = data.items;
-                let contador = 0;
-                
-                // Mostra a primeira notícia imediatamente
-                document.getElementById('manchete-noticia').innerText = noticias[0].titulo;
 
-                // Troca de notícia a cada 15 segundos
-                setInterval(() => {
-                    contador++;
-                    if (contador >= noticias.length) {
-                        contador = 0; // Volta para a primeira quando acabar
-                    }
-                    document.getElementById('manchete-noticia').innerText = noticias[contador].titulo;
-                }, 15000); 
-            })
-            .catch(erro => console.log("Erro ao carregar notícias: ", erro));
-    </script>
 </body>
 </html>
