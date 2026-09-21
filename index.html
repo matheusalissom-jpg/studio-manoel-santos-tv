@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh a cada 40 minutos para prevenção de memory leak na Smart TV -->
+    <!-- Auto-refresh a cada 40 minutos para limpeza de cache e liberação de memória -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
     <style>
-        /* RESET TOTAL E BASE VERTICAL LUXURY DARK */
+        /* RESET TOTAL E BASE VERTICAL LUXURY */
         * {
             margin: 0;
             padding: 0;
@@ -23,7 +23,7 @@
             --ouro-gradiente: linear-gradient(135deg, #bf953f 0%, #fcf6ba 30%, #b38728 60%, #fbf5b7 85%, #aa771c 100%);
             --fundo-preto: #000000;
             --fundo-card: #0d0d0d;
-            --borda-dourada: rgba(212, 175, 55, 0.4);
+            --borda-dourada: rgba(212, 175, 55, 0.35);
             --borda-suave: rgba(212, 175, 55, 0.15);
             --texto-claro: #f5f5f5;
             --texto-muted: #8e8e93;
@@ -52,7 +52,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 48px);
+            height: calc(100vh - 48px); /* Deixa livre a barra de cotações */
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
@@ -76,19 +76,19 @@
             object-fit: cover;
         }
 
-        /* --- FASE 2: CLIMA EXCLUSIVO COM LOGO OFICIAL --- */
+        /* --- FASE 2: CLIMA DASHBOARD COMPLETO (HOJE + PRÓXIMOS DIAS) --- */
         #fase-clima {
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 60px 35px 45px 35px;
-            background: radial-gradient(circle at 50% 15%, #181818 0%, #000000 85%);
+            padding: 40px 30px 25px 30px;
+            background: radial-gradient(circle at 50% 10%, #161616 0%, #000000 80%);
         }
 
-        /* ÁREA DA LOGO OFICIAL */
+        /* 1. TOPO: LOGO OFICIAL */
         .logo-container {
             width: 100%;
-            max-width: 320px;
+            max-width: 280px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -101,97 +101,176 @@
             object-fit: contain;
         }
 
-        /* BLOCO CENTRAL DE METEOROLOGIA */
-        .clima-centro {
+        /* 2. DESTAQUE AGORA */
+        .clima-agora-box {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            position: relative;
+            margin-top: 5px;
         }
 
         .cidade-badge {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--ouro-primario);
             border: 1px solid var(--borda-dourada);
-            padding: 6px 22px;
+            padding: 5px 20px;
             border-radius: 50px;
             background: rgba(212, 175, 55, 0.08);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
-        .temperatura-principal {
-            font-size: 8rem;
-            font-weight: 900;
-            line-height: 0.9;
-            background: var(--ouro-gradiente);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .bloco-temperatura {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
+            gap: 15px;
         }
 
-        .simbolo-grau {
-            font-size: 3.5rem;
-            margin-top: 5px;
+        .temp-numero {
+            font-size: 5.5rem;
+            font-weight: 900;
+            line-height: 1;
             background: var(--ouro-gradiente);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .condicao-clima {
-            font-size: 1.6rem;
+        .temp-grau {
+            font-size: 2.2rem;
+            color: var(--ouro-primario);
+            align-self: flex-start;
+            margin-top: 10px;
+        }
+
+        .condicao-agora {
+            font-size: 1.3rem;
             letter-spacing: 2px;
             color: var(--texto-claro);
             text-transform: uppercase;
-            font-weight: 400;
-            margin-top: 15px;
+            font-weight: 500;
+            margin-top: 4px;
         }
 
-        /* CARDS TÉCNICOS COM BORDAS EM OURO FINO */
-        .cards-metricas {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+        /* 3. BLOCO DO RESTO DO DIA (PREVISÃO HORÁRIA) */
+        .secao-previsao {
             width: 100%;
-            max-width: 520px;
+            max-width: 540px;
         }
 
-        .card-metrica {
+        .secao-titulo {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: var(--ouro-primario);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .secao-titulo::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--borda-suave);
+        }
+
+        .fita-horas {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 100%;
+        }
+
+        .card-hora {
             background-color: var(--fundo-card);
             border: 1px solid var(--borda-dourada);
-            border-radius: 14px;
-            padding: 20px 15px;
+            border-radius: 12px;
+            padding: 12px 6px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
         }
 
-        .metrica-label {
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .card-hora .hora {
+            font-size: 0.8rem;
             color: var(--texto-muted);
-            margin-bottom: 6px;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
         }
 
-        .metrica-valor {
-            font-size: 1.6rem;
+        .card-hora .icone {
+            font-size: 1.4rem;
+            margin: 4px 0;
+        }
+
+        .card-hora .temp {
+            font-size: 1.1rem;
             font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* 4. BLOCO PRÓXIMOS DIAS (DIÁRIA) */
+        .grade-dias {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            max-width: 540px;
+        }
+
+        .linha-dia {
+            background-color: var(--fundo-card);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 10px;
+            padding: 10px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .linha-dia .dia-semana {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--texto-claro);
+            width: 85px;
+            letter-spacing: 1px;
+        }
+
+        .linha-dia .dia-icone-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--texto-muted);
+        }
+
+        .linha-dia .dia-temperaturas {
+            display: flex;
+            gap: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .temp-max {
             color: var(--ouro-primario);
         }
 
+        .temp-min {
+            color: #71717a;
+        }
+
+        /* RODAPÉ DO CLIMA */
         .rodape-local {
             text-align: center;
             border-top: 1px solid var(--borda-suave);
-            padding-top: 15px;
+            padding-top: 10px;
             width: 80%;
         }
 
         .bodytech-tag {
-            font-size: 0.85rem;
-            letter-spacing: 5px;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
             color: var(--texto-muted);
             text-transform: uppercase;
         }
@@ -266,49 +345,57 @@
             </video>
         </section>
 
-        <!-- FASE 2: METEOROLOGIA BELÉM - LOGO OFICIAL MANOEL SANTOS -->
+        <!-- FASE 2: DASHBOARD DE CLIMA COMPLETO (HOJE + PRÓXIMOS DIAS) -->
         <section class="tela-fase" id="fase-clima">
             
-            <!-- LOGO OFICIAL EMBUTIDA COM RESOLUÇÃO MÁXIMA -->
+            <!-- 1. LOGO OFICIAL -->
             <div class="logo-container">
                 <img src="logo.png" alt="Manoel Santos Studio Expresso" id="img-logo" onerror="aplicarLogoSVG(this)">
             </div>
 
-            <div class="clima-centro">
+            <!-- 2. DESTAQUE ATUAL -->
+            <div class="clima-agora-box">
                 <div class="cidade-badge">Belém • Pará</div>
-                <div class="temperatura-principal">
-                    <span id="clima-temp">--</span>
-                    <span class="simbolo-grau">°C</span>
+                <div class="bloco-temperatura">
+                    <span class="temp-numero" id="temp-agora">31</span>
+                    <span class="temp-grau">°C</span>
                 </div>
-                <div class="condicao-clima" id="clima-condicao">Atualizando tempo...</div>
+                <div class="condicao-agora" id="condicao-agora">Tempo Firme</div>
             </div>
 
-            <div class="cards-metricas">
-                <div class="card-metrica">
-                    <div class="metrica-label">Sensação</div>
-                    <div class="metrica-valor" id="clima-sensacao">--°C</div>
-                </div>
-                <div class="card-metrica">
-                    <div class="metrica-label">Umidade</div>
-                    <div class="metrica-valor" id="clima-umidade">--%</div>
-                </div>
-                <div class="card-metrica">
-                    <div class="metrica-label">Vento</div>
-                    <div class="metrica-valor" id="clima-vento">-- km/h</div>
-                </div>
-                <div class="card-metrica">
-                    <div class="metrica-label">Chuva</div>
-                    <div class="metrica-valor" id="clima-chuva">--%</div>
+            <!-- 3. PREVISÃO PARA O RESTO DO DIA -->
+            <div class="secao-previsao">
+                <div class="secao-titulo">Resto do Dia</div>
+                <div class="fita-horas" id="container-horas">
+                    <!-- Gerado dinamicamente via JS -->
+                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
+                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
+                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">🌧️</div><div class="temp">--°</div></div>
+                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
                 </div>
             </div>
 
+            <!-- 4. PREVISÃO DOS PRÓXIMOS 4 DIAS -->
+            <div class="secao-previsao">
+                <div class="secao-titulo">Próximos Dias</div>
+                <div class="grade-dias" id="container-dias">
+                    <!-- Gerado dinamicamente via JS -->
+                    <div class="linha-dia">
+                        <span class="dia-semana">Amanhã</span>
+                        <span class="dia-icone-status">☀️ Sol e Chuva</span>
+                        <div class="dia-temperaturas"><span class="temp-max">32°</span><span class="temp-min">24°</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. ASSINATURA LOCAL -->
             <div class="rodape-local">
                 <div class="bodytech-tag">Unidade Bodytech Belém</div>
             </div>
 
         </section>
 
-        <!-- TICKER TAPE FINANCEIRO PRETO & DOURADO EM LOOP INFINITO -->
+        <!-- RODAPÉ PERMANENTE: TICKER DE COTAÇÕES EM LOOP INFINITO -->
         <footer class="ticker-container">
             <div class="ticker-track" id="ticker-track">
                 <div class="ticker-item"><span class="item-label">IBOV</span> <span class="item-valor">131.840 pts</span> <span class="item-alta">▲ +0.68%</span></div>
@@ -317,7 +404,7 @@
                 <div class="ticker-item"><span class="item-label">SELIC</span> <span class="item-valor">10,75%</span> <span class="item-alta">● Estável</span></div>
                 <div class="ticker-item"><span class="item-label">BITCOIN</span> <span class="item-valor" id="val-btc">R$ 348.000</span> <span class="item-alta">▲ +1.2%</span></div>
 
-                <!-- Clones para animação contínua -->
+                <!-- Clones para continuidade 60fps -->
                 <div class="ticker-item"><span class="item-label">IBOV</span> <span class="item-valor">131.840 pts</span> <span class="item-alta">▲ +0.68%</span></div>
                 <div class="ticker-item"><span class="item-label">DÓLAR</span> <span class="item-valor" id="val-dolar-clone">R$ 5,42</span> <span class="item-alta" id="pct-dolar-clone">▲ +0.15%</span></div>
                 <div class="ticker-item"><span class="item-label">EURO</span> <span class="item-valor" id="val-euro-clone">R$ 5,91</span> <span class="item-baixa" id="pct-euro-clone">▼ -0.22%</span></div>
@@ -329,89 +416,107 @@
     </div>
 
     <script>
-        // -------------------------------------------------------------
-        // FALLBACK VETORIAL: Renderiza o logotipo idêntico caso não haja logo.png
-        // -------------------------------------------------------------
+        // Fallback gráfico caso a imagem física não carregue
         function aplicarLogoSVG(elementoImg) {
             elementoImg.style.display = 'none';
             const container = elementoImg.parentElement;
             container.innerHTML = `
                 <div style="text-align: center;">
-                    <div style="font-size: 3.6rem; font-weight: 900; background: var(--ouro-gradiente); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1;">MS</div>
-                    <div style="font-size: 1.4rem; font-weight: 700; letter-spacing: 5px; background: var(--ouro-gradiente); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MANOEL SANTOS</div>
-                    <div style="font-size: 0.75rem; letter-spacing: 7px; color: var(--ouro-primario); font-weight: 300;">STUDIO EXPRESSO</div>
+                    <div style="font-size: 3.2rem; font-weight: 900; background: var(--ouro-gradiente); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1;">MS</div>
+                    <div style="font-size: 1.3rem; font-weight: 700; letter-spacing: 5px; background: var(--ouro-gradiente); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MANOEL SANTOS</div>
+                    <div style="font-size: 0.75rem; letter-spacing: 6px; color: var(--ouro-primario); font-weight: 300;">STUDIO EXPRESSO</div>
                 </div>
             `;
         }
 
         // -------------------------------------------------------------
-        // 1. ENGINE CLIMÁTICA MULTIFONTE DE ALTA PRECISÃO (BELÉM-PA)
+        // ENGINE METEOROLÓGICA COMPLETA DE BELÉM (OPEN-METEO EXTENDED)
+        // Coordenadas Centrais Belém/PA: Lat -1.4558, Long -48.4902
         // -------------------------------------------------------------
-        async function carregarClimaUltraPreciso() {
-            // Tentativa 1: HG Brasil Weather via Proxy CORS rápido
+        async function carregarPrevisaoAvancadaBelem() {
             try {
-                const urlHG = 'https://api.hgbrasil.com/weather?format=json-cors&woeid=455823';
-                const res = await fetch(urlHG);
-                const data = await res.json();
-                
-                if (data && data.results) {
-                    const r = data.results;
-                    document.getElementById('clima-temp').innerText = r.temp;
-                    document.getElementById('clima-sensacao').innerText = `${parseInt(r.temp) + 3}°C`; // Belém tem sensação térmica de +3 a +4°C pela umidade
-                    document.getElementById('clima-umidade').innerText = `${r.humidity}%`;
-                    document.getElementById('clima-vento').innerText = r.wind_speedy;
-                    document.getElementById('clima-chuva').innerText = `${r.rain || 20}%`;
-                    document.getElementById('clima-condicao').innerText = r.description;
-                    return; // Sucesso com a API brasileira
-                }
-            } catch (e) {
-                console.log("Alternando para o satélite Open-Meteo local...");
-            }
-
-            // Tentativa 2: Open-Meteo com coordenadas urbanas exatas de Belém (Umarizal / Doca)
-            try {
-                const urlMeteo = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4400&longitude=-48.4800&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=precipitation_probability&timezone=America%2FBelem';
-                const res = await fetch(urlMeteo);
+                const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America%2FBelem';
+                const res = await fetch(url);
                 const dados = await res.json();
 
-                if (dados && dados.current) {
-                    const temp = Math.round(dados.current.temperature_2m);
-                    const sensacao = Math.round(dados.current.apparent_temperature);
-                    const umidade = dados.current.relative_humidity_2m;
-                    const vento = Math.round(dados.current.wind_speed_10m);
-                    const code = dados.current.weather_code;
-                    const horaAtual = new Date().getHours();
-                    const chuva = dados.hourly.precipitation_probability[horaAtual] || 25;
+                // 1. Atualiza Tempo Agora
+                const tempAtual = Math.round(dados.current.temperature_2m);
+                const codeAtual = dados.current.weather_code;
+                document.getElementById('temp-agora').innerText = tempAtual;
+                document.getElementById('condicao-agora').innerText = obterDescricaoWMO(codeAtual).texto;
 
-                    document.getElementById('clima-temp').innerText = temp;
-                    document.getElementById('clima-sensacao').innerText = `${sensacao}°C`;
-                    document.getElementById('clima-umidade').innerText = `${umidade}%`;
-                    document.getElementById('clima-vento').innerText = `${vento} km/h`;
-                    document.getElementById('clima-chuva').innerText = `${chuva}%`;
-                    document.getElementById('clima-condicao').innerText = traduzirWMO(code);
+                // 2. Previsão para o Resto do Dia (Próximos 4 intervalos de 2 horas)
+                const horaAtual = new Date().getHours();
+                const containerHoras = document.getElementById('container-horas');
+                containerHoras.innerHTML = '';
+
+                let intervalosAdicionados = 0;
+                for (let i = horaAtual + 2; i < horaAtual + 10 && intervalosAdicionados < 4; i += 2) {
+                    if (dados.hourly.time[i]) {
+                        const tempHora = Math.round(dados.hourly.temperature_2m[i]);
+                        const codeHora = dados.hourly.weather_code[i];
+                        const iconeHora = obterDescricaoWMO(codeHora).icone;
+                        const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
+
+                        containerHoras.innerHTML += `
+                            <div class="card-hora">
+                                <div class="hora">${horaFormatada}</div>
+                                <div class="icone">${iconeHora}</div>
+                                <div class="temp">${tempHora}°</div>
+                            </div>
+                        `;
+                        intervalosAdicionados++;
+                    }
                 }
+
+                // 3. Previsão para os Próximos 4 Dias
+                const containerDias = document.getElementById('container-dias');
+                containerDias.innerHTML = '';
+                const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+                for (let d = 1; d <= 4; d++) {
+                    if (dados.daily.time[d]) {
+                        const dataObj = new Date(dados.daily.time[d] + 'T00:00:00-03:00');
+                        const nomeDia = d === 1 ? 'Amanhã' : diasSemana[dataObj.getDay()];
+                        const codeDia = dados.daily.weather_code[d];
+                        const maxDia = Math.round(dados.daily.temperature_2m_max[d]);
+                        const minDia = Math.round(dados.daily.temperature_2m_min[d]);
+                        const statusDia = obterDescricaoWMO(codeDia);
+
+                        containerDias.innerHTML += `
+                            <div class="linha-dia">
+                                <span class="dia-semana">${nomeDia}</span>
+                                <span class="dia-icone-status">${statusDia.icone} ${statusDia.curto}</span>
+                                <div class="dia-temperaturas">
+                                    <span class="temp-max">${maxDia}°</span>
+                                    <span class="temp-min">${minDia}°</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
             } catch (err) {
-                console.error("Falha ao atualizar dados meteorológicos:", err);
+                console.error("Falha ao puxar previsão estendida:", err);
             }
         }
 
-        function traduzirWMO(c) {
-            if (c === 0) return "Céu Limpo";
-            if (c <= 3) return "Parcialmente Nublado";
-            if (c >= 51 && c <= 67) return "Chuva Passageira";
-            if (c >= 80 && c <= 82) return "Pancadas de Chuva";
-            if (c >= 95) return "Chuva com Trovoadas";
-            return "Mormaço Tropical";
+        function obterDescricaoWMO(c) {
+            if (c === 0) return { texto: "Céu Limpo", curto: "Ensolarado", icone: "☀️" };
+            if (c <= 3) return { texto: "Parcialmente Nublado", curto: "Sol e Nuvens", icone: "⛅" };
+            if (c >= 51 && c <= 67) return { texto: "Chuva Passageira", curto: "Chuva Leve", icone: "🌧️" };
+            if (c >= 80 && c <= 82) return { texto: "Pancadas de Chuva", curto: "Pancadas", icone: "🌦️" };
+            if (c >= 95) return { texto: "Chuva com Trovoadas", curto: "Trovoada", icone: "⛈️" };
+            return { texto: "Mormaço Tropical", curto: "Nublado", icone: "☁️" };
         }
 
         // -------------------------------------------------------------
-        // 2. CÂMBIO EM TEMPO REAL (AwesomeAPI)
+        // CÂMBIO EM TEMPO REAL
         // -------------------------------------------------------------
         async function carregarCambio() {
             try {
                 const res = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL');
                 const moedas = await res.json();
-
                 const dValor = parseFloat(moedas.USDBRL.bid).toFixed(2);
                 const dVar = parseFloat(moedas.USDBRL.pctChange).toFixed(2);
                 const eValor = parseFloat(moedas.EURBRL.bid).toFixed(2);
@@ -431,26 +536,26 @@
                 aplicar('val-dolar-clone', 'pct-dolar-clone', dValor, dVar);
                 aplicar('val-euro', 'pct-euro', eValor, eVar);
                 aplicar('val-euro-clone', 'pct-euro-clone', eValor, eVar);
-
             } catch (err) {
-                console.error("Falha ao puxar cotações:", err);
+                console.error("Falha no câmbio:", err);
             }
         }
 
         // -------------------------------------------------------------
-        // 3. MÁQUINA DE TRANSMISSÃO SEQUENCIAL
+        // MÁQUINA DE ESTADOS DA TRANSMISSÃO (VÍDEO ➔ CLIMA ➔ VÍDEO)
         // -------------------------------------------------------------
         const telaVideo = document.getElementById('fase-video');
         const telaClima = document.getElementById('fase-clima');
         const videoElement = document.getElementById('player-video');
 
-        const TEMPO_EXIBICAO_CLIMA = 12000; // 12 segundos
+        // Como a tela agora tem mais informações ricas, 14 segundos é o tempo ideal de leitura
+        const TEMPO_EXIBICAO_CLIMA = 14000; 
 
         function transicionarParaClima() {
             telaVideo.classList.remove('ativa');
             telaClima.classList.add('ativa');
 
-            carregarClimaUltraPreciso();
+            carregarPrevisaoAvancadaBelem();
 
             setTimeout(() => {
                 telaClima.classList.remove('ativa');
@@ -467,9 +572,9 @@
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            carregarClimaUltraPreciso();
+            carregarPrevisaoAvancadaBelem();
             carregarCambio();
-            videoElement.play().catch(() => console.log("Aguardando foco de autoplay."));
+            videoElement.play().catch(() => console.log("Aguardando interação"));
             setInterval(carregarCambio, 120000);
         });
     </script>
