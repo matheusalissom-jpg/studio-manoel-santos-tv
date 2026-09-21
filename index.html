@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh a cada 40 minutos para limpeza e liberação de memória RAM na TV -->
+    <!-- Auto-refresh a cada 40 minutos para limpeza e liberação de memória RAM na Smart TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
+
+    <!-- Fontes Premium de Alta Legibilidade e Luxo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 
     <style>
         /* RESET TOTAL E BASE VERTICAL LUXURY */
@@ -23,10 +28,10 @@
             --ouro-gradiente: linear-gradient(135deg, #bf953f 0%, #fcf6ba 30%, #b38728 60%, #fbf5b7 85%, #aa771c 100%);
             --fundo-preto: #000000;
             --fundo-card: #0d0d0d;
-            --borda-dourada: rgba(212, 175, 55, 0.35);
-            --borda-suave: rgba(212, 175, 55, 0.15);
+            --borda-dourada: rgba(212, 175, 55, 0.4);
+            --borda-suave: rgba(212, 175, 55, 0.2);
             --texto-claro: #f5f5f5;
-            --texto-muted: #8e8e93;
+            --texto-muted: #9ca3af;
         }
 
         body, html {
@@ -46,13 +51,13 @@
             background-color: var(--fundo-preto);
         }
 
-        /* GERENCIADOR DE TELAS */
+        /* GERENCIADOR DE TELAS (FASES) */
         .tela-fase {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 48px); /* Deixa livre os 48px da barra de cotações */
+            height: calc(100vh - 48px); /* Deixa livre os 48px da barra de cotações inferior */
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
@@ -76,14 +81,14 @@
             object-fit: cover;
         }
 
-        /* --- COMPONENTES COMPARTILHADOS --- */
+        /* --- COMPONENTES COMPARTILHADOS (LOGO & ASSINATURA) --- */
         .logo-container {
             width: 100%;
-            max-width: 250px;
+            max-width: 320px; /* Ampliado para maior presença visual */
             display: flex;
             justify-content: center;
             align-items: center;
-            filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.2));
+            filter: drop-shadow(0 4px 14px rgba(212, 175, 55, 0.25));
         }
 
         .logo-container img {
@@ -95,91 +100,95 @@
         .rodape-local {
             text-align: center;
             border-top: 1px solid var(--borda-suave);
-            padding-top: 10px;
-            width: 85%;
+            padding-top: 14px;
+            width: 90%;
         }
 
         .bodytech-tag {
-            font-size: 0.8rem;
-            letter-spacing: 4px;
+            font-size: 0.95rem; /* Ampliado para legibilidade a distância */
+            letter-spacing: 5px;
             color: var(--texto-muted);
             text-transform: uppercase;
+            font-weight: 500;
         }
 
-        /* --- FASE 2: CLIMA DASHBOARD --- */
+        /* --- FASE 2: CLIMA DASHBOARD (DESIGN HUMANIZADO & TIPOGRAFIA AMPLIADA) --- */
         #fase-clima {
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 35px 30px 20px 30px;
-            background: radial-gradient(circle at 50% 10%, #161616 0%, #000000 80%);
+            padding: 45px 35px 25px 35px;
+            background: radial-gradient(circle at 50% 12%, #1a1813 0%, #000000 80%);
         }
 
         .clima-agora-box {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 5px;
+            margin-top: 8px;
         }
 
         .cidade-badge {
-            font-size: 0.8rem;
+            font-size: 1rem; /* Ampliado */
             letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--ouro-primario);
             border: 1px solid var(--borda-dourada);
-            padding: 5px 20px;
+            padding: 7px 26px;
             border-radius: 50px;
-            background: rgba(212, 175, 55, 0.08);
-            margin-bottom: 8px;
+            background: rgba(212, 175, 55, 0.1);
+            margin-bottom: 12px;
+            font-weight: 600;
         }
 
         .bloco-temperatura {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 0.9;
         }
 
         .temp-numero {
-            font-size: 5rem;
+            font-size: 7.5rem; /* Número monumental de alta visibilidade */
             font-weight: 900;
-            line-height: 1;
+            font-family: 'Playfair Display', serif;
             background: var(--ouro-gradiente);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
         }
 
         .temp-grau {
-            font-size: 2rem;
+            font-size: 3rem;
             color: var(--ouro-primario);
-            align-self: flex-start;
-            margin-top: 8px;
+            font-family: 'Playfair Display', serif;
+            margin-top: 12px;
         }
 
         .condicao-agora {
-            font-size: 1.2rem;
+            font-size: 1.6rem; /* Aumentado */
             letter-spacing: 2px;
             color: var(--texto-claro);
             text-transform: uppercase;
-            font-weight: 500;
-            margin-top: 4px;
+            font-weight: 600;
+            margin-top: 8px;
         }
 
         .secao-previsao {
             width: 100%;
-            max-width: 540px;
+            max-width: 580px; /* Ocupa melhor a tela vertical */
         }
 
         .secao-titulo {
-            font-size: 0.75rem;
+            font-size: 0.95rem; /* Aumentado */
             letter-spacing: 3px;
             color: var(--ouro-primario);
             text-transform: uppercase;
-            margin-bottom: 8px;
-            font-weight: 600;
+            margin-bottom: 12px;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .secao-titulo::after {
@@ -189,161 +198,169 @@
             background: var(--borda-suave);
         }
 
+        /* FITA HORÁRIA (RESTO DO DIA) AMPLIADA */
         .fita-horas {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 12px;
             width: 100%;
         }
 
         .card-hora {
             background-color: var(--fundo-card);
             border: 1px solid var(--borda-dourada);
-            border-radius: 10px;
-            padding: 10px 4px;
+            border-radius: 14px;
+            padding: 14px 6px;
             text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
         }
 
         .card-hora .hora {
-            font-size: 0.75rem;
+            font-size: 0.9rem; /* Aumentado */
             color: var(--texto-muted);
             letter-spacing: 1px;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
+            font-weight: 600;
         }
 
         .card-hora .icone {
-            font-size: 1.3rem;
-            margin: 2px 0;
+            font-size: 1.8rem; /* Ícones maiores */
+            margin: 6px 0;
         }
 
         .card-hora .temp {
-            font-size: 1.05rem;
-            font-weight: 700;
+            font-size: 1.35rem; /* Aumentado */
+            font-weight: 800;
             color: #ffffff;
         }
 
+        /* GRADE DA SEMANA AMPLIADA */
         .grade-dias {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 9px;
             width: 100%;
-            max-width: 540px;
+            max-width: 580px;
         }
 
         .linha-dia {
             background-color: var(--fundo-card);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 8px;
-            padding: 8px 16px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 12px 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .linha-dia .dia-semana {
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 1.15rem; /* Aumentado */
+            font-weight: 700;
             color: var(--texto-claro);
-            width: 80px;
+            width: 100px;
+            letter-spacing: 1px;
         }
 
         .linha-dia .dia-icone-status {
-            font-size: 0.8rem;
-            color: var(--texto-muted);
+            font-size: 1.05rem; /* Aumentado */
+            color: #cbd5e1;
+            font-weight: 500;
         }
 
         .linha-dia .dia-temperaturas {
             display: flex;
-            gap: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
+            gap: 14px;
+            font-size: 1.15rem; /* Aumentado */
+            font-weight: 800;
         }
 
         .temp-max { color: var(--ouro-primario); }
-        .temp-min { color: #71717a; }
+        .temp-min { color: #6b7280; }
 
-        /* --- FASE 3: PORTAL VISUAL COM IMAGEM & INOVAÇÃO --- */
+        /* --- FASE 3: NOTÍCIAS COM APROVEITAMENTO VERTICAL TOTAL (DESIGN EDITORIAL) --- */
         #fase-noticias {
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 25px 20px 25px;
-            background: radial-gradient(circle at 50% 20%, #161616 0%, #000000 85%);
+            padding: 40px 30px 25px 30px;
+            background: radial-gradient(circle at 50% 15%, #181612 0%, #000000 85%);
         }
 
         .noticia-story-card {
             width: 100%;
-            max-width: 540px;
+            max-width: 600px; /* Aumentado para preencher a tela */
+            height: 72vh; /* Aproveita a altura vertical da TV */
             background: var(--fundo-card);
             border: 1px solid var(--borda-dourada);
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95);
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
-        /* Foto de Alto Impacto */
+        /* Foto de Alto Impacto Ocupando 55% do Cartão */
         .noticia-imagem-box {
             width: 100%;
-            height: 280px;
+            height: 52%;
             position: relative;
             overflow: hidden;
-            background-color: #1e1e1e;
+            background-color: #111;
         }
 
         .noticia-imagem-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.9);
-            transition: transform 6s ease;
+            filter: brightness(0.95);
         }
 
         .tag-categoria-flutuante {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--ouro-primario);
             color: var(--ouro-primario);
-            padding: 6px 16px;
+            padding: 8px 20px;
             border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.85rem;
+            font-weight: 800;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         /* Conteúdo Editorial do Card */
         .noticia-corpo {
-            padding: 25px 20px;
+            padding: 30px 25px 25px 25px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            justify-content: space-between;
+            flex: 1;
         }
 
         .noticia-editorial-tempo {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: var(--ouro-primario);
             letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .noticia-titulo-visual {
-            font-size: 1.55rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.85rem; /* Título nobre e de grande impacto */
             font-weight: 700;
             color: #ffffff;
-            line-height: 1.3;
-            min-height: 65px;
+            line-height: 1.35;
         }
 
         .noticia-resumo-visual {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #a1a1aa;
+            font-size: 1.15rem; /* Aumentado */
+            line-height: 1.6;
+            color: #d1d5db;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
@@ -352,17 +369,16 @@
 
         .noticia-origem {
             border-top: 1px solid var(--borda-suave);
-            padding-top: 12px;
-            margin-top: 5px;
+            padding-top: 14px;
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: var(--texto-muted);
         }
 
         .noticia-origem span {
-            color: #ffffff;
-            font-weight: 600;
+            color: var(--ouro-primario);
+            font-weight: 700;
         }
 
         /* --- TICKER TAPE FINANCEIRO (60 FPS LOOP INFINITO) --- */
@@ -435,7 +451,7 @@
             </video>
         </section>
 
-        <!-- FASE 2: DASHBOARD DE CLIMA COMPLETO -->
+        <!-- FASE 2: DASHBOARD DE CLIMA COMPLETO (AMPLIADO & HUMANIZADO) -->
         <section class="tela-fase" id="fase-clima">
             
             <div class="logo-container">
@@ -451,6 +467,7 @@
                 <div class="condicao-agora" id="condicao-agora">Tempo Firme</div>
             </div>
 
+            <!-- Fita do Resto do Dia (Horária) -->
             <div class="secao-previsao">
                 <div class="secao-titulo">Resto do Dia</div>
                 <div class="fita-horas" id="container-horas">
@@ -461,6 +478,7 @@
                 </div>
             </div>
 
+            <!-- Grade dos Próximos 4 Dias -->
             <div class="secao-previsao">
                 <div class="secao-titulo">Próximos Dias</div>
                 <div class="grade-dias" id="container-dias">
@@ -478,7 +496,7 @@
 
         </section>
 
-        <!-- FASE 3: PORTAL EXECUTIVO COM FOTOS EM ALTA RESOLUÇÃO -->
+        <!-- FASE 3: PORTAL EDITORIAL COM FOTOS E APROVEITAMENTO VERTICAL -->
         <section class="tela-fase" id="fase-noticias">
             
             <div class="logo-container">
@@ -487,15 +505,17 @@
 
             <div class="noticia-story-card">
                 <div class="noticia-imagem-box">
-                    <img id="noticia-foto" src="" alt="Destaque">
+                    <img id="noticia-foto" src="" alt="Pauta Executiva">
                     <span class="tag-categoria-flutuante" id="noticia-tag">TECNOLOGIA</span>
                 </div>
                 <div class="noticia-corpo">
-                    <div class="noticia-editorial-tempo">VisioFlow Radar • Panorama Global</div>
-                    <h2 class="noticia-titulo-visual" id="noticia-titulo">Carregando pauta executiva...</h2>
-                    <p class="noticia-resumo-visual" id="noticia-resumo">Atualizações sobre tendências, mercado corporativo e avanços globais.</p>
+                    <div>
+                        <div class="noticia-editorial-tempo">Radar Corporativo • Curadoria Exclusiva</div>
+                        <h2 class="noticia-titulo-visual" id="noticia-titulo">Carregando pauta...</h2>
+                    </div>
+                    <p class="noticia-resumo-visual" id="noticia-resumo">Informações e análises de mercado selecionadas para a sua pausa.</p>
                     <div class="noticia-origem">
-                        <div>Curadoria: <span>VisioFlow Media</span></div>
+                        <div>Fonte: <span id="noticia-origem-label">Global Trends</span></div>
                         <div>Edição Diária</div>
                     </div>
                 </div>
@@ -516,7 +536,7 @@
                 <div class="ticker-item"><span class="item-label">SELIC</span> <span class="item-valor">10,75%</span> <span class="item-alta">● Estável</span></div>
                 <div class="ticker-item"><span class="item-label">BITCOIN</span> <span class="item-valor" id="val-btc">R$ 348.000</span> <span class="item-alta">▲ +1.2%</span></div>
 
-                <!-- Clones para fluidez contínua -->
+                <!-- Clones para continuidade 60 FPS -->
                 <div class="ticker-item"><span class="item-label">IBOV</span> <span class="item-valor">131.840 pts</span> <span class="item-alta">▲ +0.68%</span></div>
                 <div class="ticker-item"><span class="item-label">DÓLAR</span> <span class="item-valor" id="val-dolar-clone">R$ 5,42</span> <span class="item-alta" id="pct-dolar-clone">▲ +0.15%</span></div>
                 <div class="ticker-item"><span class="item-label">EURO</span> <span class="item-valor" id="val-euro-clone">R$ 5,91</span> <span class="item-baixa" id="pct-euro-clone">▼ -0.22%</span></div>
@@ -528,7 +548,7 @@
     </div>
 
     <script>
-        // Fallback gráfico caso a imagem da logo física não carregue
+        // Fallback gráfico caso a imagem física logo.png não carregue
         function aplicarLogoSVG(elementoImg) {
             elementoImg.style.display = 'none';
             const container = elementoImg.parentElement;
@@ -542,52 +562,93 @@
         }
 
         // -------------------------------------------------------------
-        // 1. ENGINE EDITORIAL EXECUTIVA COM FOTOS (SEM POLÍTICA / SEM TRAGÉDIAS)
+        // 1. ACERVO EDITORIAL AMPLIADO: 10 PAUTAS RELEVANTES DE ALTO NÍVEL
+        // (Sem política, sem tragédias, foco 100% positivo e corporativo)
         // -------------------------------------------------------------
-        const feedExecutivo = [
+        const acervoPautas = [
             {
-                tag: "INOVAÇÃO & IA",
-                titulo: "Avanço da Inteligência Artificial revoluciona a gestão e produtividade global",
-                resumo: "Novos ecossistemas corporativos impulsionam a eficiência operacional de líderes empresariais em todo o mundo.",
-                imagem: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80"
+                tag: "TECNOLOGIA",
+                titulo: "Avanço da Inteligência Artificial Generativa redefine a tomada de decisão executiva",
+                resumo: "Plataformas autônomas já aceleram análises estratégicas de grandes corporações no cenário internacional de 2026.",
+                origem: "Tech Review",
+                imagem: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80"
             },
             {
-                tag: "MERCADO & LUXO",
-                titulo: "Mercado imobiliário de alto padrão mantém valorização consistente em 2026",
-                resumo: "Investimentos em arquitetura biofílica e condomínios de conveniência exclusiva atraem novos perfis de investidores.",
-                imagem: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+                tag: "AVIAÇÃO EXECUTIVA",
+                titulo: "Nova geração de jatos corporativos prioriza autonomia intercontinental e silêncio de cabine",
+                resumo: "Com cabines pressurizadas ao nível do mar e isolamento acústico de ponta, aeronaves viram escritórios no ar.",
+                origem: "Aviation Daily",
+                imagem: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                tag: "ALTO PADRÃO",
+                titulo: "Arquitetura biofílica bate recordes de valorização no mercado imobiliário premium",
+                resumo: "Empreendimentos integrados à natureza com materiais nobres tornam-se o principal foco dos grandes investidores.",
+                origem: "Architectural Digest",
+                imagem: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                tag: "SUPERCARROS",
+                titulo: "Hipercarros eletrificados alcançam aceleração extrema sem emissão de ruído",
+                resumo: "Marcas icônicas combinam compósitos de fibra de carbono e sustentabilidade em modelos de tiragem ultralimitada.",
+                origem: "Motorsport Elite",
+                imagem: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                tag: "GASTRONOMIA",
+                titulo: "Alta culinária com raízes amazônicas conquista espaço definitivo no circuito mundial",
+                resumo: "Ingredientes típicos lapidados por técnicas contemporâneas posicionam a região no centro do turismo gastronômico.",
+                origem: "Gastronomy Focus",
+                imagem: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                tag: "ALTA PERFORMANCE",
+                titulo: "A neurociência do descanso: a importância das pausas estratégicas na agenda de líderes",
+                resumo: "Médicos e consultores apontam momentos de autocuidado e desconexão como segredo para a longevidade executiva.",
+                origem: "Mind & Health",
+                imagem: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1000&q=80"
             },
             {
                 tag: "SUSTENTABILIDADE",
-                titulo: "Belém consolida projetos estratégicos rumo à agenda verde global",
-                resumo: "Soluções sustentáveis e infraestrutura de ponta colocam a capital paraense no foco dos debates ambientais globais.",
-                imagem: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80"
+                titulo: "Belém consolida avanços em mobilidade verde e modernização de espaços públicos",
+                resumo: "Projetos de infraestrutura urbana preparam a capital paraibana para receber encontros e investimentos mundiais.",
+                origem: "Bioeconomia Hoje",
+                imagem: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80"
             },
             {
-                tag: "DESIGN & ARQUITETURA",
-                titulo: "Espaços corporativos premium apostam em sofisticação e conforto acústico",
-                resumo: "A transição para lounges executivos com materiais nobres redefine a experiência presencial de networking.",
-                imagem: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
+                tag: "RELOJOARIA DE LUXO",
+                titulo: "Relógios mecânicos manufaturados consolidam status de ativo patrimonial de valorização",
+                resumo: "Peças raras de alta complicação registram valorização consistente e atraem nova geração de colecionadores.",
+                origem: "Haute Horlogerie",
+                imagem: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80"
             },
             {
-                tag: "LIFESTYLE & FOCO",
-                titulo: "Rotina de alta performance alia bem-estar físico e eficiência nos negócios",
-                resumo: "Executivos integram pausas para autocuidado e treinos estratégicos à agenda diária de decisões críticas.",
-                imagem: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80"
+                tag: "MERCADO CORPORATIVO",
+                titulo: "Fundos de private equity aceleram aportes em inovação e governança no Brasil",
+                resumo: "Empresas com estruturas sólidas e modelos escaláveis despontam na captação de recursos para o segundo semestre.",
+                origem: "Financial Times",
+                imagem: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                tag: "LIFESTYLE",
+                titulo: "Clubes privados para executivos combinam alta tecnologia, privacidade e networking",
+                resumo: "Lounges exclusivos redefinem a experiência profissional presencial nas principais capitais do país.",
+                origem: "Business Lounge",
+                imagem: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=80"
             }
         ];
 
-        let indiceEditorial = 0;
+        let indexNoticia = 0;
 
-        function renderizarPautaEditorial() {
-            const pauta = feedExecutivo[indiceEditorial];
-            document.getElementById('noticia-foto').src = pauta.imagem;
-            document.getElementById('noticia-tag').innerText = pauta.tag;
-            document.getElementById('noticia-titulo').innerText = pauta.titulo;
-            document.getElementById('noticia-resumo').innerText = pauta.resumo;
+        function trocarNoticiaVisual() {
+            const p = acervoPautas[indexNoticia];
+            document.getElementById('noticia-foto').src = p.imagem;
+            document.getElementById('noticia-tag').innerText = p.tag;
+            document.getElementById('noticia-titulo').innerText = p.titulo;
+            document.getElementById('noticia-resumo').innerText = p.resumo;
+            document.getElementById('noticia-origem-label').innerText = p.origem;
 
-            // Roda a lista para a próxima matéria no próximo ciclo
-            indiceEditorial = (indiceEditorial + 1) % feedExecutivo.length;
+            indexNoticia = (indexNoticia + 1) % acervoPautas.length;
         }
 
         // -------------------------------------------------------------
@@ -599,13 +660,13 @@
                 const res = await fetch(url);
                 const dados = await res.json();
 
-                // Tempo Agora
+                // 1. Tempo Agora
                 const tempAtual = Math.round(dados.current.temperature_2m);
                 const codeAtual = dados.current.weather_code;
                 document.getElementById('temp-agora').innerText = tempAtual;
                 document.getElementById('condicao-agora').innerText = traduzirWMO(codeAtual).texto;
 
-                // Horas seguintes
+                // 2. Resto do Dia (Próximas horas)
                 const horaAtual = new Date().getHours();
                 const containerHoras = document.getElementById('container-horas');
                 containerHoras.innerHTML = '';
@@ -629,7 +690,7 @@
                     }
                 }
 
-                // Próximos 4 Dias
+                // 3. Próximos 4 Dias
                 const containerDias = document.getElementById('container-dias');
                 containerDias.innerHTML = '';
                 const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
@@ -725,7 +786,7 @@
             telaClima.classList.remove('ativa');
             telaNoticias.classList.add('ativa');
 
-            renderizarPautaEditorial();
+            trocarNoticiaVisual();
 
             setTimeout(() => {
                 telaNoticias.classList.remove('ativa');
@@ -742,7 +803,7 @@
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            renderizarPautaEditorial();
+            trocarNoticiaVisual();
             carregarPrevisaoBelem();
             carregarCambio();
             videoElement.play().catch(() => console.log("Aguardando play"));
