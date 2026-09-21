@@ -3,37 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh a cada 40 minutos para limpeza e liberação de memória RAM na TV -->
+    <!-- Auto-refresh a cada 40 minutos para limpeza de cache e liberação de RAM na Smart TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
+    <!-- Tipografia Editorial: Playfair Display (Luxo) + Plus Jakarta Sans (Moderno) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* RESET TOTAL E BASE VERTICAL LUXURY */
+        /* RESET TOTAL E BASE VERTICAL EDITORIAL */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Montserrat', 'Segoe UI', -apple-system, Roboto, sans-serif;
             -webkit-user-select: none;
             user-select: none;
         }
 
         :root {
             --ouro-primario: #d4af37;
-            --ouro-gradiente: linear-gradient(135deg, #bf953f 0%, #fcf6ba 30%, #b38728 60%, #fbf5b7 85%, #aa771c 100%);
-            --fundo-preto: #000000;
-            --fundo-card: #0d0d0d;
-            --borda-dourada: rgba(212, 175, 55, 0.35);
-            --borda-suave: rgba(212, 175, 55, 0.15);
-            --texto-claro: #f5f5f5;
-            --texto-muted: #8e8e93;
+            --ouro-gradiente: linear-gradient(135deg, #c59f3d 0%, #fef3c7 35%, #b38728 70%, #d4af37 100%);
+            --fundo-absoluto: #050505;
+            --texto-claro: #ffffff;
+            --texto-suave: #d4d4d8;
+            --texto-muted: #a1a1aa;
+            --borda-fina: rgba(212, 175, 55, 0.25);
         }
 
         body, html {
             width: 100vw;
             height: 100vh;
-            background-color: var(--fundo-preto);
+            background-color: var(--fundo-absoluto);
             color: var(--texto-claro);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             overflow: hidden;
         }
 
@@ -43,19 +47,19 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            background-color: var(--fundo-preto);
+            background-color: var(--fundo-absoluto);
         }
 
-        /* GERENCIADOR DE TELAS */
+        /* GERENCIADOR DE TELAS (FASES) */
         .tela-fase {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 48px); /* Deixa livre os 48px da barra de cotações */
+            height: calc(100vh - 54px); /* Deixa livre a barra de cotações inferior */
             display: none;
             opacity: 0;
-            transition: opacity 0.8s ease-in-out;
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .tela-fase.ativa {
@@ -65,7 +69,7 @@
 
         /* --- FASE 1: VÍDEO VERTICAL --- */
         #fase-video {
-            background-color: var(--fundo-preto);
+            background-color: #000;
             justify-content: center;
             align-items: center;
         }
@@ -76,678 +80,170 @@
             object-fit: cover;
         }
 
-        /* --- COMPONENTES COMPARTILHADOS --- */
-        .logo-container {
-            width: 100%;
-            max-width: 250px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.2));
+        /* --- FASE 2: CLIMA COM DESIGN HUMANO E NÚMEROS GIGANTES --- */
+        #fase-clima {
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 70px 50px 40px 50px;
+            background: radial-gradient(circle at 50% 10%, #171510 0%, #050505 75%);
         }
 
-        .logo-container img {
+        .clima-header-humanizado {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+        }
+
+        .logo-box-mini {
+            max-width: 190px;
+        }
+
+        .logo-box-mini img {
             width: 100%;
             height: auto;
             object-fit: contain;
         }
 
-        .rodape-local {
-            text-align: center;
-            border-top: 1px solid var(--borda-suave);
-            padding-top: 10px;
-            width: 85%;
+        .local-info {
+            text-align: right;
         }
 
-        .bodytech-tag {
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            color: var(--texto-muted);
-            text-transform: uppercase;
+        .cidade-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1px;
         }
 
-        /* --- FASE 2: CLIMA DASHBOARD --- */
-        #fase-clima {
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 35px 30px 20px 30px;
-            background: radial-gradient(circle at 50% 10%, #161616 0%, #000000 80%);
-        }
-
-        .clima-agora-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        .cidade-badge {
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
+        .cidade-sub {
+            font-size: 0.95rem;
             color: var(--ouro-primario);
-            border: 1px solid var(--borda-dourada);
-            padding: 5px 20px;
-            border-radius: 50px;
-            background: rgba(212, 175, 55, 0.08);
-            margin-bottom: 8px;
-        }
-
-        .bloco-temperatura {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .temp-numero {
-            font-size: 5rem;
-            font-weight: 900;
-            line-height: 1;
-            background: var(--ouro-gradiente);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .temp-grau {
-            font-size: 2rem;
-            color: var(--ouro-primario);
-            align-self: flex-start;
-            margin-top: 8px;
-        }
-
-        .condicao-agora {
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            color: var(--texto-claro);
+            letter-spacing: 3px;
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: 600;
             margin-top: 4px;
         }
 
-        .secao-previsao {
-            width: 100%;
-            max-width: 540px;
-        }
-
-        .secao-titulo {
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            color: var(--ouro-primario);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .secao-titulo::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--borda-suave);
-        }
-
-        .fita-horas {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            width: 100%;
-        }
-
-        .card-hora {
-            background-color: var(--fundo-card);
-            border: 1px solid var(--borda-dourada);
-            border-radius: 10px;
-            padding: 10px 4px;
-            text-align: center;
-        }
-
-        .card-hora .hora {
-            font-size: 0.75rem;
-            color: var(--texto-muted);
-            letter-spacing: 1px;
-            margin-bottom: 2px;
-        }
-
-        .card-hora .icone {
-            font-size: 1.3rem;
-            margin: 2px 0;
-        }
-
-        .card-hora .temp {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .grade-dias {
+        /* Bloco Monumental da Temperatura */
+        .clima-hero {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            width: 100%;
-            max-width: 540px;
-        }
-
-        .linha-dia {
-            background-color: var(--fundo-card);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 8px;
-            padding: 8px 16px;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-        }
-
-        .linha-dia .dia-semana {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--texto-claro);
-            width: 80px;
-        }
-
-        .linha-dia .dia-icone-status {
-            font-size: 0.8rem;
-            color: var(--texto-muted);
-        }
-
-        .linha-dia .dia-temperaturas {
-            display: flex;
-            gap: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-
-        .temp-max { color: var(--ouro-primario); }
-        .temp-min { color: #71717a; }
-
-        /* --- FASE 3: PORTAL VISUAL COM IMAGEM & INOVAÇÃO --- */
-        #fase-noticias {
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 25px 20px 25px;
-            background: radial-gradient(circle at 50% 20%, #161616 0%, #000000 85%);
-        }
-
-        .noticia-story-card {
-            width: 100%;
-            max-width: 540px;
-            background: var(--fundo-card);
-            border: 1px solid var(--borda-dourada);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Foto de Alto Impacto */
-        .noticia-imagem-box {
-            width: 100%;
-            height: 280px;
+            justify-content: center;
+            margin: 25px 0;
             position: relative;
-            overflow: hidden;
-            background-color: #1e1e1e;
         }
 
-        .noticia-imagem-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.9);
-            transition: transform 6s ease;
+        .hero-temp-wrapper {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            line-height: 0.85;
         }
 
-        .tag-categoria-flutuante {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--ouro-primario);
+        .temp-gigante {
+            font-size: 11rem;
+            font-weight: 800;
+            font-family: 'Playfair Display', serif;
+            background: var(--ouro-gradiente);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -4px;
+        }
+
+        .temp-unidade {
+            font-size: 3.5rem;
+            font-weight: 400;
+            font-family: 'Playfair Display', serif;
             color: var(--ouro-primario);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            margin-top: 20px;
+            margin-left: 5px;
         }
 
-        /* Conteúdo Editorial do Card */
-        .noticia-corpo {
-            padding: 25px 20px;
+        .condicao-frase {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            text-transform: capitalize;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        .sensacao-pill {
+            margin-top: 18px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--borda-fina);
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-size: 1.15rem;
+            color: var(--ouro-primario);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Grade da Semana em Formato Editorial */
+        .semana-editorial {
+            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--borda-fina);
+            border-radius: 24px;
+            padding: 24px 28px;
         }
 
-        .noticia-editorial-tempo {
-            font-size: 0.75rem;
-            color: var(--ouro-primario);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .noticia-titulo-visual {
-            font-size: 1.55rem;
-            font-weight: 700;
-            color: #ffffff;
-            line-height: 1.3;
-            min-height: 65px;
-        }
-
-        .noticia-resumo-visual {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #a1a1aa;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .noticia-origem {
-            border-top: 1px solid var(--borda-suave);
-            padding-top: 12px;
-            margin-top: 5px;
+        .linha-previsao {
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
-            color: var(--texto-muted);
-        }
-
-        .noticia-origem span {
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-        /* --- TICKER TAPE FINANCEIRO (60 FPS LOOP INFINITO) --- */
-        .ticker-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100vw;
-            height: 48px;
-            background-color: #030303;
-            border-top: 1px solid var(--borda-dourada);
-            display: flex;
             align-items: center;
-            overflow: hidden;
-            z-index: 1000;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .ticker-track {
+        .linha-previsao:last-child {
+            border-bottom: none;
+        }
+
+        .dia-nome {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #ffffff;
+            width: 130px;
+        }
+
+        .dia-status {
+            font-size: 1.25rem;
+            color: var(--texto-suave);
             display: flex;
-            white-space: nowrap;
-            will-change: transform;
-            animation: deslizarTicker 26s linear infinite;
-        }
-
-        @keyframes deslizarTicker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .ticker-item {
-            display: inline-flex;
             align-items: center;
             gap: 12px;
-            padding: 0 40px;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            border-right: 1px solid rgba(212, 175, 55, 0.2);
         }
 
-        .item-label {
-            color: var(--ouro-primario);
+        .dia-graus {
+            font-size: 1.4rem;
             font-weight: 700;
-            letter-spacing: 2px;
+            display: flex;
+            gap: 16px;
         }
 
-        .item-valor {
-            color: #ffffff;
-            font-weight: 600;
+        .grau-alto { color: var(--ouro-primario); }
+        .grau-baixo { color: #71717a; }
+
+        /* --- FASE 3: NOTÍCIAS FULL BLEED (CAPA DE REVISTA VIVA) --- */
+        #fase-noticias {
+            position: relative;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 60px 50px 50px 50px;
         }
 
-        .item-alta {
-            color: #4ade80;
-            font-size: 0.85rem;
-        }
-
-        .item-baixa {
-            color: #f87171;
-            font-size: 0.85rem;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="totem-display">
-
-        <!-- FASE 1: VÍDEO VERTICAL (STUDIO MANOEL SANTOS) -->
-        <section class="tela-fase ativa" id="fase-video">
-            <video id="player-video" autoplay muted playsinline preload="auto">
-                <source src="video.mp4" type="video/mp4">
-            </video>
-        </section>
-
-        <!-- FASE 2: DASHBOARD DE CLIMA COMPLETO -->
-        <section class="tela-fase" id="fase-clima">
-            
-            <div class="logo-container">
-                <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
-            </div>
-
-            <div class="clima-agora-box">
-                <div class="cidade-badge">Belém • Pará</div>
-                <div class="bloco-temperatura">
-                    <span class="temp-numero" id="temp-agora">31</span>
-                    <span class="temp-grau">°C</span>
-                </div>
-                <div class="condicao-agora" id="condicao-agora">Tempo Firme</div>
-            </div>
-
-            <div class="secao-previsao">
-                <div class="secao-titulo">Resto do Dia</div>
-                <div class="fita-horas" id="container-horas">
-                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
-                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
-                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">🌧️</div><div class="temp">--°</div></div>
-                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
-                </div>
-            </div>
-
-            <div class="secao-previsao">
-                <div class="secao-titulo">Próximos Dias</div>
-                <div class="grade-dias" id="container-dias">
-                    <div class="linha-dia">
-                        <span class="dia-semana">Amanhã</span>
-                        <span class="dia-icone-status">☀️ Sol e Chuva</span>
-                        <div class="dia-temperaturas"><span class="temp-max">32°</span><span class="temp-min">24°</span></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="rodape-local">
-                <div class="bodytech-tag">Unidade Bodytech Belém</div>
-            </div>
-
-        </section>
-
-        <!-- FASE 3: PORTAL EXECUTIVO COM FOTOS EM ALTA RESOLUÇÃO -->
-        <section class="tela-fase" id="fase-noticias">
-            
-            <div class="logo-container">
-                <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
-            </div>
-
-            <div class="noticia-story-card">
-                <div class="noticia-imagem-box">
-                    <img id="noticia-foto" src="" alt="Destaque">
-                    <span class="tag-categoria-flutuante" id="noticia-tag">TECNOLOGIA</span>
-                </div>
-                <div class="noticia-corpo">
-                    <div class="noticia-editorial-tempo">VisioFlow Radar • Panorama Global</div>
-                    <h2 class="noticia-titulo-visual" id="noticia-titulo">Carregando pauta executiva...</h2>
-                    <p class="noticia-resumo-visual" id="noticia-resumo">Atualizações sobre tendências, mercado corporativo e avanços globais.</p>
-                    <div class="noticia-origem">
-                        <div>Curadoria: <span>VisioFlow Media</span></div>
-                        <div>Edição Diária</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="rodape-local">
-                <div class="bodytech-tag">Unidade Bodytech Belém</div>
-            </div>
-
-        </section>
-
-        <!-- RODAPÉ PERMANENTE: TICKER DE COTAÇÕES EM LOOP INFINITO -->
-        <footer class="ticker-container">
-            <div class="ticker-track" id="ticker-track">
-                <div class="ticker-item"><span class="item-label">IBOV</span> <span class="item-valor">131.840 pts</span> <span class="item-alta">▲ +0.68%</span></div>
-                <div class="ticker-item"><span class="item-label">DÓLAR</span> <span class="item-valor" id="val-dolar">R$ 5,42</span> <span class="item-alta" id="pct-dolar">▲ +0.15%</span></div>
-                <div class="ticker-item"><span class="item-label">EURO</span> <span class="item-valor" id="val-euro">R$ 5,91</span> <span class="item-baixa" id="pct-euro">▼ -0.22%</span></div>
-                <div class="ticker-item"><span class="item-label">SELIC</span> <span class="item-valor">10,75%</span> <span class="item-alta">● Estável</span></div>
-                <div class="ticker-item"><span class="item-label">BITCOIN</span> <span class="item-valor" id="val-btc">R$ 348.000</span> <span class="item-alta">▲ +1.2%</span></div>
-
-                <!-- Clones para fluidez contínua -->
-                <div class="ticker-item"><span class="item-label">IBOV</span> <span class="item-valor">131.840 pts</span> <span class="item-alta">▲ +0.68%</span></div>
-                <div class="ticker-item"><span class="item-label">DÓLAR</span> <span class="item-valor" id="val-dolar-clone">R$ 5,42</span> <span class="item-alta" id="pct-dolar-clone">▲ +0.15%</span></div>
-                <div class="ticker-item"><span class="item-label">EURO</span> <span class="item-valor" id="val-euro-clone">R$ 5,91</span> <span class="item-baixa" id="pct-euro-clone">▼ -0.22%</span></div>
-                <div class="ticker-item"><span class="item-label">SELIC</span> <span class="item-valor">10,75%</span> <span class="item-alta">● Estável</span></div>
-                <div class="ticker-item"><span class="item-label">BITCOIN</span> <span class="item-valor" id="val-btc-clone">R$ 348.000</span> <span class="item-alta">▲ +1.2%</span></div>
-            </div>
-        </footer>
-
-    </div>
-
-    <script>
-        // Fallback gráfico caso a imagem da logo física não carregue
-        function aplicarLogoSVG(elementoImg) {
-            elementoImg.style.display = 'none';
-            const container = elementoImg.parentElement;
-            container.innerHTML = `
-                <div style="text-align: center;">
-                    <div style="font-size: 3.2rem; font-weight: 900; background: var(--ouro-gradiente); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1;">MS</div>
-                    <div style="font-size: 1.3rem; font-weight: 700; letter-spacing: 5px; background: var(--ouro-gradiente); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MANOEL SANTOS</div>
-                    <div style="font-size: 0.75rem; letter-spacing: 6px; color: var(--ouro-primario); font-weight: 300;">STUDIO EXPRESSO</div>
-                </div>
-            `;
-        }
-
-        // -------------------------------------------------------------
-        // 1. ENGINE EDITORIAL EXECUTIVA COM FOTOS (SEM POLÍTICA / SEM TRAGÉDIAS)
-        // -------------------------------------------------------------
-        const feedExecutivo = [
-            {
-                tag: "INOVAÇÃO & IA",
-                titulo: "Avanço da Inteligência Artificial revoluciona a gestão e produtividade global",
-                resumo: "Novos ecossistemas corporativos impulsionam a eficiência operacional de líderes empresariais em todo o mundo.",
-                imagem: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80"
-            },
-            {
-                tag: "MERCADO & LUXO",
-                titulo: "Mercado imobiliário de alto padrão mantém valorização consistente em 2026",
-                resumo: "Investimentos em arquitetura biofílica e condomínios de conveniência exclusiva atraem novos perfis de investidores.",
-                imagem: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
-            },
-            {
-                tag: "SUSTENTABILIDADE",
-                titulo: "Belém consolida projetos estratégicos rumo à agenda verde global",
-                resumo: "Soluções sustentáveis e infraestrutura de ponta colocam a capital paraense no foco dos debates ambientais globais.",
-                imagem: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80"
-            },
-            {
-                tag: "DESIGN & ARQUITETURA",
-                titulo: "Espaços corporativos premium apostam em sofisticação e conforto acústico",
-                resumo: "A transição para lounges executivos com materiais nobres redefine a experiência presencial de networking.",
-                imagem: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
-            },
-            {
-                tag: "LIFESTYLE & FOCO",
-                titulo: "Rotina de alta performance alia bem-estar físico e eficiência nos negócios",
-                resumo: "Executivos integram pausas para autocuidado e treinos estratégicos à agenda diária de decisões críticas.",
-                imagem: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80"
-            }
-        ];
-
-        let indiceEditorial = 0;
-
-        function renderizarPautaEditorial() {
-            const pauta = feedExecutivo[indiceEditorial];
-            document.getElementById('noticia-foto').src = pauta.imagem;
-            document.getElementById('noticia-tag').innerText = pauta.tag;
-            document.getElementById('noticia-titulo').innerText = pauta.titulo;
-            document.getElementById('noticia-resumo').innerText = pauta.resumo;
-
-            // Roda a lista para a próxima matéria no próximo ciclo
-            indiceEditorial = (indiceEditorial + 1) % feedExecutivo.length;
-        }
-
-        // -------------------------------------------------------------
-        // 2. METEOROLOGIA COMPLETA DE BELÉM (OPEN-METEO)
-        // -------------------------------------------------------------
-        async function carregarPrevisaoBelem() {
-            try {
-                const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America%2FBelem';
-                const res = await fetch(url);
-                const dados = await res.json();
-
-                // Tempo Agora
-                const tempAtual = Math.round(dados.current.temperature_2m);
-                const codeAtual = dados.current.weather_code;
-                document.getElementById('temp-agora').innerText = tempAtual;
-                document.getElementById('condicao-agora').innerText = traduzirWMO(codeAtual).texto;
-
-                // Horas seguintes
-                const horaAtual = new Date().getHours();
-                const containerHoras = document.getElementById('container-horas');
-                containerHoras.innerHTML = '';
-
-                let adicionados = 0;
-                for (let i = horaAtual + 2; i < horaAtual + 10 && adicionados < 4; i += 2) {
-                    if (dados.hourly.time[i]) {
-                        const tempHora = Math.round(dados.hourly.temperature_2m[i]);
-                        const codeHora = dados.hourly.weather_code[i];
-                        const iconeHora = traduzirWMO(codeHora).icone;
-                        const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
-
-                        containerHoras.innerHTML += `
-                            <div class="card-hora">
-                                <div class="hora">${horaFormatada}</div>
-                                <div class="icone">${iconeHora}</div>
-                                <div class="temp">${tempHora}°</div>
-                            </div>
-                        `;
-                        adicionados++;
-                    }
-                }
-
-                // Próximos 4 Dias
-                const containerDias = document.getElementById('container-dias');
-                containerDias.innerHTML = '';
-                const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-
-                for (let d = 1; d <= 4; d++) {
-                    if (dados.daily.time[d]) {
-                        const dataObj = new Date(dados.daily.time[d] + 'T00:00:00-03:00');
-                        const nomeDia = d === 1 ? 'Amanhã' : diasSemana[dataObj.getDay()];
-                        const codeDia = dados.daily.weather_code[d];
-                        const maxDia = Math.round(dados.daily.temperature_2m_max[d]);
-                        const minDia = Math.round(dados.daily.temperature_2m_min[d]);
-                        const statusDia = traduzirWMO(codeDia);
-
-                        containerDias.innerHTML += `
-                            <div class="linha-dia">
-                                <span class="dia-semana">${nomeDia}</span>
-                                <span class="dia-icone-status">${statusDia.icone} ${statusDia.curto}</span>
-                                <div class="dia-temperaturas">
-                                    <span class="temp-max">${maxDia}°</span>
-                                    <span class="temp-min">${minDia}°</span>
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-            } catch (err) {
-                console.error("Falha ao sincronizar clima:", err);
-            }
-        }
-
-        function traduzirWMO(c) {
-            if (c === 0) return { texto: "Céu Limpo", curto: "Ensolarado", icone: "☀️" };
-            if (c <= 3) return { texto: "Parcialmente Nublado", curto: "Sol e Nuvens", icone: "⛅" };
-            if (c >= 51 && c <= 67) return { texto: "Chuva Passageira", curto: "Chuva Leve", icone: "🌧️" };
-            if (c >= 80 && c <= 82) return { texto: "Pancadas de Chuva", curto: "Pancadas", icone: "🌦️" };
-            if (c >= 95) return { texto: "Chuva com Trovoadas", curto: "Trovoada", icone: "⛈️" };
-            return { texto: "Mormaço Tropical", curto: "Nublado", icone: "☁️" };
-        }
-
-        // -------------------------------------------------------------
-        // 3. CÂMBIO EM TEMPO REAL
-        // -------------------------------------------------------------
-        async function carregarCambio() {
-            try {
-                const res = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL');
-                const moedas = await res.json();
-                const dValor = parseFloat(moedas.USDBRL.bid).toFixed(2);
-                const dVar = parseFloat(moedas.USDBRL.pctChange).toFixed(2);
-                const eValor = parseFloat(moedas.EURBRL.bid).toFixed(2);
-                const eVar = parseFloat(moedas.EURBRL.pctChange).toFixed(2);
-
-                const aplicar = (idVal, idPct, valor, variacao) => {
-                    const elV = document.getElementById(idVal);
-                    const elP = document.getElementById(idPct);
-                    if (elV && elP) {
-                        elV.innerText = `R$ ${valor}`;
-                        elP.innerText = `${variacao >= 0 ? '▲ +' : '▼ '}${variacao}%`;
-                        elP.className = variacao >= 0 ? 'item-alta' : 'item-baixa';
-                    }
-                };
-
-                aplicar('val-dolar', 'pct-dolar', dValor, dVar);
-                aplicar('val-dolar-clone', 'pct-dolar-clone', dValor, dVar);
-                aplicar('val-euro', 'pct-euro', eValor, eVar);
-                aplicar('val-euro-clone', 'pct-euro-clone', eValor, eVar);
-            } catch (err) {
-                console.error("Falha no câmbio:", err);
-            }
-        }
-
-        // -------------------------------------------------------------
-        // 4. MÁQUINA DE TRANSMISSÃO EM 3 FASES
-        // Vídeo ➔ Clima (13s) ➔ Revista Executiva com Foto (13s) ➔ Vídeo
-        // -------------------------------------------------------------
-        const telaVideo = document.getElementById('fase-video');
-        const telaClima = document.getElementById('fase-clima');
-        const telaNoticias = document.getElementById('fase-noticias');
-        const videoElement = document.getElementById('player-video');
-
-        const TEMPO_EXIBICAO = 13000; // 13 segundos por tela informativa
-
-        function irParaClima() {
-            telaVideo.classList.remove('ativa');
-            telaNoticias.classList.remove('ativa');
-            telaClima.classList.add('ativa');
-
-            carregarPrevisaoBelem();
-
-            setTimeout(irParaNoticias, TEMPO_EXIBICAO);
-        }
-
-        function irParaNoticias() {
-            telaClima.classList.remove('ativa');
-            telaNoticias.classList.add('ativa');
-
-            renderizarPautaEditorial();
-
-            setTimeout(() => {
-                telaNoticias.classList.remove('ativa');
-                telaVideo.classList.add('ativa');
-                videoElement.currentTime = 0;
-                videoElement.play();
-            }, TEMPO_EXIBICAO);
-        }
-
-        videoElement.onended = irParaClima;
-
-        videoElement.onerror = function() {
-            setTimeout(irParaClima, 10000);
-        };
-
-        window.addEventListener('DOMContentLoaded', () => {
-            renderizarPautaEditorial();
-            carregarPrevisaoBelem();
-            carregarCambio();
-            videoElement.play().catch(() => console.log("Aguardando play"));
-            setInterval(carregarCambio, 120000);
-        });
-    </script>
-</body>
-</html>
+        /* Foto de Fundo em Altíssima Definição preenchendo a tela inteira */
