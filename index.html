@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh a cada 40 minutos para limpeza de memória RAM na Smart TV -->
+    <!-- Auto-refresh a cada 40 minutos para prevenção de memory leak na Smart TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
@@ -115,7 +115,7 @@
         /* --- COMPONENTES COMPARTILHADOS --- */
         .logo-container {
             width: 100%;
-            max-width: 300px;
+            max-width: 320px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -136,15 +136,15 @@
         }
 
         .bodytech-tag {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             letter-spacing: 5px;
             color: var(--texto-muted);
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* ==========================================================================
-           NOVO DESIGN RADICAL DO CLIMA: FOCO ABSOLUTO NO DIA DE HOJE
+           FASE DE CLIMA CORRIGIDA E AMPLIADA
            ========================================================================== */
         #fase-clima {
             flex-direction: column;
@@ -170,16 +170,16 @@
             gap: 8px;
             background: rgba(212, 175, 55, 0.1);
             border: 1px solid var(--borda-dourada);
-            padding: 6px 22px;
+            padding: 8px 26px;
             border-radius: 50px;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             color: var(--ouro-primario);
             letter-spacing: 3px;
             font-weight: 700;
             text-transform: uppercase;
         }
 
-        /* 2. HERO MONUMENTAL: TEMPERATURA & EXTREMOS DE HOJE */
+        /* 2. HERO: TEMPERATURA CORRIGIDA (SEM CORTES) */
         .clima-hero-monumental {
             display: flex;
             flex-direction: column;
@@ -190,11 +190,13 @@
             width: 100%;
         }
 
+        /* Correção cirúrgica do corte da fonte */
         .bloco-temp-gigante {
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            line-height: 0.85;
+            line-height: 1.05; /* Altura segura para evitar o corte horizontal */
+            padding: 10px 20px;
         }
 
         .temp-valor-enorme {
@@ -204,78 +206,82 @@
             background: var(--ouro-gradiente);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -3px;
+            display: inline-block;
+            letter-spacing: 0px; /* Remove corte de kerning */
         }
 
         .temp-simbolo-enorme {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-family: 'Playfair Display', serif;
             color: var(--ouro-primario);
             margin-top: 15px;
-            margin-left: 6px;
+            margin-left: 8px;
+            display: inline-block;
         }
 
+        /* Condição Climática Ampliada */
         .condicao-destaque-hoje {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem; /* Ampliado para grande impacto */
+            font-weight: 800;
             color: #ffffff;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-top: 12px;
+            margin-top: 8px;
             text-align: center;
         }
 
-        /* Pílula de Extremos: Máxima e Mínima de Hoje */
+        /* Pílula de Extremos Ampliada */
         .extremos-hoje-pill {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 24px;
             margin-top: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--borda-suave);
-            padding: 8px 24px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--borda-dourada);
+            padding: 12px 32px; /* Mais encorpada */
             border-radius: 40px;
-            font-size: 1.1rem;
+            font-size: 1.35rem; /* Texto maior */
             font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .extremos-max {
             color: var(--ouro-primario);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .extremos-min {
-            color: #71717a;
+            color: #9ca3af;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
-        /* 3. QUADRO DE MÉTRICAS ESSENCIAIS DE HOJE (2x2 GRID DE LUXO) */
+        /* 3. QUADRO DE MÉTRICAS ESSENCIAIS AMPLIADAS */
         .grid-metricas-hoje {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 16px; /* Mais espaço entre os blocos */
             width: 100%;
-            max-width: 580px;
+            max-width: 600px;
         }
 
         .card-metrica-hoje {
             background: var(--fundo-card);
             border: 1px solid var(--borda-dourada);
-            border-radius: 16px;
-            padding: 16px 20px;
+            border-radius: 18px;
+            padding: 22px 24px; /* Mais alto e respirado */
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 18px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.85);
         }
 
         .card-metrica-icone {
-            font-size: 2.2rem;
+            font-size: 2.8rem; /* Ícone bem maior */
             line-height: 1;
         }
 
@@ -286,16 +292,16 @@
         }
 
         .card-metrica-label {
-            font-size: 0.75rem;
+            font-size: 0.95rem; /* Label maior e mais legível */
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--texto-muted);
-            font-weight: 600;
-            margin-bottom: 2px;
+            font-weight: 700;
+            margin-bottom: 4px;
         }
 
         .card-metrica-valor {
-            font-size: 1.5rem;
+            font-size: 2rem; /* Número bem maior */
             font-weight: 800;
             color: #ffffff;
         }
@@ -304,22 +310,22 @@
             color: var(--ouro-primario);
         }
 
-        /* 4. EVOLUÇÃO DO DIA (FITA HORÁRIA REFINADA NA BASE) */
+        /* 4. CLIMA NO RESTANTE DO DIA (AMPLIADO) */
         .secao-evolucao-dia {
             width: 100%;
-            max-width: 580px;
+            max-width: 600px;
         }
 
         .evolucao-titulo {
-            font-size: 0.8rem;
+            font-size: 1rem; /* Título maior */
             letter-spacing: 3px;
             color: var(--ouro-primario);
             text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-weight: 800;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .evolucao-titulo::after {
@@ -332,31 +338,31 @@
         .fita-horas-capsula {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 12px;
             width: 100%;
         }
 
         .capsula-hora {
-            background: rgba(20, 20, 20, 0.7);
+            background: rgba(20, 20, 20, 0.75);
             border: 1px solid var(--borda-suave);
-            border-radius: 12px;
-            padding: 10px 4px;
+            border-radius: 14px;
+            padding: 14px 6px;
             text-align: center;
         }
 
         .capsula-hora .hora {
-            font-size: 0.8rem;
+            font-size: 1rem; /* Hora maior */
             color: var(--texto-muted);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .capsula-hora .icone {
-            font-size: 1.4rem;
-            margin: 3px 0;
+            font-size: 1.8rem; /* Ícone do tempo maior */
+            margin: 6px 0;
         }
 
         .capsula-hora .temp {
-            font-size: 1.15rem;
+            font-size: 1.45rem; /* Temperatura da hora maior */
             font-weight: 800;
             color: #ffffff;
         }
@@ -533,10 +539,9 @@
             </video>
         </section>
 
-        <!-- FASE 2: CLIMA RADICALMENTE REFORMULADO (FOCO NO DIA ATUAL) -->
+        <!-- FASE 2: CLIMA COM NÚMERO CORRIGIDO E ELEMENTOS AMPLIADOS -->
         <section class="tela-fase" id="fase-clima">
             
-            <!-- TOPO COM LOGO E DATA -->
             <div class="clima-header-destaque">
                 <div class="logo-container">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
@@ -546,29 +551,29 @@
                 </div>
             </div>
 
-            <!-- HERO MONUMENTAL: TEMPERATURA + CONDIÇÃO + MÁX/MÍN -->
+            <!-- HERO MONUMENTAL TOTALMENTE VISÍVEL (SEM CORTES) -->
             <div class="clima-hero-monumental">
                 <div class="bloco-temp-gigante">
-                    <span class="temp-valor-enorme" id="temp-agora">31</span>
+                    <span class="temp-valor-enorme" id="temp-agora">30</span>
                     <span class="temp-simbolo-enorme">°C</span>
                 </div>
-                <div class="condicao-destaque-hoje" id="condicao-agora">Céu Limpo com Sol</div>
+                <div class="condicao-destaque-hoje" id="condicao-agora">Sol e Nuvens</div>
                 
                 <div class="extremos-hoje-pill">
-                    <span class="extremos-max">▲ <span id="temp-hoje-max">33</span>° Máxima</span>
-                    <span style="color: rgba(255,255,255,0.2);">|</span>
+                    <span class="extremos-max">▲ <span id="temp-hoje-max">32</span>° Máxima</span>
+                    <span style="color: rgba(212, 175, 55, 0.3);">|</span>
                     <span class="extremos-min">▼ <span id="temp-hoje-min">24</span>° Mínima</span>
                 </div>
             </div>
 
-            <!-- QUARTETO DE MÉTRICAS ESSENCIAIS DE HOJE -->
+            <!-- QUADRO DE MÉTRICAS ESSENCIAIS EM TAMANHO AMPLIADO -->
             <div class="grid-metricas-hoje">
                 
                 <div class="card-metrica-hoje">
                     <div class="card-metrica-icone">🌡️</div>
                     <div class="card-metrica-textos">
                         <span class="card-metrica-label">Sensação Real</span>
-                        <span class="card-metrica-valor"><span id="clima-sensacao">35</span>°C</span>
+                        <span class="card-metrica-valor"><span id="clima-sensacao">34</span>°C</span>
                     </div>
                 </div>
 
@@ -576,7 +581,7 @@
                     <div class="card-metrica-icone">🌧️</div>
                     <div class="card-metrica-textos">
                         <span class="card-metrica-label">Prob. Chuva</span>
-                        <span class="card-metrica-valor"><span id="clima-chuva-hoje">30</span>%</span>
+                        <span class="card-metrica-valor"><span id="clima-chuva-hoje">92</span>%</span>
                     </div>
                 </div>
 
@@ -584,7 +589,7 @@
                     <div class="card-metrica-icone">💧</div>
                     <div class="card-metrica-textos">
                         <span class="card-metrica-label">Umidade do Ar</span>
-                        <span class="card-metrica-valor"><span id="clima-umidade-hoje">78</span>%</span>
+                        <span class="card-metrica-valor"><span id="clima-umidade-hoje">71</span>%</span>
                     </div>
                 </div>
 
@@ -592,15 +597,15 @@
                     <div class="card-metrica-icone">💨</div>
                     <div class="card-metrica-textos">
                         <span class="card-metrica-label">Veloc. Vento</span>
-                        <span class="card-metrica-valor"><span id="clima-vento-hoje">14</span> km/h</span>
+                        <span class="card-metrica-valor"><span id="clima-vento-hoje">11</span> km/h</span>
                     </div>
                 </div>
 
             </div>
 
-            <!-- EVOLUÇÃO DAS PRÓXIMAS HORAS (RESTO DO DIA) -->
+            <!-- CLIMA NO RESTANTE DO DIA COM TEXTO E TAMANHO AJUSTADOS -->
             <div class="secao-evolucao-dia">
-                <div class="evolucao-titulo">Evolução de Hoje</div>
+                <div class="evolucao-titulo">Clima no restante do dia</div>
                 <div class="fita-horas-capsula" id="container-horas-capsula">
                     <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
                     <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
@@ -609,7 +614,6 @@
                 </div>
             </div>
 
-            <!-- ASSINATURA LOCAL -->
             <div class="rodape-local">
                 <div class="bodytech-tag">Unidade Bodytech Belém</div>
             </div>
@@ -673,9 +677,7 @@
     </div>
 
     <script>
-        // -------------------------------------------------------------
-        // AUDITORIA (PROOF OF PLAY - LOCALSTORAGE)
-        // -------------------------------------------------------------
+        // AUDITORIA (LOCALSTORAGE)
         const STORAGE_KEY = 'visioflow_proof_of_play';
 
         function registrarAuditoria(tipo) {
@@ -693,7 +695,6 @@
 
             metricas.ultima_atualizacao = new Date().toLocaleString('pt-BR');
             localStorage.setItem(STORAGE_KEY, JSON.stringify(metricas));
-            console.log(`[VisioFlow Audit] Mídia registrada: ${tipo}`, metricas);
         }
 
         window.consultarMetricas = function() {
@@ -702,9 +703,6 @@
             return relatorio;
         };
 
-        // -------------------------------------------------------------
-        // FALLBACKS VISUAIS
-        // -------------------------------------------------------------
         function aplicarLogoSVG(elementoImg) {
             elementoImg.style.display = 'none';
             const container = elementoImg.parentElement;
@@ -722,45 +720,38 @@
         }
 
         // -------------------------------------------------------------
-        // 1. ENGINE METEOROLÓGICA DE ALTA CLAREZA (FOCO NO DIA DE HOJE)
+        // CLIMA BELÉM COM ALTA PRECISÃO
         // -------------------------------------------------------------
         async function carregarPrevisaoBelem() {
             try {
-                // Atualiza a data de hoje por extenso
                 const opcoesData = { weekday: 'long', day: 'numeric', month: 'short' };
                 const dataHojeFormatada = new Date().toLocaleDateString('pt-BR', opcoesData);
                 document.getElementById('clima-data-hoje').innerText = `${dataHojeFormatada} • Belém, PA`;
 
-                // Chamada de alta resolução Open-Meteo
                 const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,weather_code,relative_humidity_2m,wind_speed_10m&hourly=temperature_2m,weather_code,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FBelem';
                 const res = await fetch(url);
                 const dados = await res.json();
 
-                // 1. Temperatura e Condição Imediata
                 const tempAtual = Math.round(dados.current.temperature_2m);
                 const sensacao = Math.round(dados.current.apparent_temperature);
                 const umidade = dados.current.relative_humidity_2m;
                 const vento = Math.round(dados.current.wind_speed_10m);
                 const codeAtual = dados.current.weather_code;
 
-                // 2. Extremos de Hoje (Máxima / Mínima / Chuva do dia)
                 const maxHoje = Math.round(dados.daily.temperature_2m_max[0]);
                 const minHoje = Math.round(dados.daily.temperature_2m_min[0]);
                 const chuvaHoje = dados.daily.precipitation_probability_max[0] || 35;
 
-                // Injeção nos elementos Hero
                 document.getElementById('temp-agora').innerText = tempAtual;
                 document.getElementById('condicao-agora').innerText = traduzirWMO(codeAtual).texto;
                 document.getElementById('temp-hoje-max').innerText = maxHoje;
                 document.getElementById('temp-hoje-min').innerText = minHoje;
 
-                // Injeção no Quarteto de Métricas
                 document.getElementById('clima-sensacao').innerText = sensacao;
                 document.getElementById('clima-chuva-hoje').innerText = chuvaHoje;
                 document.getElementById('clima-umidade-hoje').innerText = umidade;
                 document.getElementById('clima-vento-hoje').innerText = vento;
 
-                // 3. Evolução Horária de Hoje (Próximos 4 blocos de 2h)
                 const horaAtual = new Date().getHours();
                 const containerHoras = document.getElementById('container-horas-capsula');
                 containerHoras.innerHTML = '';
@@ -799,7 +790,7 @@
         }
 
         // -------------------------------------------------------------
-        // 2. INFORMAÇÕES REAIS E DE IMPACTO
+        // INFORMAÇÕES REAIS E DE IMPACTO
         // -------------------------------------------------------------
         const acervoInformacoesReais = [
             {
@@ -880,7 +871,7 @@
         }
 
         // -------------------------------------------------------------
-        // 3. CÂMBIO EM TEMPO REAL
+        // CÂMBIO EM TEMPO REAL
         // -------------------------------------------------------------
         async function carregarCambio() {
             try {
@@ -911,7 +902,7 @@
         }
 
         // -------------------------------------------------------------
-        // 4. MÁQUINA DE TRANSMISSÃO EM 4 FASES
+        // MÁQUINA DE TRANSMISSÃO EM 4 FASES
         // -------------------------------------------------------------
         const telaVideo = document.getElementById('fase-video');
         const telaClima = document.getElementById('fase-clima');
@@ -949,7 +940,6 @@
 
             videoAnuncio.currentTime = 0;
             videoAnuncio.play().catch(() => {
-                console.log("Fallback: vídeo do anúncio avançando após timeout.");
                 setTimeout(voltarParaVideoPrincipal, 10000);
             });
         }
