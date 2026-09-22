@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Auto-refresh a cada 40 minutos para limpeza e liberação de memória RAM na Smart TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
+    <!-- Fontes Premium de Alta Legibilidade e Luxo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 
     <style>
+        /* RESET TOTAL E BASE VERTICAL LUXURY */
         * {
             margin: 0;
             padding: 0;
@@ -48,12 +51,13 @@
             background-color: var(--fundo-preto);
         }
 
+        /* GERENCIADOR DE TELAS (FASES) */
         .tela-fase {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 48px);
+            height: calc(100vh - 48px); /* Deixa livre os 48px da barra de cotações inferior */
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
@@ -64,6 +68,7 @@
             opacity: 1;
         }
 
+        /* --- FASE 1: VÍDEO VERTICAL PRINCIPAL (STUDIO MANOEL SANTOS) --- */
         #fase-video {
             background-color: var(--fundo-preto);
             justify-content: center;
@@ -76,6 +81,38 @@
             object-fit: cover;
         }
 
+        /* --- FASE 4: VÍDEO DO ANUNCIANTE (PARCEIRO COMERCIAL) --- */
+        #fase-anuncio {
+            background-color: var(--fundo-preto);
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #fase-anuncio video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .selo-patrocinio {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--ouro-primario);
+            color: var(--ouro-primario);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        /* --- COMPONENTES COMPARTILHADOS (LOGO & ASSINATURA) --- */
         .logo-container {
             width: 100%;
             max-width: 320px;
@@ -106,6 +143,7 @@
             font-weight: 500;
         }
 
+        /* --- FASE 2: CLIMA DASHBOARD --- */
         #fase-clima {
             flex-direction: column;
             justify-content: space-between;
@@ -268,6 +306,7 @@
         .temp-max { color: var(--ouro-primario); }
         .temp-min { color: #6b7280; }
 
+        /* --- FASE 3: INFORMAÇÕES REAIS E DE IMPACTO --- */
         #fase-noticias {
             flex-direction: column;
             justify-content: space-between;
@@ -303,7 +342,6 @@
             height: 100%;
             object-fit: cover;
             filter: brightness(0.95);
-            transition: opacity 0.4s ease-in-out;
         }
 
         .tag-categoria-flutuante {
@@ -370,6 +408,7 @@
             font-weight: 700;
         }
 
+        /* --- TICKER TAPE FINANCEIRO (60 FPS LOOP INFINITO) --- */
         .ticker-container {
             position: absolute;
             bottom: 0;
@@ -432,12 +471,14 @@
 
     <div class="totem-display">
 
+        <!-- FASE 1: VÍDEO VERTICAL PRINCIPAL (STUDIO MANOEL SANTOS) -->
         <section class="tela-fase ativa" id="fase-video">
             <video id="player-video" autoplay muted playsinline preload="auto">
                 <source src="video.mp4" type="video/mp4">
             </video>
         </section>
 
+        <!-- FASE 2: DASHBOARD DE CLIMA COMPLETO -->
         <section class="tela-fase" id="fase-clima">
             <div class="logo-container">
                 <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
@@ -478,6 +519,7 @@
             </div>
         </section>
 
+        <!-- FASE 3: INFORMAÇÕES REAIS E DE IMPACTO -->
         <section class="tela-fase" id="fase-noticias">
             <div class="logo-container">
                 <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
@@ -485,7 +527,7 @@
 
             <div class="noticia-story-card">
                 <div class="noticia-imagem-box">
-                    <img id="noticia-foto" src="" alt="Notícia Econômica" onerror="tratarErroImagem(this)">
+                    <img id="noticia-foto" src="" alt="Informação Econômica" onerror="tratarErroImagem(this)">
                     <span class="tag-categoria-flutuante" id="noticia-tag">FINANÇAS</span>
                 </div>
                 <div class="noticia-corpo">
@@ -506,6 +548,15 @@
             </div>
         </section>
 
+        <!-- FASE 4: VÍDEO DO ANUNCIANTE / PATROCINADOR EXCLUSIVO (KEUNE) -->
+        <section class="tela-fase" id="fase-anuncio">
+            <div class="selo-patrocinio">Parceiro Oficial • Keune</div>
+            <video id="player-anuncio" muted playsinline preload="auto">
+                <source src="anuncio.mp4" type="video/mp4">
+            </video>
+        </section>
+
+        <!-- RODAPÉ PERMANENTE COM TICKER -->
         <footer class="ticker-container">
             <div class="ticker-track" id="ticker-track">
                 <div class="ticker-item"><span class="item-label">IBOV</span> <span class="item-valor">131.840 pts</span> <span class="item-alta">▲ +0.68%</span></div>
@@ -525,6 +576,39 @@
     </div>
 
     <script>
+        // -------------------------------------------------------------
+        // MOTOR DE PROVA DE EXIBIÇÃO (PROOF OF PLAY - LOCALSTORAGE)
+        // -------------------------------------------------------------
+        const STORAGE_KEY = 'visioflow_proof_of_play';
+
+        function registrarAuditoria(tipo) {
+            let metricas = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+                total_ciclos_completos: 0,
+                exibicoes_video_salao: 0,
+                exibicoes_video_anuncio: 0,
+                primeira_execucao: new Date().toLocaleString('pt-BR'),
+                ultima_atualizacao: null
+            };
+
+            if (tipo === 'salao') metricas.exibicoes_video_salao++;
+            if (tipo === 'anuncio') metricas.exibicoes_video_anuncio++;
+            if (tipo === 'ciclo_fechado') metricas.total_ciclos_completos++;
+
+            metricas.ultima_atualizacao = new Date().toLocaleString('pt-BR');
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(metricas));
+            console.log(`[VisioFlow Audit] Mídia registrada: ${tipo}`, metricas);
+        }
+
+        // Função executiva para consultar as métricas no console a qualquer momento
+        window.consultarMetricas = function() {
+            const relatorio = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            console.table(relatorio);
+            return relatorio;
+        };
+
+        // -------------------------------------------------------------
+        // LOGO SVG FALLBACK
+        // -------------------------------------------------------------
         function aplicarLogoSVG(elementoImg) {
             elementoImg.style.display = 'none';
             const container = elementoImg.parentElement;
@@ -537,13 +621,12 @@
             `;
         }
 
-        // Fallback robusto para qualquer imagem com falha temporária
         function tratarErroImagem(img) {
             img.src = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80';
         }
 
         // -------------------------------------------------------------
-        // LINKS DE IMAGENS 100% AUDITADOS E TESTADOS EM PRODUÇÃO
+        // INFORMAÇÕES REAIS E DE IMPACTO
         // -------------------------------------------------------------
         const acervoInformacoesReais = [
             {
@@ -572,7 +655,6 @@
                 titulo: "Contas globais e cartões multimoedas superam compras em dinheiro vivo no exterior",
                 resumo: "Praticidade na conversão pelo câmbio comercial (spread reduzido e IOF de 1,1%) consolida novo hábito financeiro de viajantes brasileiros.",
                 origem: "Fintechs & Câmbio",
-                // NOVO LINK TESTADO:
                 imagem: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1000&q=80"
             },
             {
@@ -580,7 +662,6 @@
                 titulo: "Energia Solar por assinatura cresce 45% entre empresas para redução de custos fixos",
                 resumo: "Modelo de créditos energéticos permite condomínios e estabelecimentos reduzirem até 20% da fatura sem instalação física de placas.",
                 origem: "Setor Energético",
-                // NOVO LINK TESTADO:
                 imagem: "https://images.unsplash.com/photo-1508873696983-2df5293cb32f?auto=format&fit=crop&w=1000&q=80"
             },
             {
@@ -588,7 +669,6 @@
                 titulo: "Vendas de veículos híbridos e elétricos batem recorde histórico de emplacamentos no país",
                 resumo: "Isenções fiscais de IPVA e economia expressiva de combustível aceleram a renovação de frotas executivas e particulares.",
                 origem: "Anfavea",
-                // NOVO LINK TESTADO:
                 imagem: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1000&q=80"
             },
             {
@@ -613,15 +693,10 @@
             const p = acervoInformacoesReais[indexInfo];
             const fotoEl = document.getElementById('noticia-foto');
             
-            // Pré-carrega a imagem para evitar piscadas
             const preloader = new Image();
             preloader.src = p.imagem;
-            preloader.onload = () => {
-                fotoEl.src = p.imagem;
-            };
-            preloader.onerror = () => {
-                fotoEl.src = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80';
-            };
+            preloader.onload = () => { fotoEl.src = p.imagem; };
+            preloader.onerror = () => { fotoEl.src = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80'; };
 
             document.getElementById('noticia-tag').innerText = p.tag;
             document.getElementById('noticia-titulo').innerText = p.titulo;
@@ -631,6 +706,9 @@
             indexInfo = (indexInfo + 1) % acervoInformacoesReais.length;
         }
 
+        // -------------------------------------------------------------
+        // METEOROLOGIA COMPLETA DE BELÉM (OPEN-METEO)
+        // -------------------------------------------------------------
         async function carregarPrevisaoBelem() {
             try {
                 const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America%2FBelem';
@@ -704,6 +782,9 @@
             return { texto: "Mormaço Tropical", curto: "Nublado", icone: "☁️" };
         }
 
+        // -------------------------------------------------------------
+        // CÂMBIO EM TEMPO REAL
+        // -------------------------------------------------------------
         async function carregarCambio() {
             try {
                 const res = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL');
@@ -732,20 +813,30 @@
             }
         }
 
+        // -------------------------------------------------------------
+        // MÁQUINA DE TRANSMISSÃO EM 4 FASES
+        // Fase 1: Vídeo do Salão (onended)
+        // Fase 2: Clima Belém (13s)
+        // Fase 3: Informações de Mercado (13s)
+        // Fase 4: Vídeo do Anunciante (onended) ➔ Retorna à Fase 1
+        // -------------------------------------------------------------
         const telaVideo = document.getElementById('fase-video');
         const telaClima = document.getElementById('fase-clima');
         const telaNoticias = document.getElementById('fase-noticias');
-        const videoElement = document.getElementById('player-video');
+        const telaAnuncio = document.getElementById('fase-anuncio');
+
+        const videoSalao = document.getElementById('player-video');
+        const videoAnuncio = document.getElementById('player-anuncio');
 
         const TEMPO_EXIBICAO = 13000;
 
         function irParaClima() {
             telaVideo.classList.remove('ativa');
+            telaAnuncio.classList.remove('ativa');
             telaNoticias.classList.remove('ativa');
             telaClima.classList.add('ativa');
 
             carregarPrevisaoBelem();
-
             setTimeout(irParaNoticias, TEMPO_EXIBICAO);
         }
 
@@ -754,26 +845,48 @@
             telaNoticias.classList.add('ativa');
 
             trocarNoticiaVisual();
-
-            setTimeout(() => {
-                telaNoticias.classList.remove('ativa');
-                telaVideo.classList.add('ativa');
-                videoElement.currentTime = 0;
-                videoElement.play();
-            }, TEMPO_EXIBICAO);
+            setTimeout(irParaAnuncio, TEMPO_EXIBICAO);
         }
 
-        videoElement.onended = irParaClima;
+        function irParaAnuncio() {
+            telaNoticias.classList.remove('ativa');
+            telaAnuncio.classList.add('ativa');
 
-        videoElement.onerror = function() {
-            setTimeout(irParaClima, 10000);
-        };
+            registrarAuditoria('anuncio');
+
+            videoAnuncio.currentTime = 0;
+            videoAnuncio.play().catch(() => {
+                console.log("Fallback: vídeo do anúncio avançando após timeout.");
+                setTimeout(voltarParaVideoPrincipal, 10000);
+            });
+        }
+
+        function voltarParaVideoPrincipal() {
+            telaAnuncio.classList.remove('ativa');
+            telaVideo.classList.add('ativa');
+
+            registrarAuditoria('ciclo_fechado');
+            registrarAuditoria('salao');
+
+            videoSalao.currentTime = 0;
+            videoSalao.play().catch(() => console.log("Aguardando foco para autoplay."));
+        }
+
+        // Transições ativadas pelo término real de cada vídeo
+        videoSalao.onended = irParaClima;
+        videoAnuncio.onended = voltarParaVideoPrincipal;
+
+        // Fallbacks caso os arquivos de vídeo ainda não tenham sido baixados
+        videoSalao.onerror = () => setTimeout(irParaClima, 10000);
+        videoAnuncio.onerror = () => setTimeout(voltarParaVideoPrincipal, 10000);
 
         window.addEventListener('DOMContentLoaded', () => {
+            registrarAuditoria('salao');
             trocarNoticiaVisual();
             carregarPrevisaoBelem();
             carregarCambio();
-            videoElement.play().catch(() => console.log("Aguardando play"));
+
+            videoSalao.play().catch(() => console.log("Aguardando interação inicial."));
             setInterval(carregarCambio, 120000);
         });
     </script>
