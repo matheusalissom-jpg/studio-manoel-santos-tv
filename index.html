@@ -547,6 +547,102 @@
         .item-baixa {
             color: #f87171;
             font-size: 0.85rem;
+    /* ==========================================================================
+           MOTOR DE ANIMAÇÕES ATMOSFÉRICAS (ESTILO GOOGLE WEATHER)
+           ========================================================================== */
+        .cenario-atmosferico {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sol-vivo-glow {
+            position: absolute;
+            top: 18%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.25) 0%, rgba(212, 175, 55, 0.08) 45%, transparent 70%);
+            border-radius: 50%;
+            animation: pulsarSolGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulsarSolGlow {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+        }
+
+        .lua-brilho-noturno {
+            position: absolute;
+            top: 16%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(148, 163, 184, 0.2) 0%, rgba(100, 116, 139, 0.05) 50%, transparent 70%);
+            border-radius: 50%;
+            animation: respirarLua 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes respirarLua {
+            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.95); }
+            100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        .estrela-viva {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #ffffff;
+            animation: cintilarEstrela 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes cintilarEstrela {
+            0% { opacity: 0.2; transform: scale(0.6); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .nuvem-deriva {
+            position: absolute;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            filter: blur(12px);
+            animation: flutuarNuvem 24s linear infinite;
+        }
+
+        @keyframes flutuarNuvem {
+            0% { transform: translateX(-120%); }
+            100% { transform: translateX(120vw); }
+        }
+
+        .gota-chuva {
+            position: absolute;
+            width: 2px;
+            height: 24px;
+            background: linear-gradient(180deg, transparent, rgba(56, 189, 248, 0.7));
+            animation: cairChuva 1.1s linear infinite;
+        }
+
+        @keyframes cairChuva {
+            0% { transform: translateY(-30px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0.2; }
+        }
+
+        .clima-header-destaque, 
+        .clima-hero-monumental, 
+        .grid-metricas-hoje, 
+        .secao-evolucao-dia, 
+        .rodape-local {
+            position: relative;
+            z-index: 2;
+        }
         }
     </style>
 </head>
@@ -563,7 +659,9 @@
 
         <!-- FASE 2: CLIMA COM INTELIGÊNCIA DIA/NOITE (SEM ERRO DE SOL À NOITE) -->
         <section class="tela-fase" id="fase-clima">
-            
+
+            <!-- CAMADA DE CENÁRIO ATMOSFÉRICO ANIMADO (ESTILO GOOGLE WEATHER) -->
+            <div class="cenario-atmosferico" id="cenario-clima"></div>
             <div class="clima-header-destaque">
                 <div class="logo-container">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
@@ -739,13 +837,15 @@
         // NOVO MOTOR METEOROLÓGICO: COM DETECÇÃO REAL DE DIA E NOITE
         // Coordenadas: Belém, PA (-1.4558, -48.4902)
         // -------------------------------------------------------------
+        // -------------------------------------------------------------
+        // MOTOR DE CLIMA COM EFEITOS VISUAIS DINÂMICOS (GOOGLE WEATHER)
+        // -------------------------------------------------------------
         async function carregarPrevisaoBelem() {
             try {
                 const opcoesData = { weekday: 'long', day: 'numeric', month: 'short' };
                 const dataHojeFormatada = new Date().toLocaleDateString('pt-BR', opcoesData);
                 document.getElementById('clima-data-hoje').innerText = `${dataHojeFormatada} • Belém, PA`;
 
-                // Adicionamos is_day no current e no hourly para precisão astronômica
                 const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,is_day,weather_code,relative_humidity_2m,wind_speed_10m&hourly=temperature_2m,is_day,weather_code,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FBelem';
                 const res = await fetch(url);
                 const dados = await res.json();
@@ -755,7 +855,7 @@
                 const umidade = dados.current.relative_humidity_2m;
                 const vento = Math.round(dados.current.wind_speed_10m);
                 const codeAtual = dados.current.weather_code;
-                const isDayAtual = dados.current.is_day; // 1 = Dia, 0 = Noite
+                const isDayAtual = dados.current.is_day;
 
                 const maxHoje = Math.round(dados.daily.temperature_2m_max[0]);
                 const minHoje = Math.round(dados.daily.temperature_2m_min[0]);
@@ -771,7 +871,8 @@
                 document.getElementById('clima-umidade-hoje').innerText = umidade;
                 document.getElementById('clima-vento-hoje').innerText = vento;
 
-                // Fita de Horas com respeito a dia/noite
+                renderizarCenarioAtmosferico(codeAtual, isDayAtual);
+
                 const horaAtual = new Date().getHours();
                 const containerHoras = document.getElementById('container-horas-capsula');
                 containerHoras.innerHTML = '';
@@ -781,7 +882,7 @@
                     if (dados.hourly.time[i]) {
                         const tempHora = Math.round(dados.hourly.temperature_2m[i]);
                         const codeHora = dados.hourly.weather_code[i];
-                        const isDayHora = dados.hourly.is_day[i]; // Verifica se aquela hora específica é dia ou noite
+                        const isDayHora = dados.hourly.is_day[i];
                         const infoHora = traduzirClimaComPeriodo(codeHora, isDayHora);
                         const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
 
@@ -798,6 +899,53 @@
 
             } catch (err) {
                 console.error("Falha ao sincronizar clima:", err);
+            }
+        }
+
+        function renderizarCenarioAtmosferico(codigo, isDay) {
+            const cenario = document.getElementById('cenario-clima');
+            cenario.innerHTML = '';
+
+            if (codigo >= 51) {
+                for (let i = 0; i < 35; i++) {
+                    const gota = document.createElement('div');
+                    gota.className = 'gota-chuva';
+                    gota.style.left = `${Math.random() * 100}%`;
+                    gota.style.animationDelay = `${Math.random() * 1.5}s`;
+                    gota.style.animationDuration = `${0.8 + Math.random() * 0.5}s`;
+                    cenario.appendChild(gota);
+                }
+                return;
+            }
+
+            if (isDay === 1) {
+                const solGlow = document.createElement('div');
+                solGlow.className = 'sol-vivo-glow';
+                cenario.appendChild(solGlow);
+
+                const nuvem = document.createElement('div');
+                nuvem.className = 'nuvem-deriva';
+                nuvem.style.top = '22%';
+                nuvem.style.width = '350px';
+                nuvem.style.height = '140px';
+                cenario.appendChild(nuvem);
+                return;
+            }
+
+            const luaGlow = document.createElement('div');
+            luaGlow.className = 'lua-brilho-noturno';
+            cenario.appendChild(luaGlow);
+
+            for (let i = 0; i < 25; i++) {
+                const estrela = document.createElement('div');
+                estrela.className = 'estrela-viva';
+                const tamanho = 2 + Math.random() * 3;
+                estrela.style.width = `${tamanho}px`;
+                estrela.style.height = `${tamanho}px`;
+                estrela.style.top = `${Math.random() * 55}%`;
+                estrela.style.left = `${Math.random() * 100}%`;
+                estrela.style.animationDelay = `${Math.random() * 3}s`;
+                cenario.appendChild(estrela);
             }
         }
 
