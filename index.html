@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh a cada 40 minutos para limpeza e liberação de memória RAM na Smart TV -->
+    <!-- Auto-refresh a cada 40 minutos para limpeza de memória RAM na Smart TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
-    <!-- Fontes Premium de Alta Legibilidade e Luxo -->
+    <!-- Fontes Premium: Montserrat + Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
@@ -27,11 +27,11 @@
             --ouro-primario: #d4af37;
             --ouro-gradiente: linear-gradient(135deg, #bf953f 0%, #fcf6ba 30%, #b38728 60%, #fbf5b7 85%, #aa771c 100%);
             --fundo-preto: #000000;
-            --fundo-card: #0d0d0d;
-            --borda-dourada: rgba(212, 175, 55, 0.4);
-            --borda-suave: rgba(212, 175, 55, 0.2);
+            --fundo-card: rgba(14, 14, 14, 0.75);
+            --borda-dourada: rgba(212, 175, 55, 0.35);
+            --borda-suave: rgba(212, 175, 55, 0.15);
             --texto-claro: #f5f5f5;
-            --texto-muted: #9ca3af;
+            --texto-muted: #a1a1aa;
         }
 
         body, html {
@@ -57,7 +57,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 48px); /* Deixa livre os 48px da barra de cotações inferior */
+            height: calc(100vh - 48px); /* Deixa livre a barra de cotações inferior */
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
@@ -68,7 +68,7 @@
             opacity: 1;
         }
 
-        /* --- FASE 1: VÍDEO VERTICAL PRINCIPAL (STUDIO MANOEL SANTOS) --- */
+        /* --- FASE 1: VÍDEO PRINCIPAL --- */
         #fase-video {
             background-color: var(--fundo-preto);
             justify-content: center;
@@ -81,7 +81,7 @@
             object-fit: cover;
         }
 
-        /* --- FASE 4: VÍDEO DO ANUNCIANTE (PARCEIRO COMERCIAL) --- */
+        /* --- FASE 4: VÍDEO DO ANUNCIANTE --- */
         #fase-anuncio {
             background-color: var(--fundo-preto);
             justify-content: center;
@@ -112,10 +112,10 @@
             z-index: 10;
         }
 
-        /* --- COMPONENTES COMPARTILHADOS (LOGO & ASSINATURA) --- */
+        /* --- COMPONENTES COMPARTILHADOS --- */
         .logo-container {
             width: 100%;
-            max-width: 320px;
+            max-width: 300px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -131,182 +131,237 @@
         .rodape-local {
             text-align: center;
             border-top: 1px solid var(--borda-suave);
-            padding-top: 14px;
+            padding-top: 12px;
             width: 90%;
         }
 
         .bodytech-tag {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             letter-spacing: 5px;
             color: var(--texto-muted);
             text-transform: uppercase;
             font-weight: 500;
         }
 
-        /* --- FASE 2: CLIMA DASHBOARD --- */
+        /* ==========================================================================
+           NOVO DESIGN RADICAL DO CLIMA: FOCO ABSOLUTO NO DIA DE HOJE
+           ========================================================================== */
         #fase-clima {
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 45px 35px 25px 35px;
-            background: radial-gradient(circle at 50% 12%, #1a1813 0%, #000000 80%);
+            padding: 40px 30px 20px 30px;
+            background: radial-gradient(circle at 50% 18%, #1c1810 0%, #000000 80%);
+            position: relative;
         }
 
-        .clima-agora-box {
+        /* 1. TOPO: Identificador de Tempo e Data */
+        .clima-header-destaque {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 8px;
+            gap: 12px;
+            width: 100%;
         }
 
-        .cidade-badge {
-            font-size: 1rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--ouro-primario);
-            border: 1px solid var(--borda-dourada);
-            padding: 7px 26px;
-            border-radius: 50px;
+        .badge-data-hoje {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             background: rgba(212, 175, 55, 0.1);
-            margin-bottom: 12px;
-            font-weight: 600;
+            border: 1px solid var(--borda-dourada);
+            padding: 6px 22px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--ouro-primario);
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        .bloco-temperatura {
+        /* 2. HERO MONUMENTAL: TEMPERATURA & EXTREMOS DE HOJE */
+        .clima-hero-monumental {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .bloco-temp-gigante {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            line-height: 0.9;
+            justify-content: center;
+            line-height: 0.85;
         }
 
-        .temp-numero {
-            font-size: 7.5rem;
+        .temp-valor-enorme {
+            font-size: 8.8rem;
             font-weight: 900;
             font-family: 'Playfair Display', serif;
             background: var(--ouro-gradiente);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
         }
 
-        .temp-grau {
-            font-size: 3rem;
-            color: var(--ouro-primario);
+        .temp-simbolo-enorme {
+            font-size: 3.5rem;
             font-family: 'Playfair Display', serif;
-            margin-top: 12px;
+            color: var(--ouro-primario);
+            margin-top: 15px;
+            margin-left: 6px;
         }
 
-        .condicao-agora {
-            font-size: 1.6rem;
+        .condicao-destaque-hoje {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
             letter-spacing: 2px;
-            color: var(--texto-claro);
             text-transform: uppercase;
-            font-weight: 600;
-            margin-top: 8px;
+            margin-top: 12px;
+            text-align: center;
         }
 
-        .secao-previsao {
+        /* Pílula de Extremos: Máxima e Mínima de Hoje */
+        .extremos-hoje-pill {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--borda-suave);
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .extremos-max {
+            color: var(--ouro-primario);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .extremos-min {
+            color: #71717a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 3. QUADRO DE MÉTRICAS ESSENCIAIS DE HOJE (2x2 GRID DE LUXO) */
+        .grid-metricas-hoje {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             width: 100%;
             max-width: 580px;
         }
 
-        .secao-titulo {
-            font-size: 0.95rem;
+        .card-metrica-hoje {
+            background: var(--fundo-card);
+            border: 1px solid var(--borda-dourada);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .card-metrica-icone {
+            font-size: 2.2rem;
+            line-height: 1;
+        }
+
+        .card-metrica-textos {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .card-metrica-label {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--texto-muted);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .card-metrica-valor {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .card-metrica-valor span {
+            color: var(--ouro-primario);
+        }
+
+        /* 4. EVOLUÇÃO DO DIA (FITA HORÁRIA REFINADA NA BASE) */
+        .secao-evolucao-dia {
+            width: 100%;
+            max-width: 580px;
+        }
+
+        .evolucao-titulo {
+            font-size: 0.8rem;
             letter-spacing: 3px;
             color: var(--ouro-primario);
             text-transform: uppercase;
-            margin-bottom: 12px;
             font-weight: 700;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .secao-titulo::after {
+        .evolucao-titulo::after {
             content: '';
             flex: 1;
             height: 1px;
             background: var(--borda-suave);
         }
 
-        .fita-horas {
+        .fita-horas-capsula {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            gap: 10px;
             width: 100%;
         }
 
-        .card-hora {
-            background-color: var(--fundo-card);
-            border: 1px solid var(--borda-dourada);
-            border-radius: 14px;
-            padding: 14px 6px;
+        .capsula-hora {
+            background: rgba(20, 20, 20, 0.7);
+            border: 1px solid var(--borda-suave);
+            border-radius: 12px;
+            padding: 10px 4px;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
         }
 
-        .card-hora .hora {
-            font-size: 0.9rem;
+        .capsula-hora .hora {
+            font-size: 0.8rem;
             color: var(--texto-muted);
-            letter-spacing: 1px;
-            margin-bottom: 4px;
             font-weight: 600;
         }
 
-        .card-hora .icone {
-            font-size: 1.8rem;
-            margin: 6px 0;
+        .capsula-hora .icone {
+            font-size: 1.4rem;
+            margin: 3px 0;
         }
 
-        .card-hora .temp {
-            font-size: 1.35rem;
+        .capsula-hora .temp {
+            font-size: 1.15rem;
             font-weight: 800;
             color: #ffffff;
         }
 
-        .grade-dias {
-            display: flex;
-            flex-direction: column;
-            gap: 9px;
-            width: 100%;
-            max-width: 580px;
-        }
-
-        .linha-dia {
-            background-color: var(--fundo-card);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 12px;
-            padding: 12px 22px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .linha-dia .dia-semana {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--texto-claro);
-            width: 100px;
-            letter-spacing: 1px;
-        }
-
-        .linha-dia .dia-icone-status {
-            font-size: 1.05rem;
-            color: #cbd5e1;
-            font-weight: 500;
-        }
-
-        .linha-dia .dia-temperaturas {
-            display: flex;
-            gap: 14px;
-            font-size: 1.15rem;
-            font-weight: 800;
-        }
-
-        .temp-max { color: var(--ouro-primario); }
-        .temp-min { color: #6b7280; }
-
-        /* --- FASE 3: INFORMAÇÕES REAIS E DE IMPACTO --- */
+        /* --- FASE 3: INFORMAÇÕES REAIS --- */
         #fase-noticias {
             flex-direction: column;
             justify-content: space-between;
@@ -408,7 +463,7 @@
             font-weight: 700;
         }
 
-        /* --- TICKER TAPE FINANCEIRO (60 FPS LOOP INFINITO) --- */
+        /* --- TICKER TAPE FINANCEIRO --- */
         .ticker-container {
             position: absolute;
             bottom: 0;
@@ -471,55 +526,97 @@
 
     <div class="totem-display">
 
-        <!-- FASE 1: VÍDEO VERTICAL PRINCIPAL (STUDIO MANOEL SANTOS) -->
+        <!-- FASE 1: VÍDEO PRINCIPAL (STUDIO MANOEL SANTOS) -->
         <section class="tela-fase ativa" id="fase-video">
             <video id="player-video" autoplay muted playsinline preload="auto">
                 <source src="video.mp4" type="video/mp4">
             </video>
         </section>
 
-        <!-- FASE 2: DASHBOARD DE CLIMA COMPLETO -->
+        <!-- FASE 2: CLIMA RADICALMENTE REFORMULADO (FOCO NO DIA ATUAL) -->
         <section class="tela-fase" id="fase-clima">
-            <div class="logo-container">
-                <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
-            </div>
-
-            <div class="clima-agora-box">
-                <div class="cidade-badge">Belém • Pará</div>
-                <div class="bloco-temperatura">
-                    <span class="temp-numero" id="temp-agora">31</span>
-                    <span class="temp-grau">°C</span>
+            
+            <!-- TOPO COM LOGO E DATA -->
+            <div class="clima-header-destaque">
+                <div class="logo-container">
+                    <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
-                <div class="condicao-agora" id="condicao-agora">Tempo Firme</div>
-            </div>
-
-            <div class="secao-previsao">
-                <div class="secao-titulo">Resto do Dia</div>
-                <div class="fita-horas" id="container-horas">
-                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
-                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
-                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">🌧️</div><div class="temp">--°</div></div>
-                    <div class="card-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
+                <div class="badge-data-hoje" id="clima-data-hoje">
+                    Hoje • Belém, PA
                 </div>
             </div>
 
-            <div class="secao-previsao">
-                <div class="secao-titulo">Próximos Dias</div>
-                <div class="grade-dias" id="container-dias">
-                    <div class="linha-dia">
-                        <span class="dia-semana">Amanhã</span>
-                        <span class="dia-icone-status">☀️ Sol e Chuva</span>
-                        <div class="dia-temperaturas"><span class="temp-max">32°</span><span class="temp-min">24°</span></div>
+            <!-- HERO MONUMENTAL: TEMPERATURA + CONDIÇÃO + MÁX/MÍN -->
+            <div class="clima-hero-monumental">
+                <div class="bloco-temp-gigante">
+                    <span class="temp-valor-enorme" id="temp-agora">31</span>
+                    <span class="temp-simbolo-enorme">°C</span>
+                </div>
+                <div class="condicao-destaque-hoje" id="condicao-agora">Céu Limpo com Sol</div>
+                
+                <div class="extremos-hoje-pill">
+                    <span class="extremos-max">▲ <span id="temp-hoje-max">33</span>° Máxima</span>
+                    <span style="color: rgba(255,255,255,0.2);">|</span>
+                    <span class="extremos-min">▼ <span id="temp-hoje-min">24</span>° Mínima</span>
+                </div>
+            </div>
+
+            <!-- QUARTETO DE MÉTRICAS ESSENCIAIS DE HOJE -->
+            <div class="grid-metricas-hoje">
+                
+                <div class="card-metrica-hoje">
+                    <div class="card-metrica-icone">🌡️</div>
+                    <div class="card-metrica-textos">
+                        <span class="card-metrica-label">Sensação Real</span>
+                        <span class="card-metrica-valor"><span id="clima-sensacao">35</span>°C</span>
                     </div>
                 </div>
+
+                <div class="card-metrica-hoje">
+                    <div class="card-metrica-icone">🌧️</div>
+                    <div class="card-metrica-textos">
+                        <span class="card-metrica-label">Prob. Chuva</span>
+                        <span class="card-metrica-valor"><span id="clima-chuva-hoje">30</span>%</span>
+                    </div>
+                </div>
+
+                <div class="card-metrica-hoje">
+                    <div class="card-metrica-icone">💧</div>
+                    <div class="card-metrica-textos">
+                        <span class="card-metrica-label">Umidade do Ar</span>
+                        <span class="card-metrica-valor"><span id="clima-umidade-hoje">78</span>%</span>
+                    </div>
+                </div>
+
+                <div class="card-metrica-hoje">
+                    <div class="card-metrica-icone">💨</div>
+                    <div class="card-metrica-textos">
+                        <span class="card-metrica-label">Veloc. Vento</span>
+                        <span class="card-metrica-valor"><span id="clima-vento-hoje">14</span> km/h</span>
+                    </div>
+                </div>
+
             </div>
 
+            <!-- EVOLUÇÃO DAS PRÓXIMAS HORAS (RESTO DO DIA) -->
+            <div class="secao-evolucao-dia">
+                <div class="evolucao-titulo">Evolução de Hoje</div>
+                <div class="fita-horas-capsula" id="container-horas-capsula">
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌧️</div><div class="temp">--°</div></div>
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
+                </div>
+            </div>
+
+            <!-- ASSINATURA LOCAL -->
             <div class="rodape-local">
                 <div class="bodytech-tag">Unidade Bodytech Belém</div>
             </div>
+
         </section>
 
-        <!-- FASE 3: INFORMAÇÕES REAIS E DE IMPACTO -->
+        <!-- FASE 3: INFORMAÇÕES REAIS -->
         <section class="tela-fase" id="fase-noticias">
             <div class="logo-container">
                 <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
@@ -548,7 +645,7 @@
             </div>
         </section>
 
-        <!-- FASE 4: VÍDEO DO ANUNCIANTE / PATROCINADOR EXCLUSIVO (KEUNE) -->
+        <!-- FASE 4: VÍDEO DO ANUNCIANTE (KEUNE) -->
         <section class="tela-fase" id="fase-anuncio">
             <div class="selo-patrocinio">Parceiro Oficial • Keune</div>
             <video id="player-anuncio" muted playsinline preload="auto">
@@ -556,7 +653,7 @@
             </video>
         </section>
 
-        <!-- RODAPÉ PERMANENTE COM TICKER -->
+        <!-- TICKER TAPE FINANCEIRO -->
         <footer class="ticker-container">
             <div class="ticker-track" id="ticker-track">
                 <div class="ticker-item"><span class="item-label">IBOV</span> <span class="item-valor">131.840 pts</span> <span class="item-alta">▲ +0.68%</span></div>
@@ -577,7 +674,7 @@
 
     <script>
         // -------------------------------------------------------------
-        // MOTOR DE PROVA DE EXIBIÇÃO (PROOF OF PLAY - LOCALSTORAGE)
+        // AUDITORIA (PROOF OF PLAY - LOCALSTORAGE)
         // -------------------------------------------------------------
         const STORAGE_KEY = 'visioflow_proof_of_play';
 
@@ -599,7 +696,6 @@
             console.log(`[VisioFlow Audit] Mídia registrada: ${tipo}`, metricas);
         }
 
-        // Função executiva para consultar as métricas no console a qualquer momento
         window.consultarMetricas = function() {
             const relatorio = JSON.parse(localStorage.getItem(STORAGE_KEY));
             console.table(relatorio);
@@ -607,7 +703,7 @@
         };
 
         // -------------------------------------------------------------
-        // LOGO SVG FALLBACK
+        // FALLBACKS VISUAIS
         // -------------------------------------------------------------
         function aplicarLogoSVG(elementoImg) {
             elementoImg.style.display = 'none';
@@ -626,7 +722,84 @@
         }
 
         // -------------------------------------------------------------
-        // INFORMAÇÕES REAIS E DE IMPACTO
+        // 1. ENGINE METEOROLÓGICA DE ALTA CLAREZA (FOCO NO DIA DE HOJE)
+        // -------------------------------------------------------------
+        async function carregarPrevisaoBelem() {
+            try {
+                // Atualiza a data de hoje por extenso
+                const opcoesData = { weekday: 'long', day: 'numeric', month: 'short' };
+                const dataHojeFormatada = new Date().toLocaleDateString('pt-BR', opcoesData);
+                document.getElementById('clima-data-hoje').innerText = `${dataHojeFormatada} • Belém, PA`;
+
+                // Chamada de alta resolução Open-Meteo
+                const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,weather_code,relative_humidity_2m,wind_speed_10m&hourly=temperature_2m,weather_code,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FBelem';
+                const res = await fetch(url);
+                const dados = await res.json();
+
+                // 1. Temperatura e Condição Imediata
+                const tempAtual = Math.round(dados.current.temperature_2m);
+                const sensacao = Math.round(dados.current.apparent_temperature);
+                const umidade = dados.current.relative_humidity_2m;
+                const vento = Math.round(dados.current.wind_speed_10m);
+                const codeAtual = dados.current.weather_code;
+
+                // 2. Extremos de Hoje (Máxima / Mínima / Chuva do dia)
+                const maxHoje = Math.round(dados.daily.temperature_2m_max[0]);
+                const minHoje = Math.round(dados.daily.temperature_2m_min[0]);
+                const chuvaHoje = dados.daily.precipitation_probability_max[0] || 35;
+
+                // Injeção nos elementos Hero
+                document.getElementById('temp-agora').innerText = tempAtual;
+                document.getElementById('condicao-agora').innerText = traduzirWMO(codeAtual).texto;
+                document.getElementById('temp-hoje-max').innerText = maxHoje;
+                document.getElementById('temp-hoje-min').innerText = minHoje;
+
+                // Injeção no Quarteto de Métricas
+                document.getElementById('clima-sensacao').innerText = sensacao;
+                document.getElementById('clima-chuva-hoje').innerText = chuvaHoje;
+                document.getElementById('clima-umidade-hoje').innerText = umidade;
+                document.getElementById('clima-vento-hoje').innerText = vento;
+
+                // 3. Evolução Horária de Hoje (Próximos 4 blocos de 2h)
+                const horaAtual = new Date().getHours();
+                const containerHoras = document.getElementById('container-horas-capsula');
+                containerHoras.innerHTML = '';
+
+                let adicionados = 0;
+                for (let i = horaAtual + 2; i < horaAtual + 10 && adicionados < 4; i += 2) {
+                    if (dados.hourly.time[i]) {
+                        const tempHora = Math.round(dados.hourly.temperature_2m[i]);
+                        const codeHora = dados.hourly.weather_code[i];
+                        const iconeHora = traduzirWMO(codeHora).icone;
+                        const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
+
+                        containerHoras.innerHTML += `
+                            <div class="capsula-hora">
+                                <div class="hora">${horaFormatada}</div>
+                                <div class="icone">${iconeHora}</div>
+                                <div class="temp">${tempHora}°</div>
+                            </div>
+                        `;
+                        adicionados++;
+                    }
+                }
+
+            } catch (err) {
+                console.error("Falha ao sincronizar clima:", err);
+            }
+        }
+
+        function traduzirWMO(c) {
+            if (c === 0) return { texto: "Céu Limpo com Sol", icone: "☀️" };
+            if (c <= 3) return { texto: "Sol e Nuvens", icone: "⛅" };
+            if (c >= 51 && c <= 67) return { texto: "Chuva Passageira", icone: "🌧️" };
+            if (c >= 80 && c <= 82) return { texto: "Pancadas de Chuva", icone: "🌦️" };
+            if (c >= 95) return { texto: "Chuva com Trovoadas", icone: "⛈️" };
+            return { texto: "Mormaço Tropical", icone: "☁️" };
+        }
+
+        // -------------------------------------------------------------
+        // 2. INFORMAÇÕES REAIS E DE IMPACTO
         // -------------------------------------------------------------
         const acervoInformacoesReais = [
             {
@@ -707,83 +880,7 @@
         }
 
         // -------------------------------------------------------------
-        // METEOROLOGIA COMPLETA DE BELÉM (OPEN-METEO)
-        // -------------------------------------------------------------
-        async function carregarPrevisaoBelem() {
-            try {
-                const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America%2FBelem';
-                const res = await fetch(url);
-                const dados = await res.json();
-
-                const tempAtual = Math.round(dados.current.temperature_2m);
-                const codeAtual = dados.current.weather_code;
-                document.getElementById('temp-agora').innerText = tempAtual;
-                document.getElementById('condicao-agora').innerText = traduzirWMO(codeAtual).texto;
-
-                const horaAtual = new Date().getHours();
-                const containerHoras = document.getElementById('container-horas');
-                containerHoras.innerHTML = '';
-
-                let adicionados = 0;
-                for (let i = horaAtual + 2; i < horaAtual + 10 && adicionados < 4; i += 2) {
-                    if (dados.hourly.time[i]) {
-                        const tempHora = Math.round(dados.hourly.temperature_2m[i]);
-                        const codeHora = dados.hourly.weather_code[i];
-                        const iconeHora = traduzirWMO(codeHora).icone;
-                        const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
-
-                        containerHoras.innerHTML += `
-                            <div class="card-hora">
-                                <div class="hora">${horaFormatada}</div>
-                                <div class="icone">${iconeHora}</div>
-                                <div class="temp">${tempHora}°</div>
-                            </div>
-                        `;
-                        adicionados++;
-                    }
-                }
-
-                const containerDias = document.getElementById('container-dias');
-                containerDias.innerHTML = '';
-                const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-
-                for (let d = 1; d <= 4; d++) {
-                    if (dados.daily.time[d]) {
-                        const dataObj = new Date(dados.daily.time[d] + 'T00:00:00-03:00');
-                        const nomeDia = d === 1 ? 'Amanhã' : diasSemana[dataObj.getDay()];
-                        const codeDia = dados.daily.weather_code[d];
-                        const maxDia = Math.round(dados.daily.temperature_2m_max[d]);
-                        const minDia = Math.round(dados.daily.temperature_2m_min[d]);
-                        const statusDia = traduzirWMO(codeDia);
-
-                        containerDias.innerHTML += `
-                            <div class="linha-dia">
-                                <span class="dia-semana">${nomeDia}</span>
-                                <span class="dia-icone-status">${statusDia.icone} ${statusDia.curto}</span>
-                                <div class="dia-temperaturas">
-                                    <span class="temp-max">${maxDia}°</span>
-                                    <span class="temp-min">${minDia}°</span>
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-            } catch (err) {
-                console.error("Falha ao sincronizar clima:", err);
-            }
-        }
-
-        function traduzirWMO(c) {
-            if (c === 0) return { texto: "Céu Limpo", curto: "Ensolarado", icone: "☀️" };
-            if (c <= 3) return { texto: "Parcialmente Nublado", curto: "Sol e Nuvens", icone: "⛅" };
-            if (c >= 51 && c <= 67) return { texto: "Chuva Passageira", curto: "Chuva Leve", icone: "🌧️" };
-            if (c >= 80 && c <= 82) return { texto: "Pancadas de Chuva", curto: "Pancadas", icone: "🌦️" };
-            if (c >= 95) return { texto: "Chuva com Trovoadas", curto: "Trovoada", icone: "⛈️" };
-            return { texto: "Mormaço Tropical", curto: "Nublado", icone: "☁️" };
-        }
-
-        // -------------------------------------------------------------
-        // CÂMBIO EM TEMPO REAL
+        // 3. CÂMBIO EM TEMPO REAL
         // -------------------------------------------------------------
         async function carregarCambio() {
             try {
@@ -814,11 +911,7 @@
         }
 
         // -------------------------------------------------------------
-        // MÁQUINA DE TRANSMISSÃO EM 4 FASES
-        // Fase 1: Vídeo do Salão (onended)
-        // Fase 2: Clima Belém (13s)
-        // Fase 3: Informações de Mercado (13s)
-        // Fase 4: Vídeo do Anunciante (onended) ➔ Retorna à Fase 1
+        // 4. MÁQUINA DE TRANSMISSÃO EM 4 FASES
         // -------------------------------------------------------------
         const telaVideo = document.getElementById('fase-video');
         const telaClima = document.getElementById('fase-clima');
@@ -872,11 +965,9 @@
             videoSalao.play().catch(() => console.log("Aguardando foco para autoplay."));
         }
 
-        // Transições ativadas pelo término real de cada vídeo
         videoSalao.onended = irParaClima;
         videoAnuncio.onended = voltarParaVideoPrincipal;
 
-        // Fallbacks caso os arquivos de vídeo ainda não tenham sido baixados
         videoSalao.onerror = () => setTimeout(irParaClima, 10000);
         videoAnuncio.onerror = () => setTimeout(voltarParaVideoPrincipal, 10000);
 
