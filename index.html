@@ -57,7 +57,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 48px); /* Deixa livre a barra de cotações inferior */
+            height: calc(100vh - 48px);
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
@@ -144,7 +144,7 @@
         }
 
         /* ==========================================================================
-           FASE DE CLIMA (COM INTELIGÊNCIA DIA/NOITE E SEM CORTES)
+           FASE DE CLIMA
            ========================================================================== */
         #fase-clima {
             flex-direction: column;
@@ -361,7 +361,7 @@
         }
 
         /* ==========================================================================
-           FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO)
+           FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS)
            ========================================================================== */
         #fase-noticias {
             position: absolute;
@@ -382,7 +382,6 @@
             display: flex;
         }
 
-        /* Foto de Fundo 100% Tela Vertical */
         .noticia-bg-full {
             position: absolute;
             top: 0;
@@ -395,7 +394,6 @@
             transition: opacity 0.5s ease-in-out;
         }
 
-        /* Degradê Cinematográfico Contínuo para Legibilidade Absoluta */
         .noticia-vignette-overlay {
             position: absolute;
             top: 0;
@@ -410,7 +408,6 @@
             z-index: 2;
         }
 
-        /* Topo da Tela com a Logo do Salão */
         .noticia-topo-flutuante {
             position: relative;
             z-index: 3;
@@ -438,7 +435,6 @@
             text-transform: uppercase;
         }
 
-        /* Bloco de Conteúdo Flutuante na Base (Sem Caixas / Sem Bordas) */
         .noticia-conteudo-full {
             position: relative;
             z-index: 3;
@@ -547,7 +543,9 @@
         .item-baixa {
             color: #f87171;
             font-size: 0.85rem;
-    /* ==========================================================================
+        }
+
+        /* ==========================================================================
            MOTOR DE ANIMAÇÕES ATMOSFÉRICAS (ESTILO GOOGLE WEATHER)
            ========================================================================== */
         .cenario-atmosferico {
@@ -561,6 +559,7 @@
             z-index: 1;
         }
 
+        /* 1. Sol Vivo com Brilho Pulsante */
         .sol-vivo-glow {
             position: absolute;
             top: 18%;
@@ -568,52 +567,55 @@
             transform: translate(-50%, -50%);
             width: 320px;
             height: 320px;
-            background: radial-gradient(circle, rgba(234, 179, 8, 0.25) 0%, rgba(212, 175, 55, 0.08) 45%, transparent 70%);
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.28) 0%, rgba(212, 175, 55, 0.1) 45%, transparent 70%);
             border-radius: 50%;
             animation: pulsarSolGlow 4s ease-in-out infinite alternate;
         }
 
         @keyframes pulsarSolGlow {
-            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
-            100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+            0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
         }
 
+        /* 2. Lua com Brilho Noturno */
         .lua-brilho-noturno {
             position: absolute;
             top: 16%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 260px;
-            height: 260px;
-            background: radial-gradient(circle, rgba(148, 163, 184, 0.2) 0%, rgba(100, 116, 139, 0.05) 50%, transparent 70%);
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(148, 163, 184, 0.25) 0%, rgba(100, 116, 139, 0.08) 50%, transparent 70%);
             border-radius: 50%;
             animation: respirarLua 5s ease-in-out infinite alternate;
         }
 
         @keyframes respirarLua {
-            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.95); }
-            100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.05); }
+            0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
         }
 
+        /* 3. Estrelas Cintilantes */
         .estrela-viva {
             position: absolute;
             background-color: #ffffff;
             border-radius: 50%;
-            box-shadow: 0 0 6px #ffffff;
+            box-shadow: 0 0 8px #ffffff;
             animation: cintilarEstrela 3s ease-in-out infinite alternate;
         }
 
         @keyframes cintilarEstrela {
-            0% { opacity: 0.2; transform: scale(0.6); }
-            100% { opacity: 1; transform: scale(1.2); }
+            0% { opacity: 0.1; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1.3); }
         }
 
+        /* 4. Nuvem Flutuante */
         .nuvem-deriva {
             position: absolute;
-            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
             border-radius: 50%;
-            filter: blur(12px);
-            animation: flutuarNuvem 24s linear infinite;
+            filter: blur(14px);
+            animation: flutuarNuvem 22s linear infinite;
         }
 
         @keyframes flutuarNuvem {
@@ -621,18 +623,19 @@
             100% { transform: translateX(120vw); }
         }
 
+        /* 5. Gotas de Chuva */
         .gota-chuva {
             position: absolute;
             width: 2px;
-            height: 24px;
-            background: linear-gradient(180deg, transparent, rgba(56, 189, 248, 0.7));
-            animation: cairChuva 1.1s linear infinite;
+            height: 28px;
+            background: linear-gradient(180deg, transparent, rgba(56, 189, 248, 0.8));
+            animation: cairChuva 1s linear infinite;
         }
 
         @keyframes cairChuva {
             0% { transform: translateY(-30px); opacity: 0; }
             50% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0.2; }
+            100% { transform: translateY(100vh); opacity: 0.3; }
         }
 
         .clima-header-destaque, 
@@ -642,7 +645,6 @@
         .rodape-local {
             position: relative;
             z-index: 2;
-        }
         }
     </style>
 </head>
@@ -657,11 +659,12 @@
             </video>
         </section>
 
-        <!-- FASE 2: CLIMA COM INTELIGÊNCIA DIA/NOITE (SEM ERRO DE SOL À NOITE) -->
+        <!-- FASE 2: CLIMA COM INTELIGÊNCIA DIA/NOITE -->
         <section class="tela-fase" id="fase-clima">
 
             <!-- CAMADA DE CENÁRIO ATMOSFÉRICO ANIMADO (ESTILO GOOGLE WEATHER) -->
             <div class="cenario-atmosferico" id="cenario-clima"></div>
+
             <div class="clima-header-destaque">
                 <div class="logo-container">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
@@ -737,12 +740,9 @@
 
         <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO) -->
         <section class="tela-fase" id="fase-noticias">
-            
-            <!-- Imagem de Fundo 100% Tela Cheia -->
             <img class="noticia-bg-full" id="noticia-foto" src="" alt="Tendência" onerror="tratarErroImagem(this)">
             <div class="noticia-vignette-overlay"></div>
 
-            <!-- Topo com Logo Oficial Mantida -->
             <div class="noticia-topo-flutuante">
                 <div class="logo-container">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
@@ -750,7 +750,6 @@
                 <span class="badge-editorial-full" id="noticia-tag">TENDÊNCIA</span>
             </div>
 
-            <!-- Conteúdo Flutuante na Base (Sem Bordas, Ocupando Todo o Espaço) -->
             <div class="noticia-conteudo-full">
                 <div class="noticia-chapeu-tempo">Tendências & Estilo • Circuito Internacional</div>
                 <h1 class="noticia-titulo-full" id="noticia-titulo">Carregando pauta de beleza...</h1>
@@ -760,7 +759,6 @@
                     <div>Consulte a Recepção</div>
                 </div>
             </div>
-
         </section>
 
         <!-- FASE 4: VÍDEO DO ANUNCIANTE (KEUNE) -->
@@ -833,10 +831,6 @@
             img.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80';
         }
 
-        // -------------------------------------------------------------
-        // NOVO MOTOR METEOROLÓGICO: COM DETECÇÃO REAL DE DIA E NOITE
-        // Coordenadas: Belém, PA (-1.4558, -48.4902)
-        // -------------------------------------------------------------
         // -------------------------------------------------------------
         // MOTOR DE CLIMA COM EFEITOS VISUAIS DINÂMICOS (GOOGLE WEATHER)
         // -------------------------------------------------------------
@@ -949,9 +943,7 @@
             }
         }
 
-        // Tradutor oficial com distinção rigorosa de Dia e Noite
         function traduzirClimaComPeriodo(codigo, isDay) {
-            // Se for NOITE (isDay === 0)
             if (isDay === 0) {
                 if (codigo === 0) return { texto: "Noite Limpa e Estrelada", icone: "🌙" };
                 if (codigo <= 3) return { texto: "Noite com Poucas Nuvens", icone: "☁️" };
@@ -961,7 +953,6 @@
                 return { texto: "Noite Tropical com Nuvens", icone: "☁️" };
             }
 
-            // Se for DIA (isDay === 1)
             if (codigo === 0) return { texto: "Céu Limpo com Sol", icone: "☀️" };
             if (codigo <= 3) return { texto: "Sol entre Nuvens", icone: "⛅" };
             if (codigo >= 51 && codigo <= 67) return { texto: "Chuva Passageira", icone: "🌧️" };
