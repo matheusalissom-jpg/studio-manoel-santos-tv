@@ -57,7 +57,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 48px);
+            height: calc(100vh - 48px); /* Deixa livre a barra de cotações inferior */
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
@@ -112,7 +112,7 @@
             z-index: 10;
         }
 
-        /* --- COMPONENTES COMPARTILHADOS --- */
+        /* --- LOGO OFICIAL DO SALÃO (COMPARTILHADA) --- */
         .logo-container {
             width: 100%;
             max-width: 320px;
@@ -144,7 +144,7 @@
         }
 
         /* ==========================================================================
-           FASE DE CLIMA
+           FASE DE CLIMA (COM INTELIGÊNCIA DIA/NOITE E SEM CORTES)
            ========================================================================== */
         #fase-clima {
             flex-direction: column;
@@ -217,10 +217,10 @@
         }
 
         .condicao-destaque-hoje {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             font-weight: 800;
             color: #ffffff;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             margin-top: 8px;
             text-align: center;
@@ -361,54 +361,76 @@
         }
 
         /* ==========================================================================
-           FASE 3: TENDÊNCIAS DE BELEZA, CABELOS & LUXO (CNN + KEUNE / VOGUE)
+           FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO)
            ========================================================================== */
         #fase-noticias {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 48px);
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            display: none;
             flex-direction: column;
             justify-content: space-between;
-            align-items: center;
-            padding: 40px 30px 25px 30px;
-            background: radial-gradient(circle at 50% 15%, #181612 0%, #000000 85%);
         }
 
-        .noticia-story-card {
-            width: 100%;
-            max-width: 600px;
-            height: 72vh;
-            background: var(--fundo-card);
-            border: 1px solid var(--borda-dourada);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95);
+        #fase-noticias.ativa {
             display: flex;
-            flex-direction: column;
-            position: relative;
         }
 
-        .noticia-imagem-box {
-            width: 100%;
-            height: 52%;
-            position: relative;
-            overflow: hidden;
-            background-color: #111;
-        }
-
-        .noticia-imagem-box img {
+        /* Foto de Fundo 100% Tela Vertical */
+        .noticia-bg-full {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.95);
+            z-index: 1;
+            filter: brightness(0.85);
+            transition: opacity 0.5s ease-in-out;
         }
 
-        .tag-categoria-flutuante {
+        /* Degradê Cinematográfico Contínuo para Legibilidade Absoluta */
+        .noticia-vignette-overlay {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.85);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(0, 0, 0, 0.85) 0%, 
+                rgba(0, 0, 0, 0.25) 30%, 
+                rgba(0, 0, 0, 0.75) 60%, 
+                rgba(0, 0, 0, 0.98) 95%);
+            z-index: 2;
+        }
+
+        /* Topo da Tela com a Logo do Salão */
+        .noticia-topo-flutuante {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            padding: 45px 35px 20px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .noticia-topo-flutuante .logo-container {
+            max-width: 260px;
+        }
+
+        .badge-editorial-full {
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(10px);
             border: 1px solid var(--ouro-primario);
             color: var(--ouro-primario);
-            padding: 8px 20px;
+            padding: 8px 24px;
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 800;
@@ -416,50 +438,55 @@
             text-transform: uppercase;
         }
 
-        .noticia-corpo {
-            padding: 30px 25px 25px 25px;
+        /* Bloco de Conteúdo Flutuante na Base (Sem Caixas / Sem Bordas) */
+        .noticia-conteudo-full {
+            position: relative;
+            z-index: 3;
+            padding: 0 45px 40px 45px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            flex: 1;
+            gap: 16px;
+            text-align: left;
         }
 
-        .noticia-editorial-tempo {
-            font-size: 0.85rem;
+        .noticia-chapeu-tempo {
+            font-size: 0.95rem;
             color: var(--ouro-primario);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             font-weight: 700;
         }
 
-        .noticia-titulo-visual {
+        .noticia-titulo-full {
             font-family: 'Playfair Display', serif;
-            font-size: 1.85rem;
-            font-weight: 700;
+            font-size: 2.8rem;
+            font-weight: 800;
             color: #ffffff;
-            line-height: 1.35;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+            text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
         }
 
-        .noticia-resumo-visual {
-            font-size: 1.15rem;
+        .noticia-resumo-full {
+            font-size: 1.35rem;
             line-height: 1.6;
-            color: #d1d5db;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            color: #e4e4e7;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+            max-width: 95%;
         }
 
-        .noticia-origem {
-            border-top: 1px solid var(--borda-suave);
-            padding-top: 14px;
+        .noticia-rodape-full {
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
+            align-items: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.25);
+            padding-top: 16px;
+            margin-top: 10px;
+            font-size: 0.95rem;
             color: var(--texto-muted);
         }
 
-        .noticia-origem span {
+        .noticia-rodape-full span {
             color: var(--ouro-primario);
             font-weight: 700;
         }
@@ -534,7 +561,7 @@
             </video>
         </section>
 
-        <!-- FASE 2: CLIMA COM NÚMERO CORRIGIDO E ELEMENTOS AMPLIADOS -->
+        <!-- FASE 2: CLIMA COM INTELIGÊNCIA DIA/NOITE (SEM ERRO DE SOL À NOITE) -->
         <section class="tela-fase" id="fase-clima">
             
             <div class="clima-header-destaque">
@@ -548,15 +575,15 @@
 
             <div class="clima-hero-monumental">
                 <div class="bloco-temp-gigante">
-                    <span class="temp-valor-enorme" id="temp-agora">30</span>
+                    <span class="temp-valor-enorme" id="temp-agora">--</span>
                     <span class="temp-simbolo-enorme">°C</span>
                 </div>
-                <div class="condicao-destaque-hoje" id="condicao-agora">Sol e Nuvens</div>
+                <div class="condicao-destaque-hoje" id="condicao-agora">Atualizando...</div>
                 
                 <div class="extremos-hoje-pill">
-                    <span class="extremos-max">▲ <span id="temp-hoje-max">32</span>° Máxima</span>
+                    <span class="extremos-max">▲ <span id="temp-hoje-max">--</span>° Máxima</span>
                     <span style="color: rgba(212, 175, 55, 0.3);">|</span>
-                    <span class="extremos-min">▼ <span id="temp-hoje-min">24</span>° Mínima</span>
+                    <span class="extremos-min">▼ <span id="temp-hoje-min">--</span>° Mínima</span>
                 </div>
             </div>
 
@@ -565,7 +592,7 @@
                     <div class="card-metrica-icone">🌡️</div>
                     <div class="card-metrica-textos">
                         <span class="card-metrica-label">Sensação Real</span>
-                        <span class="card-metrica-valor"><span id="clima-sensacao">34</span>°C</span>
+                        <span class="card-metrica-valor"><span id="clima-sensacao">--</span>°C</span>
                     </div>
                 </div>
 
@@ -573,7 +600,7 @@
                     <div class="card-metrica-icone">🌧️</div>
                     <div class="card-metrica-textos">
                         <span class="card-metrica-label">Prob. Chuva</span>
-                        <span class="card-metrica-valor"><span id="clima-chuva-hoje">92</span>%</span>
+                        <span class="card-metrica-valor"><span id="clima-chuva-hoje">--</span>%</span>
                     </div>
                 </div>
 
@@ -581,7 +608,7 @@
                     <div class="card-metrica-icone">💧</div>
                     <div class="card-metrica-textos">
                         <span class="card-metrica-label">Umidade do Ar</span>
-                        <span class="card-metrica-valor"><span id="clima-umidade-hoje">71</span>%</span>
+                        <span class="card-metrica-valor"><span id="clima-umidade-hoje">--</span>%</span>
                     </div>
                 </div>
 
@@ -589,7 +616,7 @@
                     <div class="card-metrica-icone">💨</div>
                     <div class="card-metrica-textos">
                         <span class="card-metrica-label">Veloc. Vento</span>
-                        <span class="card-metrica-valor"><span id="clima-vento-hoje">11</span> km/h</span>
+                        <span class="card-metrica-valor"><span id="clima-vento-hoje">--</span> km/h</span>
                     </div>
                 </div>
             </div>
@@ -597,9 +624,9 @@
             <div class="secao-evolucao-dia">
                 <div class="evolucao-titulo">Clima no restante do dia</div>
                 <div class="fita-horas-capsula" id="container-horas-capsula">
-                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
-                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">⛅</div><div class="temp">--°</div></div>
-                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌧️</div><div class="temp">--°</div></div>
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
                     <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
                 </div>
             </div>
@@ -610,33 +637,32 @@
 
         </section>
 
-        <!-- FASE 3: EDITORIAL DE TENDÊNCIAS DE BELEZA & ESTILO (CNN + KEUNE / VOGUE) -->
+        <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO) -->
         <section class="tela-fase" id="fase-noticias">
-            <div class="logo-container">
-                <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
+            
+            <!-- Imagem de Fundo 100% Tela Cheia -->
+            <img class="noticia-bg-full" id="noticia-foto" src="" alt="Tendência" onerror="tratarErroImagem(this)">
+            <div class="noticia-vignette-overlay"></div>
+
+            <!-- Topo com Logo Oficial Mantida -->
+            <div class="noticia-topo-flutuante">
+                <div class="logo-container">
+                    <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
+                </div>
+                <span class="badge-editorial-full" id="noticia-tag">TENDÊNCIA</span>
             </div>
 
-            <div class="noticia-story-card">
-                <div class="noticia-imagem-box">
-                    <img id="noticia-foto" src="" alt="Tendência de Cabelo" onerror="tratarErroImagem(this)">
-                    <span class="tag-categoria-flutuante" id="noticia-tag">COLORAÇÃO</span>
-                </div>
-                <div class="noticia-corpo">
-                    <div>
-                        <div class="noticia-editorial-tempo">Tendências & Estilo • Circuito Internacional</div>
-                        <h2 class="noticia-titulo-visual" id="noticia-titulo">Carregando pauta de beleza...</h2>
-                    </div>
-                    <p class="noticia-resumo-visual" id="noticia-resumo">As interpretações contemporâneas mais sofisticadas para inspirar sua transformação.</p>
-                    <div class="noticia-origem">
-                        <div>Fonte: <span id="noticia-origem-label">Keune + CNN Brasil</span></div>
-                        <div>Consulte a Recepção</div>
-                    </div>
+            <!-- Conteúdo Flutuante na Base (Sem Bordas, Ocupando Todo o Espaço) -->
+            <div class="noticia-conteudo-full">
+                <div class="noticia-chapeu-tempo">Tendências & Estilo • Circuito Internacional</div>
+                <h1 class="noticia-titulo-full" id="noticia-titulo">Carregando pauta de beleza...</h1>
+                <p class="noticia-resumo-full" id="noticia-resumo">As interpretações contemporâneas mais sofisticadas para inspirar sua transformação.</p>
+                <div class="noticia-rodape-full">
+                    <div>Fonte Oficial: <span id="noticia-origem-label">Keune + CNN Brasil</span></div>
+                    <div>Consulte a Recepção</div>
                 </div>
             </div>
 
-            <div class="rodape-local">
-                <div class="bodytech-tag">Unidade Bodytech Belém</div>
-            </div>
         </section>
 
         <!-- FASE 4: VÍDEO DO ANUNCIANTE (KEUNE) -->
@@ -706,11 +732,12 @@
         }
 
         function tratarErroImagem(img) {
-            img.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80';
+            img.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80';
         }
 
         // -------------------------------------------------------------
-        // CLIMA BELÉM COM ALTA PRECISÃO
+        // NOVO MOTOR METEOROLÓGICO: COM DETECÇÃO REAL DE DIA E NOITE
+        // Coordenadas: Belém, PA (-1.4558, -48.4902)
         // -------------------------------------------------------------
         async function carregarPrevisaoBelem() {
             try {
@@ -718,7 +745,8 @@
                 const dataHojeFormatada = new Date().toLocaleDateString('pt-BR', opcoesData);
                 document.getElementById('clima-data-hoje').innerText = `${dataHojeFormatada} • Belém, PA`;
 
-                const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,weather_code,relative_humidity_2m,wind_speed_10m&hourly=temperature_2m,weather_code,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FBelem';
+                // Adicionamos is_day no current e no hourly para precisão astronômica
+                const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,is_day,weather_code,relative_humidity_2m,wind_speed_10m&hourly=temperature_2m,is_day,weather_code,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FBelem';
                 const res = await fetch(url);
                 const dados = await res.json();
 
@@ -727,13 +755,14 @@
                 const umidade = dados.current.relative_humidity_2m;
                 const vento = Math.round(dados.current.wind_speed_10m);
                 const codeAtual = dados.current.weather_code;
+                const isDayAtual = dados.current.is_day; // 1 = Dia, 0 = Noite
 
                 const maxHoje = Math.round(dados.daily.temperature_2m_max[0]);
                 const minHoje = Math.round(dados.daily.temperature_2m_min[0]);
-                const chuvaHoje = dados.daily.precipitation_probability_max[0] || 35;
+                const chuvaHoje = dados.daily.precipitation_probability_max[0] || 30;
 
                 document.getElementById('temp-agora').innerText = tempAtual;
-                document.getElementById('condicao-agora').innerText = traduzirWMO(codeAtual).texto;
+                document.getElementById('condicao-agora').innerText = traduzirClimaComPeriodo(codeAtual, isDayAtual).texto;
                 document.getElementById('temp-hoje-max').innerText = maxHoje;
                 document.getElementById('temp-hoje-min').innerText = minHoje;
 
@@ -742,6 +771,7 @@
                 document.getElementById('clima-umidade-hoje').innerText = umidade;
                 document.getElementById('clima-vento-hoje').innerText = vento;
 
+                // Fita de Horas com respeito a dia/noite
                 const horaAtual = new Date().getHours();
                 const containerHoras = document.getElementById('container-horas-capsula');
                 containerHoras.innerHTML = '';
@@ -751,13 +781,14 @@
                     if (dados.hourly.time[i]) {
                         const tempHora = Math.round(dados.hourly.temperature_2m[i]);
                         const codeHora = dados.hourly.weather_code[i];
-                        const iconeHora = traduzirWMO(codeHora).icone;
+                        const isDayHora = dados.hourly.is_day[i]; // Verifica se aquela hora específica é dia ou noite
+                        const infoHora = traduzirClimaComPeriodo(codeHora, isDayHora);
                         const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
 
                         containerHoras.innerHTML += `
                             <div class="capsula-hora">
                                 <div class="hora">${horaFormatada}</div>
-                                <div class="icone">${iconeHora}</div>
+                                <div class="icone">${infoHora.icone}</div>
                                 <div class="temp">${tempHora}°</div>
                             </div>
                         `;
@@ -770,18 +801,29 @@
             }
         }
 
-        function traduzirWMO(c) {
-            if (c === 0) return { texto: "Céu Limpo com Sol", icone: "☀️" };
-            if (c <= 3) return { texto: "Sol e Nuvens", icone: "⛅" };
-            if (c >= 51 && c <= 67) return { texto: "Chuva Passageira", icone: "🌧️" };
-            if (c >= 80 && c <= 82) return { texto: "Pancadas de Chuva", icone: "🌦️" };
-            if (c >= 95) return { texto: "Chuva com Trovoadas", icone: "⛈️" };
+        // Tradutor oficial com distinção rigorosa de Dia e Noite
+        function traduzirClimaComPeriodo(codigo, isDay) {
+            // Se for NOITE (isDay === 0)
+            if (isDay === 0) {
+                if (codigo === 0) return { texto: "Noite Limpa e Estrelada", icone: "🌙" };
+                if (codigo <= 3) return { texto: "Noite com Poucas Nuvens", icone: "☁️" };
+                if (codigo >= 51 && codigo <= 67) return { texto: "Chuva Passageira Noturna", icone: "🌧️" };
+                if (codigo >= 80 && codigo <= 82) return { texto: "Pancadas de Chuva", icone: "🌦️" };
+                if (codigo >= 95) return { texto: "Chuva com Trovoadas", icone: "⛈️" };
+                return { texto: "Noite Tropical com Nuvens", icone: "☁️" };
+            }
+
+            // Se for DIA (isDay === 1)
+            if (codigo === 0) return { texto: "Céu Limpo com Sol", icone: "☀️" };
+            if (codigo <= 3) return { texto: "Sol entre Nuvens", icone: "⛅" };
+            if (codigo >= 51 && codigo <= 67) return { texto: "Chuva Passageira", icone: "🌧️" };
+            if (codigo >= 80 && codigo <= 82) return { texto: "Pancadas de Chuva", icone: "🌦️" };
+            if (codigo >= 95) return { texto: "Chuva com Trovoadas", icone: "⛈️" };
             return { texto: "Mormaço Tropical", icone: "☁️" };
         }
 
         // -------------------------------------------------------------
-        // NOVO ACERVO EDITORIAL: BELEZA, CABELOS, VISAGISMO & ESTILO
-        // (Alinhado à Keune, CNN Brasil, Vogue e aos serviços do salão)
+        // ACERVO EDITORIAL: BELEZA, CABELOS, VISAGISMO & ESTILO
         // -------------------------------------------------------------
         const acervoBelezaEstilo = [
             {
@@ -789,42 +831,42 @@
                 titulo: "Saiba quais tendências de coloração vão dominar os cabelos na primavera",
                 resumo: "De acordo com o embaixador master Du Nunes, interpretações contemporâneas renovam e iluminam os fios com profundidade e acabamento natural.",
                 origem: "Keune + CNN Brasil",
-                imagem: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80"
+                imagem: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
             },
             {
                 tag: "TERAPIA CAPILAR",
                 titulo: "Ozonioterapia capilar e hidratação profunda restauram a saúde dos fios danificados",
                 resumo: "Protocolos com vapor de ozônio ativam a circulação no couro cabeludo e garantem nutrição intensa desde a primeira sessão.",
                 origem: "Vogue Beleza",
-                imagem: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80"
+                imagem: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80"
             },
             {
                 tag: "BARBA & GROOMING",
                 titulo: "Barba Terapia: a combinação de toalhas quentes e óleos essenciais para o homem moderno",
                 resumo: "Mais do que alinhamento dos fios, o tratamento previne foliculite e transforma o momento do barbear em uma experiência relaxante.",
                 origem: "GQ Brasil",
-                imagem: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1000&q=80"
+                imagem: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=80"
             },
             {
                 tag: "WELLNESS & BODYTECH",
                 titulo: "Blindagem capilar pré e pós-treino: como proteger os fios do suor diário na academia",
                 resumo: "Especialistas indicam o uso de finalizadores com barreira lipídica antes das atividades físicas para preservar o brilho e maciez.",
                 origem: "Forbes Life",
-                imagem: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1000&q=80"
+                imagem: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80"
             },
             {
                 tag: "VISAGISMO EXECUTIVO",
                 titulo: "O corte sob medida como instrumento de autoridade e imagem profissional",
                 resumo: "O estudo das proporções faciais permite definir linhas de corte que valorizam os traços e transmitem sofisticação imediata.",
                 origem: "Estilo & Imagem",
-                imagem: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=1000&q=80"
+                imagem: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=1200&q=80"
             },
             {
                 tag: "LOIROS PERFEITOS",
                 titulo: "Infinite Blonde: a tecnologia que clareia até 8 tons preservando a integridade capilar",
                 resumo: "Com ativos protetores de ponta, o clareamento uniforme alcança tons platinados e dourados sem quebra da fibra.",
                 origem: "Keune Haircosmetics",
-                imagem: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1000&q=80"
+                imagem: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=80"
             }
         ];
 
@@ -837,7 +879,7 @@
             const preloader = new Image();
             preloader.src = p.imagem;
             preloader.onload = () => { fotoEl.src = p.imagem; };
-            preloader.onerror = () => { fotoEl.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80'; };
+            preloader.onerror = () => { fotoEl.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80'; };
 
             document.getElementById('noticia-tag').innerText = p.tag;
             document.getElementById('noticia-titulo').innerText = p.titulo;
