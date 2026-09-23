@@ -1,8 +1,63 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE DE TRANSMISSÃO E AUDITORIA (SCRIPT.JS)
+// VISIOFLOW MEDIA - ENGINE DE TRANSMISSÃO, TELEMETRIA & WAKE LOCK (SCRIPT.JS)
 // ==========================================================================
 
-// 1. AUDITORIA & PROVA DE EXIBIÇÃO (PROOF OF PLAY - LOCALSTORAGE)
+// 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
+let wakeLockSentinel = null;
+
+async function ativarWakeLock() {
+    try {
+        if ('wakeLock' in navigator) {
+            wakeLockSentinel = await navigator.wakeLock.request('screen');
+            console.log('[VisioFlow] Wake Lock Ativo: Tela bloqueada contra suspensão.');
+        }
+    } catch (err) {
+        console.log('[VisioFlow] Wake Lock não disponível ou negado:', err);
+    }
+}
+
+// Reativa automaticamente a trava se a página recuperar o foco
+document.addEventListener('visibilitychange', async () => {
+    if (wakeLockSentinel !== null && document.visibilityState === 'visible') {
+        await ativarWakeLock();
+    }
+});
+
+// 2. RELÓGIO DIGITAL DE LUXO (TOPO DA TELA)
+function atualizarRelogioTopo() {
+    const agora = new Date();
+    const horas = String(agora.getHours()).padStart(2, '0');
+    const minutos = String(agora.getMinutes()).padStart(2, '0');
+    const el = document.getElementById('relogio-topo');
+    if (el) el.innerText = `${horas}:${minutos}`;
+}
+setInterval(atualizarRelogioTopo, 1000);
+
+// 3. BARRA DE PROGRESSO DE SEGMENTO (ESTILO STORIES NO TOPO)
+let timerProgresso = null;
+
+function iniciarBarraProgresso(duracaoMs) {
+    const barra = document.getElementById('story-progress');
+    if (!barra) return;
+
+    clearInterval(timerProgresso);
+    barra.style.transition = 'none';
+    barra.style.width = '0%';
+
+    const inicio = performance.now();
+
+    timerProgresso = setInterval(() => {
+        const decorrido = performance.now() - inicio;
+        const porcentagem = Math.min((decorrido / duracaoMs) * 100, 100);
+        barra.style.width = `${porcentagem}%`;
+
+        if (porcentagem >= 100) {
+            clearInterval(timerProgresso);
+        }
+    }, 50);
+}
+
+// 4. AUDITORIA & PROVA DE EXIBIÇÃO (PROOF OF PLAY - LOCALSTORAGE)
 const STORAGE_KEY = 'visioflow_proof_of_play';
 
 function registrarAuditoria(tipo) {
@@ -24,14 +79,54 @@ function registrarAuditoria(tipo) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(metricas));
 }
 
-// Comando executivo para ver métricas no console
-window.consultarMetricas = function() {
-    const relatorio = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    console.table(relatorio);
-    return relatorio;
-};
+// 5. GESTO SECRETO: 3 TOQUES NA LOGO ABREM O HUD EXECUTIVO
+let contadorCliquesLogo = 0;
+let timerCliqueLogo = null;
 
-// 2. FALLBACKS DE LOGO E IMAGENS
+function registrarCliqueLogo() {
+    contadorCliquesLogo++;
+    clearTimeout(timerCliqueLogo);
+
+    timerCliqueLogo = setTimeout(() => {
+        contadorCliquesLogo = 0;
+    }, 1000);
+
+    if (contadorCliquesLogo >= 3) {
+        contadorCliquesLogo = 0;
+        abrirHUD();
+    }
+}
+
+function abrirHUD() {
+    const metricas = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+        total_ciclos_completos: 0,
+        exibicoes_video_salao: 0,
+        exibicoes_video_anuncio: 0,
+        exibicoes_video_produto: 0,
+        primeira_execucao: '--'
+    };
+
+    document.getElementById('hud-ciclos').innerText = metricas.total_ciclos_completos;
+    document.getElementById('hud-salao').innerText = metricas.exibicoes_video_salao;
+    document.getElementById('hud-keune').innerText = metricas.exibicoes_video_anuncio;
+    document.getElementById('hud-loreal').innerText = metricas.exibicoes_video_produto;
+    document.getElementById('hud-inicio').innerText = metricas.primeira_execucao;
+
+    document.getElementById('hud-auditoria').classList.add('ativo');
+}
+
+function fecharHUD() {
+    document.getElementById('hud-auditoria').classList.remove('ativo');
+}
+
+function zerarMetricas() {
+    if (confirm("Deseja zerar as métricas de exibição da tela?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        abrirHUD();
+    }
+}
+
+// 6. FALLBACKS DE LOGO E IMAGENS
 function aplicarLogoSVG(elementoImg) {
     elementoImg.style.display = 'none';
     const container = elementoImg.parentElement;
@@ -48,7 +143,7 @@ function tratarErroImagem(img) {
     img.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80';
 }
 
-// 3. MOTOR METEOROLÓGICO DE ALTA PRECISÃO (OPEN-METEO COM EFEITOS DINÂMICOS)
+// 7. MOTOR METEOROLÓGICO DE ALTA PRECISÃO (OPEN-METEO)
 async function carregarPrevisaoBelem() {
     try {
         const opcoesData = { weekday: 'long', day: 'numeric', month: 'short' };
@@ -82,7 +177,6 @@ async function carregarPrevisaoBelem() {
 
         renderizarCenarioAtmosferico(codeAtual, isDayAtual);
 
-        // Fita horária
         const horaAtual = new Date().getHours();
         const containerHoras = document.getElementById('container-horas-capsula');
         containerHoras.innerHTML = '';
@@ -176,7 +270,7 @@ function traduzirClimaComPeriodo(codigo, isDay) {
     return { texto: "Mormaço Tropical", icone: "☁️" };
 }
 
-// 4. ACERVO EDITORIAL: BELEZA, CABELOS, VISAGISMO & ESTILO
+// 8. ACERVO EDITORIAL: BELEZA, CABELOS, VISAGISMO & ESTILO
 const acervoBelezaEstilo = [
     {
         tag: "COLORAÇÃO & TENDÊNCIA",
@@ -241,7 +335,7 @@ function trocarNoticiaVisual() {
     indexInfo = (indexInfo + 1) % acervoBelezaEstilo.length;
 }
 
-// 5. CÂMBIO EM TEMPO REAL (AWESOMEAPI)
+// 9. CÂMBIO EM TEMPO REAL (AWESOMEAPI)
 async function carregarCambio() {
     try {
         const res = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL');
@@ -270,7 +364,7 @@ async function carregarCambio() {
     }
 }
 
-// 6. MÁQUINA DE TRANSMISSÃO EM 7 FASES (GRADE COMPLETA)
+// 10. MÁQUINA DE TRANSMISSÃO EM 7 FASES (GRADE COMPLETA)
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
 const telaNoticias = document.getElementById('fase-noticias');
@@ -292,50 +386,64 @@ function ativarApenas(telaAlvo) {
     if (telaAlvo) telaAlvo.classList.add('ativa');
 }
 
+// 1 ➔ 2
 function irParaClima() {
     ativarApenas(telaClima);
     carregarPrevisaoBelem();
+    iniciarBarraProgresso(12000);
     setTimeout(irParaNoticias, 12000);
 }
 
+// 2 ➔ 3
 function irParaNoticias() {
     ativarApenas(telaNoticias);
     trocarNoticiaVisual();
+    iniciarBarraProgresso(12000);
     setTimeout(irParaAnuncio, 12000);
 }
 
+// 3 ➔ 4
 function irParaAnuncio() {
     ativarApenas(telaAnuncio);
     registrarAuditoria('anuncio');
     if (videoAnuncio) {
         videoAnuncio.currentTime = 0;
         videoAnuncio.play().catch(() => setTimeout(irParaAgenda, 10000));
+        // Se a duração do vídeo for lida, sincroniza a barra
+        iniciarBarraProgresso(10000);
     } else {
         setTimeout(irParaAgenda, 10000);
     }
 }
 
+// 4 ➔ 5
 function irParaAgenda() {
     ativarApenas(telaAgenda);
+    iniciarBarraProgresso(12000);
     setTimeout(irParaAnuncieAqui, 12000);
 }
 
+// 5 ➔ 6
 function irParaAnuncieAqui() {
     ativarApenas(telaAnuncieAqui);
+    iniciarBarraProgresso(11000);
     setTimeout(irParaProduto, 11000);
 }
 
+// 6 ➔ 7
 function irParaProduto() {
     ativarApenas(telaProduto);
     registrarAuditoria('produto_salao');
     if (videoProduto) {
         videoProduto.currentTime = 0;
         videoProduto.play().catch(() => setTimeout(voltarParaVideoPrincipal, 10000));
+        iniciarBarraProgresso(10000);
     } else {
         setTimeout(voltarParaVideoPrincipal, 10000);
     }
 }
 
+// 7 ➔ 1 (Fecha o ciclo completo e reinicia)
 function voltarParaVideoPrincipal() {
     ativarApenas(telaVideo);
     registrarAuditoria('ciclo_fechado');
@@ -344,6 +452,7 @@ function voltarParaVideoPrincipal() {
     if (videoSalao) {
         videoSalao.currentTime = 0;
         videoSalao.play().catch(() => console.log("Aguardando foco para autoplay."));
+        iniciarBarraProgresso(25000); // Estimativa do vídeo do corte
     }
 }
 
@@ -359,6 +468,8 @@ if (videoProduto) videoProduto.onerror = () => setTimeout(voltarParaVideoPrincip
 
 // Inicialização Global
 window.addEventListener('DOMContentLoaded', () => {
+    ativarWakeLock();
+    atualizarRelogioTopo();
     registrarAuditoria('salao');
     trocarNoticiaVisual();
     carregarPrevisaoBelem();
@@ -366,6 +477,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (videoSalao) {
         videoSalao.play().catch(() => console.log("Aguardando interação inicial."));
+        iniciarBarraProgresso(25000);
     }
     setInterval(carregarCambio, 120000);
 });
