@@ -31,6 +31,181 @@ body, html {
     overflow: hidden;
 }
 
+/* BARRA DE PROGRESSO DE HISTÓRIA NO TOPO (ESTILO STORIES) */
+.story-progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 9999;
+}
+
+.story-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--ouro-gradiente);
+    transition: width 0.1s linear;
+}
+
+/* SELO DISCRETO AO VIVO + RELÓGIO */
+.live-status-bar {
+    position: fixed;
+    top: 10px;
+    left: 0;
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    z-index: 5000;
+    pointer-events: none;
+}
+
+.live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #e4e4e7;
+}
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+    background-color: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #22c55e;
+    animation: piscarLive 1.8s ease-in-out infinite;
+}
+
+@keyframes piscarLive {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.8); }
+}
+
+.live-clock {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--ouro-primario);
+    letter-spacing: 1px;
+}
+
+/* PAINEL SECRETO DE AUDITORIA (HUD) */
+.hud-auditoria {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    z-index: 99999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.hud-auditoria.ativo {
+    display: flex;
+}
+
+.hud-card {
+    background: #0d0d0d;
+    border: 2px solid var(--ouro-primario);
+    border-radius: 24px;
+    padding: 35px 25px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+}
+
+.hud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--borda-suave);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.hud-header h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--ouro-primario);
+    font-size: 1.4rem;
+}
+
+.hud-close {
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.hud-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.hud-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--borda-suave);
+    border-radius: 14px;
+    padding: 15px;
+    text-align: center;
+}
+
+.hud-num {
+    display: block;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--ouro-primario);
+}
+
+.hud-label {
+    font-size: 0.8rem;
+    color: var(--texto-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hud-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--borda-suave);
+    padding-top: 15px;
+    font-size: 0.85rem;
+    color: var(--texto-muted);
+}
+
+.btn-hud-reset {
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* PALCO DO TOTEM */
 .totem-display {
     position: relative;
     width: 100vw;
@@ -86,7 +261,7 @@ body, html {
 
 .selo-patrocinio {
     position: absolute;
-    top: 25px;
+    top: 40px;
     left: 25px;
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(8px);
@@ -123,6 +298,7 @@ body, html {
     justify-content: center;
     align-items: center;
     filter: drop-shadow(0 4px 14px rgba(212, 175, 55, 0.25));
+    cursor: pointer;
 }
 
 .logo-container img {
@@ -151,7 +327,7 @@ body, html {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 30px 20px 30px;
+    padding: 50px 30px 20px 30px;
     background: radial-gradient(circle at 50% 18%, #1c1810 0%, #000000 80%);
     position: relative;
 }
@@ -454,7 +630,7 @@ body, html {
     100% { transform: translateY(100vh); opacity: 0.3; }
 }
 
-/* FASE 3: NOTÍCIAS FULL BLEED (SEM BORDAS) */
+/* FASE 3: NOTÍCIAS FULL BLEED */
 #fase-noticias {
     position: absolute;
     top: 0;
@@ -584,7 +760,7 @@ body, html {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 30px 20px 30px;
+    padding: 50px 30px 20px 30px;
     background: radial-gradient(circle at 50% 15%, #181612 0%, #000000 85%);
 }
 
@@ -651,7 +827,7 @@ body, html {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 45px 35px 25px 35px;
+    padding: 50px 35px 25px 35px;
     background: radial-gradient(circle at 50% 20%, #1a160c 0%, #000000 85%);
     text-align: center;
 }
