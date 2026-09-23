@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh preventivo a cada 40 minutos para limpeza de memória RAM na TV -->
+    <!-- Auto-refresh preventivo a cada 40 minutos para limpeza de RAM na Smart TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
@@ -16,6 +16,52 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- BARRA DE PROGRESSO DE HISTÓRIA (ESTILO STORIES/REELS NO TOPO) -->
+    <div class="story-progress-container">
+        <div class="story-progress-bar" id="story-progress"></div>
+    </div>
+
+    <!-- SELO DE TRANSMISSÃO DIGITAL DISCRETO NO TOPO -->
+    <div class="live-status-bar">
+        <div class="live-indicator">
+            <span class="live-dot"></span>
+            <span>TRANSMISSÃO DIGITAL • AO VIVO</span>
+        </div>
+        <div class="live-clock" id="relogio-topo">00:00</div>
+    </div>
+
+    <!-- PAINEL SECRETO DE AUDITORIA (ABRE COM 3 CLIQUES NA LOGO) -->
+    <div class="hud-auditoria" id="hud-auditoria">
+        <div class="hud-card">
+            <div class="hud-header">
+                <h3>VisioFlow Media • Telemetria</h3>
+                <span class="hud-close" onclick="fecharHUD()">&times;</span>
+            </div>
+            <div class="hud-grid">
+                <div class="hud-item">
+                    <span class="hud-num" id="hud-ciclos">0</span>
+                    <span class="hud-label">Ciclos Completos</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-num" id="hud-salao">0</span>
+                    <span class="hud-label">Exibições Salão</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-num" id="hud-keune">0</span>
+                    <span class="hud-label">Exibições Keune</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-num" id="hud-loreal">0</span>
+                    <span class="hud-label">Exibições L'Oréal</span>
+                </div>
+            </div>
+            <div class="hud-footer">
+                <span>Início: <strong id="hud-inicio">--</strong></span>
+                <button class="btn-hud-reset" onclick="zerarMetricas()">Zerar Dados</button>
+            </div>
+        </div>
+    </div>
 
     <div class="totem-display">
 
@@ -31,7 +77,7 @@
             <div class="cenario-atmosferico" id="cenario-clima"></div>
 
             <div class="clima-header-destaque">
-                <div class="logo-container">
+                <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
                 <div class="badge-data-hoje" id="clima-data-hoje">
@@ -108,7 +154,7 @@
             <div class="noticia-vignette-overlay"></div>
 
             <div class="noticia-topo-flutuante">
-                <div class="logo-container">
+                <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
                 <span class="badge-editorial-full" id="noticia-tag">TENDÊNCIA</span>
@@ -136,7 +182,7 @@
         <!-- FASE 5: AGENDA CULTURAL & GASTRONOMIA DE BELÉM -->
         <section class="tela-fase" id="fase-agenda">
             <div class="clima-header-destaque">
-                <div class="logo-container">
+                <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
                 <div class="badge-data-hoje">Circuito Belém • Gastronomia & Cultura</div>
