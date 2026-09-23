@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh a cada 40 minutos para limpeza de memória RAM na Smart TV -->
+    <!-- Auto-refresh a cada 40 minutos para limpeza preventiva da memória RAM na Smart TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
@@ -57,7 +57,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100vh - 48px);
+            height: calc(100vh - 48px); /* Deixa livre a barra de cotações inferior */
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
@@ -68,7 +68,7 @@
             opacity: 1;
         }
 
-        /* --- FASE 1: VÍDEO PRINCIPAL --- */
+        /* --- FASE 1: VÍDEO PRINCIPAL DO SALÃO --- */
         #fase-video {
             background-color: var(--fundo-preto);
             justify-content: center;
@@ -81,7 +81,7 @@
             object-fit: cover;
         }
 
-        /* --- FASE 4: VÍDEO DO ANUNCIANTE --- */
+        /* --- FASE 4: VÍDEO DO ANUNCIANTE (KEUNE) --- */
         #fase-anuncio {
             background-color: var(--fundo-preto);
             justify-content: center;
@@ -112,7 +112,21 @@
             z-index: 10;
         }
 
-        /* --- LOGO OFICIAL DO SALÃO (COMPARTILHADA) --- */
+        /* --- FASE 7: VÍDEO DO PRODUTO (L'ORÉAL) --- */
+        #fase-produto {
+            background-color: var(--fundo-preto);
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #fase-produto video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- LOGO OFICIAL COMPARTILHADA --- */
         .logo-container {
             width: 100%;
             max-width: 320px;
@@ -144,7 +158,7 @@
         }
 
         /* ==========================================================================
-           FASE DE CLIMA
+           FASE 2: CLIMA COM INTELIGÊNCIA DIA/NOITE & ANIMAÇÕES VIVAS
            ========================================================================== */
         #fase-clima {
             flex-direction: column;
@@ -161,6 +175,8 @@
             align-items: center;
             gap: 12px;
             width: 100%;
+            position: relative;
+            z-index: 2;
         }
 
         .badge-data-hoje {
@@ -186,6 +202,7 @@
             margin: 10px 0;
             position: relative;
             width: 100%;
+            z-index: 2;
         }
 
         .bloco-temp-gigante {
@@ -260,6 +277,8 @@
             gap: 16px;
             width: 100%;
             max-width: 600px;
+            position: relative;
+            z-index: 2;
         }
 
         .card-metrica-hoje {
@@ -307,6 +326,8 @@
         .secao-evolucao-dia {
             width: 100%;
             max-width: 600px;
+            position: relative;
+            z-index: 2;
         }
 
         .evolucao-titulo {
@@ -358,6 +379,92 @@
             font-size: 1.45rem;
             font-weight: 800;
             color: #ffffff;
+        }
+
+        /* ANIMAÇÕES ATMOSFÉRICAS (GOOGLE WEATHER) */
+        .cenario-atmosferico {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sol-vivo-glow {
+            position: absolute;
+            top: 18%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.28) 0%, rgba(212, 175, 55, 0.1) 45%, transparent 70%);
+            border-radius: 50%;
+            animation: pulsarSolGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulsarSolGlow {
+            0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        .lua-brilho-noturno {
+            position: absolute;
+            top: 16%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(148, 163, 184, 0.25) 0%, rgba(100, 116, 139, 0.08) 50%, transparent 70%);
+            border-radius: 50%;
+            animation: respirarLua 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes respirarLua {
+            0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .estrela-viva {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ffffff;
+            animation: cintilarEstrela 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes cintilarEstrela {
+            0% { opacity: 0.1; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1.3); }
+        }
+
+        .nuvem-deriva {
+            position: absolute;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            filter: blur(14px);
+            animation: flutuarNuvem 22s linear infinite;
+        }
+
+        @keyframes flutuarNuvem {
+            0% { transform: translateX(-120%); }
+            100% { transform: translateX(120vw); }
+        }
+
+        .gota-chuva {
+            position: absolute;
+            width: 2px;
+            height: 28px;
+            background: linear-gradient(180deg, transparent, rgba(56, 189, 248, 0.8));
+            animation: cairChuva 1s linear infinite;
+        }
+
+        @keyframes cairChuva {
+            0% { transform: translateY(-30px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0.3; }
         }
 
         /* ==========================================================================
@@ -487,6 +594,170 @@
             font-weight: 700;
         }
 
+        /* ==========================================================================
+           FASE 5: AGENDA CULTURAL & GASTRONOMIA DE BELÉM
+           ========================================================================== */
+        #fase-agenda {
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 30px 20px 30px;
+            background: radial-gradient(circle at 50% 15%, #181612 0%, #000000 85%);
+        }
+
+        .agenda-cards-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 15px 0;
+        }
+
+        .card-gastronomia {
+            background: var(--fundo-card);
+            border: 1px solid var(--borda-dourada);
+            border-radius: 18px;
+            padding: 20px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            text-align: left;
+        }
+
+        .card-gastronomia-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge-bairro {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--borda-dourada);
+            color: var(--ouro-primario);
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .categoria-tag {
+            color: var(--texto-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .local-nome {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .local-desc {
+            font-size: 1.05rem;
+            color: #d1d5db;
+            line-height: 1.5;
+        }
+
+        /* ==========================================================================
+           FASE 6: VISIOFLOW "ANUNCIE CONOSCO"
+           ========================================================================== */
+        #fase-anuncie-aqui {
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 45px 35px 25px 35px;
+            background: radial-gradient(circle at 50% 20%, #1a160c 0%, #000000 85%);
+            text-align: center;
+        }
+
+        .anuncie-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-width: 580px;
+        }
+
+        .badge-visioflow {
+            background: var(--ouro-gradiente);
+            color: #000000;
+            font-size: 0.9rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            padding: 8px 24px;
+            border-radius: 50px;
+            text-transform: uppercase;
+        }
+
+        .anuncie-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.7rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.25;
+        }
+
+        .metricas-totem-row {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .metrica-pilula {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--borda-suave);
+            border-radius: 12px;
+            padding: 12px 16px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .metrica-pilula strong {
+            display: block;
+            font-size: 1.5rem;
+            color: var(--ouro-primario);
+            font-weight: 800;
+        }
+
+        .metrica-pilula span {
+            font-size: 0.75rem;
+            color: var(--texto-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .qr-conversao-box {
+            background: #ffffff;
+            padding: 14px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-conversao-box img {
+            width: 180px;
+            height: 180px;
+            display: block;
+        }
+
+        .cta-scan-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--ouro-primario);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
         /* --- TICKER TAPE FINANCEIRO --- */
         .ticker-container {
             position: absolute;
@@ -544,108 +815,6 @@
             color: #f87171;
             font-size: 0.85rem;
         }
-
-        /* ==========================================================================
-           MOTOR DE ANIMAÇÕES ATMOSFÉRICAS (ESTILO GOOGLE WEATHER)
-           ========================================================================== */
-        .cenario-atmosferico {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* 1. Sol Vivo com Brilho Pulsante */
-        .sol-vivo-glow {
-            position: absolute;
-            top: 18%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 320px;
-            height: 320px;
-            background: radial-gradient(circle, rgba(234, 179, 8, 0.28) 0%, rgba(212, 175, 55, 0.1) 45%, transparent 70%);
-            border-radius: 50%;
-            animation: pulsarSolGlow 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulsarSolGlow {
-            0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.6; }
-            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-        }
-
-        /* 2. Lua com Brilho Noturno */
-        .lua-brilho-noturno {
-            position: absolute;
-            top: 16%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 280px;
-            height: 280px;
-            background: radial-gradient(circle, rgba(148, 163, 184, 0.25) 0%, rgba(100, 116, 139, 0.08) 50%, transparent 70%);
-            border-radius: 50%;
-            animation: respirarLua 5s ease-in-out infinite alternate;
-        }
-
-        @keyframes respirarLua {
-            0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-        }
-
-        /* 3. Estrelas Cintilantes */
-        .estrela-viva {
-            position: absolute;
-            background-color: #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #ffffff;
-            animation: cintilarEstrela 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes cintilarEstrela {
-            0% { opacity: 0.1; transform: scale(0.5); }
-            100% { opacity: 1; transform: scale(1.3); }
-        }
-
-        /* 4. Nuvem Flutuante */
-        .nuvem-deriva {
-            position: absolute;
-            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
-            border-radius: 50%;
-            filter: blur(14px);
-            animation: flutuarNuvem 22s linear infinite;
-        }
-
-        @keyframes flutuarNuvem {
-            0% { transform: translateX(-120%); }
-            100% { transform: translateX(120vw); }
-        }
-
-        /* 5. Gotas de Chuva */
-        .gota-chuva {
-            position: absolute;
-            width: 2px;
-            height: 28px;
-            background: linear-gradient(180deg, transparent, rgba(56, 189, 248, 0.8));
-            animation: cairChuva 1s linear infinite;
-        }
-
-        @keyframes cairChuva {
-            0% { transform: translateY(-30px); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0.3; }
-        }
-
-        .clima-header-destaque, 
-        .clima-hero-monumental, 
-        .grid-metricas-hoje, 
-        .secao-evolucao-dia, 
-        .rodape-local {
-            position: relative;
-            z-index: 2;
-        }
     </style>
 </head>
 <body>
@@ -659,10 +828,8 @@
             </video>
         </section>
 
-        <!-- FASE 2: CLIMA COM INTELIGÊNCIA DIA/NOITE -->
+        <!-- FASE 2: CLIMA COM INTELIGÊNCIA DIA/NOITE & ANIMAÇÕES VIVAS -->
         <section class="tela-fase" id="fase-clima">
-
-            <!-- CAMADA DE CENÁRIO ATMOSFÉRICO ANIMADO (ESTILO GOOGLE WEATHER) -->
             <div class="cenario-atmosferico" id="cenario-clima"></div>
 
             <div class="clima-header-destaque">
@@ -735,7 +902,6 @@
             <div class="rodape-local">
                 <div class="bodytech-tag">Unidade Bodytech Belém</div>
             </div>
-
         </section>
 
         <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO) -->
@@ -769,6 +935,92 @@
             </video>
         </section>
 
+        <!-- FASE 5: AGENDA CULTURAL & GASTRONOMIA DE BELÉM -->
+        <section class="tela-fase" id="fase-agenda">
+            <div class="clima-header-destaque">
+                <div class="logo-container">
+                    <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
+                </div>
+                <div class="badge-data-hoje">Circuito Belém • Gastronomia & Cultura</div>
+            </div>
+
+            <div class="agenda-cards-container">
+                <div class="card-gastronomia">
+                    <div class="card-gastronomia-header">
+                        <span class="badge-bairro">Umarizal</span>
+                        <span class="categoria-tag">Alta Cozinha Contemporânea</span>
+                    </div>
+                    <div class="local-nome">Experiências Gastronômicas</div>
+                    <div class="local-desc">Técnicas modernas valorizam os ingredientes amazônicos no polo gastronômico mais sofisticado da cidade.</div>
+                </div>
+
+                <div class="card-gastronomia">
+                    <div class="card-gastronomia-header">
+                        <span class="badge-bairro">Baía do Guajará</span>
+                        <span class="categoria-tag">Sunset & Cultura</span>
+                    </div>
+                    <div class="local-nome">Estação das Docas</div>
+                    <div class="local-desc">O ponto de encontro tradicional do fim de tarde com cervejarias artesanais, alta gastronomia e vista para o rio.</div>
+                </div>
+
+                <div class="card-gastronomia">
+                    <div class="card-gastronomia-header">
+                        <span class="badge-bairro">Ilha do Combu</span>
+                        <span class="categoria-tag">Ecoturismo de Charme</span>
+                    </div>
+                    <div class="local-nome">Gastronomia Ribeirinha</div>
+                    <div class="local-desc">A poucos minutos da cidade, travessias náuticas levam a restaurantes com chocolates artesanais e pratos autorais.</div>
+                </div>
+            </div>
+
+            <div class="rodape-local">
+                <div class="bodytech-tag">Unidade Bodytech Belém</div>
+            </div>
+        </section>
+
+        <!-- FASE 6: VISIOFLOW "ANUNCIE CONOSCO" -->
+        <section class="tela-fase" id="fase-anuncie-aqui">
+            <div class="anuncie-hero">
+                <div class="badge-visioflow">VisioFlow Media Network</div>
+                <h2 class="anuncie-titulo">Sua marca na TV do salão mais exclusivo</h2>
+                <p style="font-size: 1.15rem; color: #d4d4d8;">Conecte sua empresa a clientes de alto poder aquisitivo enquanto eles cuidam do visual.</p>
+            </div>
+
+            <div class="metricas-totem-row" style="max-width: 580px;">
+                <div class="metrica-pilula">
+                    <strong>+3.500</strong>
+                    <span>Impactos / Mês</span>
+                </div>
+                <div class="metrica-pilula">
+                    <strong>Classe A/B</strong>
+                    <span>Público Executivo</span>
+                </div>
+                <div class="metrica-pilula">
+                    <strong>100%</strong>
+                    <span>Atenção Retida</span>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <div class="qr-conversao-box">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://wa.me/5591981249767?text=Olá!%20Vi%20a%20tela%20na%20Bodytech%20e%20gostaria%20de%20anunciar%20minha%20marca%20na%20VisioFlow." alt="Anuncie na VisioFlow">
+                </div>
+                <div class="cta-scan-text">Aponte a câmera e anuncie</div>
+            </div>
+
+            <div class="rodape-local">
+                <div class="bodytech-tag">Powered by VisioFlow • Mídia Indoor Inteligente</div>
+            </div>
+        </section>
+
+        <!-- FASE 7: VÍDEO DO PRODUTO DO SALÃO (L'ORÉAL) -->
+        <section class="tela-fase" id="fase-produto">
+            <div class="selo-patrocinio">Tratamento de Luxo • L'Oréal Professionnel</div>
+            <video id="player-produto" muted playsinline preload="auto">
+                <source src="produto.mp4" type="video/mp4">
+            </video>
+        </section>
+
         <!-- TICKER TAPE FINANCEIRO -->
         <footer class="ticker-container">
             <div class="ticker-track" id="ticker-track">
@@ -789,7 +1041,7 @@
     </div>
 
     <script>
-        // AUDITORIA (LOCALSTORAGE)
+        // AUDITORIA (PROOF OF PLAY - LOCALSTORAGE)
         const STORAGE_KEY = 'visioflow_proof_of_play';
 
         function registrarAuditoria(tipo) {
@@ -797,12 +1049,14 @@
                 total_ciclos_completos: 0,
                 exibicoes_video_salao: 0,
                 exibicoes_video_anuncio: 0,
+                exibicoes_video_produto: 0,
                 primeira_execucao: new Date().toLocaleString('pt-BR'),
                 ultima_atualizacao: null
             };
 
             if (tipo === 'salao') metricas.exibicoes_video_salao++;
             if (tipo === 'anuncio') metricas.exibicoes_video_anuncio++;
+            if (tipo === 'produto_salao') metricas.exibicoes_video_produto++;
             if (tipo === 'ciclo_fechado') metricas.total_ciclos_completos++;
 
             metricas.ultima_atualizacao = new Date().toLocaleString('pt-BR');
@@ -1060,64 +1314,93 @@
         }
 
         // -------------------------------------------------------------
-        // MÁQUINA DE TRANSMISSÃO EM 4 FASES
+        // MÁQUINA DE TRANSMISSÃO EM 7 FASES (GRADE COMPLETA)
+        // 1. Salão ➔ 2. Clima ➔ 3. Editorial ➔ 4. Keune 
+        // ➔ 5. Gastronomia Belém ➔ 6. Anuncie Aqui ➔ 7. Produto L'Oréal ➔ Retorna
         // -------------------------------------------------------------
         const telaVideo = document.getElementById('fase-video');
         const telaClima = document.getElementById('fase-clima');
         const telaNoticias = document.getElementById('fase-noticias');
         const telaAnuncio = document.getElementById('fase-anuncio');
+        const telaAgenda = document.getElementById('fase-agenda');
+        const telaAnuncieAqui = document.getElementById('fase-anuncie-aqui');
+        const telaProduto = document.getElementById('fase-produto');
 
         const videoSalao = document.getElementById('player-video');
         const videoAnuncio = document.getElementById('player-anuncio');
+        const videoProduto = document.getElementById('player-produto');
 
-        const TEMPO_EXIBICAO = 13000;
+        const todasAsTelas = [telaVideo, telaClima, telaNoticias, telaAnuncio, telaAgenda, telaAnuncieAqui, telaProduto];
+
+        function ativarApenas(telaAlvo) {
+            todasAsTelas.forEach(t => {
+                if (t) t.classList.remove('ativa');
+            });
+            if (telaAlvo) telaAlvo.classList.add('ativa');
+        }
 
         function irParaClima() {
-            telaVideo.classList.remove('ativa');
-            telaAnuncio.classList.remove('ativa');
-            telaNoticias.classList.remove('ativa');
-            telaClima.classList.add('ativa');
-
+            ativarApenas(telaClima);
             carregarPrevisaoBelem();
-            setTimeout(irParaNoticias, TEMPO_EXIBICAO);
+            setTimeout(irParaNoticias, 12000);
         }
 
         function irParaNoticias() {
-            telaClima.classList.remove('ativa');
-            telaNoticias.classList.add('ativa');
-
+            ativarApenas(telaNoticias);
             trocarNoticiaVisual();
-            setTimeout(irParaAnuncio, TEMPO_EXIBICAO);
+            setTimeout(irParaAnuncio, 12000);
         }
 
         function irParaAnuncio() {
-            telaNoticias.classList.remove('ativa');
-            telaAnuncio.classList.add('ativa');
-
+            ativarApenas(telaAnuncio);
             registrarAuditoria('anuncio');
+            if (videoAnuncio) {
+                videoAnuncio.currentTime = 0;
+                videoAnuncio.play().catch(() => setTimeout(irParaAgenda, 10000));
+            } else {
+                setTimeout(irParaAgenda, 10000);
+            }
+        }
 
-            videoAnuncio.currentTime = 0;
-            videoAnuncio.play().catch(() => {
+        function irParaAgenda() {
+            ativarApenas(telaAgenda);
+            setTimeout(irParaAnuncieAqui, 12000);
+        }
+
+        function irParaAnuncieAqui() {
+            ativarApenas(telaAnuncieAqui);
+            setTimeout(irParaProduto, 11000);
+        }
+
+        function irParaProduto() {
+            ativarApenas(telaProduto);
+            registrarAuditoria('produto_salao');
+            if (videoProduto) {
+                videoProduto.currentTime = 0;
+                videoProduto.play().catch(() => setTimeout(voltarParaVideoPrincipal, 10000));
+            } else {
                 setTimeout(voltarParaVideoPrincipal, 10000);
-            });
+            }
         }
 
         function voltarParaVideoPrincipal() {
-            telaAnuncio.classList.remove('ativa');
-            telaVideo.classList.add('ativa');
-
+            ativarApenas(telaVideo);
             registrarAuditoria('ciclo_fechado');
             registrarAuditoria('salao');
 
-            videoSalao.currentTime = 0;
-            videoSalao.play().catch(() => console.log("Aguardando foco para autoplay."));
+            if (videoSalao) {
+                videoSalao.currentTime = 0;
+                videoSalao.play().catch(() => console.log("Aguardando foco para autoplay."));
+            }
         }
 
-        videoSalao.onended = irParaClima;
-        videoAnuncio.onended = voltarParaVideoPrincipal;
+        if (videoSalao) videoSalao.onended = irParaClima;
+        if (videoAnuncio) videoAnuncio.onended = irParaAgenda;
+        if (videoProduto) videoProduto.onended = voltarParaVideoPrincipal;
 
-        videoSalao.onerror = () => setTimeout(irParaClima, 10000);
-        videoAnuncio.onerror = () => setTimeout(voltarParaVideoPrincipal, 10000);
+        if (videoSalao) videoSalao.onerror = () => setTimeout(irParaClima, 10000);
+        if (videoAnuncio) videoAnuncio.onerror = () => setTimeout(irParaAgenda, 10000);
+        if (videoProduto) videoProduto.onerror = () => setTimeout(voltarParaVideoPrincipal, 10000);
 
         window.addEventListener('DOMContentLoaded', () => {
             registrarAuditoria('salao');
@@ -1125,7 +1408,9 @@
             carregarPrevisaoBelem();
             carregarCambio();
 
-            videoSalao.play().catch(() => console.log("Aguardando interação inicial."));
+            if (videoSalao) {
+                videoSalao.play().catch(() => console.log("Aguardando interação inicial."));
+            }
             setInterval(carregarCambio, 120000);
         });
     </script>
