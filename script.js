@@ -22,7 +22,7 @@ document.addEventListener('visibilitychange', async () => {
     }
 });
 
-// 2. MOTOR DO WORLD CLOCK (FUSOS HORÁRIOS MUNDIAIS EM TEMPO REAL)
+// 2. MOTOR DO WORLD CLOCK (COM DIFERENÇA EM RELAÇÃO A BRASÍLIA)
 function atualizarRelogiosMundiais() {
     const agora = new Date();
 
@@ -43,16 +43,16 @@ function atualizarRelogiosMundiais() {
         elData.innerText = dataExtenso.charAt(0).toUpperCase() + dataExtenso.slice(1);
     }
 
-    // 2. Nova York (America/New_York)
+    // 2. Nova York (UTC-4 no inverno / UTC-4 atual)
     formatarHoraCidade('clock-ny', 'America/New_York');
 
-    // 3. Londres (Europe/London)
+    // 3. Londres (UTC+1 no verão / UTC+0 no inverno)
     formatarHoraCidade('clock-london', 'Europe/London');
 
-    // 4. Dubai (Asia/Dubai)
+    // 4. Dubai (UTC+4 Fixo)
     formatarHoraCidade('clock-dubai', 'Asia/Dubai');
 
-    // 5. Tóquio (Asia/Tokyo)
+    // 5. Tóquio (UTC+9 Fixo)
     formatarHoraCidade('clock-tokyo', 'Asia/Tokyo');
 }
 
@@ -372,21 +372,26 @@ async function carregarCambio() {
     }
 }
 
-// 9. MÁQUINA DE TRANSMISSÃO EM 8 FASES (GRADE COMPLETA)
+// ==========================================================================
+// 9. MÁQUINA DE TRANSMISSÃO EM 8 FASES (COM WORLD CLOCK COMO ÚLTIMA TELA)
+// 1. Salão ➔ 2. Clima ➔ 3. Editorial ➔ 4. Keune 
+// ➔ 5. Gastronomia Belém ➔ 6. Anuncie Aqui ➔ 7. Produto L'Oréal 
+// ➔ 8. World Clock (Horas Mundiais) ➔ Reinicia no Salão
+// ==========================================================================
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
-const telaRelogio = document.getElementById('fase-relogio-mundial');
 const telaNoticias = document.getElementById('fase-noticias');
 const telaAnuncio = document.getElementById('fase-anuncio');
 const telaAgenda = document.getElementById('fase-agenda');
 const telaAnuncieAqui = document.getElementById('fase-anuncie-aqui');
 const telaProduto = document.getElementById('fase-produto');
+const telaRelogio = document.getElementById('fase-relogio-mundial');
 
 const videoSalao = document.getElementById('player-video');
 const videoAnuncio = document.getElementById('player-anuncio');
 const videoProduto = document.getElementById('player-produto');
 
-const todasAsTelas = [telaVideo, telaClima, telaRelogio, telaNoticias, telaAnuncio, telaAgenda, telaAnuncieAqui, telaProduto];
+const todasAsTelas = [telaVideo, telaClima, telaNoticias, telaAnuncio, telaAgenda, telaAnuncieAqui, telaProduto, telaRelogio];
 
 function ativarApenas(telaAlvo) {
     todasAsTelas.forEach(t => {
@@ -395,28 +400,21 @@ function ativarApenas(telaAlvo) {
     if (telaAlvo) telaAlvo.classList.add('ativa');
 }
 
-// 1 ➔ 2
+// 1 ➔ 2 (Vídeo Salão ➔ Clima)
 function irParaClima() {
     ativarApenas(telaClima);
     carregarPrevisaoBelem();
-    setTimeout(irParaRelogioMundial, 12000);
+    setTimeout(irParaNoticias, 12000);
 }
 
-// 2 ➔ 3 (NOVA FASE: WORLD CLOCK)
-function irParaRelogioMundial() {
-    ativarApenas(telaRelogio);
-    atualizarRelogiosMundiais();
-    setTimeout(irParaNoticias, 11000);
-}
-
-// 3 ➔ 4
+// 2 ➔ 3 (Clima ➔ Editorial de Notícias)
 function irParaNoticias() {
     ativarApenas(telaNoticias);
     trocarNoticiaVisual();
     setTimeout(irParaAnuncio, 12000);
 }
 
-// 4 ➔ 5
+// 3 ➔ 4 (Editorial ➔ Anúncio Keune)
 function irParaAnuncio() {
     ativarApenas(telaAnuncio);
     registrarAuditoria('anuncio');
@@ -428,31 +426,38 @@ function irParaAnuncio() {
     }
 }
 
-// 5 ➔ 6
+// 4 ➔ 5 (Anúncio Keune ➔ Gastronomia Belém)
 function irParaAgenda() {
     ativarApenas(telaAgenda);
     setTimeout(irParaAnuncieAqui, 12000);
 }
 
-// 6 ➔ 7
+// 5 ➔ 6 (Gastronomia Belém ➔ Anuncie na VisioFlow)
 function irParaAnuncieAqui() {
     ativarApenas(telaAnuncieAqui);
     setTimeout(irParaProduto, 11000);
 }
 
-// 7 ➔ 8
+// 6 ➔ 7 (Anuncie VisioFlow ➔ Vídeo Produto L'Oréal)
 function irParaProduto() {
     ativarApenas(telaProduto);
     registrarAuditoria('produto_salao');
     if (videoProduto) {
         videoProduto.currentTime = 0;
-        videoProduto.play().catch(() => setTimeout(voltarParaVideoPrincipal, 10000));
+        videoProduto.play().catch(() => setTimeout(irParaRelogioMundial, 10000));
     } else {
-        setTimeout(voltarParaVideoPrincipal, 10000);
+        setTimeout(irParaRelogioMundial, 10000);
     }
 }
 
-// 8 ➔ 1 (Reinicia o ciclo completo)
+// 7 ➔ 8 (Produto L'Oréal ➔ World Clock - Última Fase)
+function irParaRelogioMundial() {
+    ativarApenas(telaRelogio);
+    atualizarRelogiosMundiais();
+    setTimeout(voltarParaVideoPrincipal, 12000);
+}
+
+// 8 ➔ 1 (World Clock ➔ Reinicia o ciclo completo no Vídeo do Salão)
 function voltarParaVideoPrincipal() {
     ativarApenas(telaVideo);
     registrarAuditoria('ciclo_fechado');
@@ -464,15 +469,15 @@ function voltarParaVideoPrincipal() {
     }
 }
 
-// Gatilhos de Término de Vídeo
+// Listeners de Término de Vídeo
 if (videoSalao) videoSalao.onended = irParaClima;
 if (videoAnuncio) videoAnuncio.onended = irParaAgenda;
-if (videoProduto) videoProduto.onended = voltarParaVideoPrincipal;
+if (videoProduto) videoProduto.onended = irParaRelogioMundial;
 
 // Fallbacks de proteção
 if (videoSalao) videoSalao.onerror = () => setTimeout(irParaClima, 10000);
 if (videoAnuncio) videoAnuncio.onerror = () => setTimeout(irParaAgenda, 10000);
-if (videoProduto) videoProduto.onerror = () => setTimeout(voltarParaVideoPrincipal, 10000);
+if (videoProduto) videoProduto.onerror = () => setTimeout(irParaRelogioMundial, 10000);
 
 // Inicialização Global
 window.addEventListener('DOMContentLoaded', () => {
