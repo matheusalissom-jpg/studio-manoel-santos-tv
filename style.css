@@ -31,79 +31,6 @@ body, html {
     overflow: hidden;
 }
 
-/* BARRA DE PROGRESSO DE HISTÓRIA NO TOPO (ESTILO STORIES) */
-.story-progress-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.1);
-    z-index: 9999;
-}
-
-.story-progress-bar {
-    width: 0%;
-    height: 100%;
-    background: var(--ouro-gradiente);
-    transition: width 0.1s linear;
-}
-
-/* SELO DISCRETO AO VIVO + RELÓGIO */
-.live-status-bar {
-    position: fixed;
-    top: 10px;
-    left: 0;
-    width: 100vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 25px;
-    z-index: 5000;
-    pointer-events: none;
-}
-
-.live-indicator {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.65rem;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    color: #e4e4e7;
-}
-
-.live-dot {
-    width: 7px;
-    height: 7px;
-    background-color: #22c55e;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #22c55e;
-    animation: piscarLive 1.8s ease-in-out infinite;
-}
-
-@keyframes piscarLive {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.3; transform: scale(0.8); }
-}
-
-.live-clock {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--ouro-primario);
-    letter-spacing: 1px;
-}
-
 /* PAINEL SECRETO DE AUDITORIA (HUD) */
 .hud-auditoria {
     position: fixed;
@@ -261,7 +188,7 @@ body, html {
 
 .selo-patrocinio {
     position: absolute;
-    top: 40px;
+    top: 25px;
     left: 25px;
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(8px);
@@ -327,7 +254,7 @@ body, html {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 50px 30px 20px 30px;
+    padding: 40px 30px 20px 30px;
     background: radial-gradient(circle at 50% 18%, #1c1810 0%, #000000 80%);
     position: relative;
 }
@@ -760,7 +687,7 @@ body, html {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 50px 30px 20px 30px;
+    padding: 40px 30px 20px 30px;
     background: radial-gradient(circle at 50% 15%, #181612 0%, #000000 85%);
 }
 
@@ -827,7 +754,7 @@ body, html {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 50px 35px 25px 35px;
+    padding: 45px 35px 25px 35px;
     background: radial-gradient(circle at 50% 20%, #1a160c 0%, #000000 85%);
     text-align: center;
 }
