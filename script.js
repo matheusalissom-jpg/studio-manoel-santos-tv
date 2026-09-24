@@ -1,5 +1,5 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE DE TRANSMISSÃO, TELEMETRIA & WAKE LOCK (SCRIPT.JS)
+// VISIOFLOW MEDIA - ENGINE DE TRANSMISSÃO, TELEMETRIA & WORLD CLOCK
 // ==========================================================================
 
 // 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
@@ -22,7 +22,50 @@ document.addEventListener('visibilitychange', async () => {
     }
 });
 
-// 2. AUDITORIA & PROVA DE EXIBIÇÃO (PROOF OF PLAY - LOCALSTORAGE)
+// 2. MOTOR DO WORLD CLOCK (FUSOS HORÁRIOS MUNDIAIS EM TEMPO REAL)
+function atualizarRelogiosMundiais() {
+    const agora = new Date();
+
+    // 1. Brasília / Belém (UTC-3)
+    const optionsBrasilia = { timeZone: 'America/Belem', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    const horaBrasiliaCompleta = agora.toLocaleTimeString('pt-BR', optionsBrasilia);
+    const partesBrasilia = horaBrasiliaCompleta.split(':');
+    
+    const elBrasilia = document.getElementById('clock-brasilia');
+    if (elBrasilia) {
+        elBrasilia.innerHTML = `${partesBrasilia[0]}:${partesBrasilia[1]}<span class="clock-segundos">:${partesBrasilia[2]}</span>`;
+    }
+
+    const optionsData = { timeZone: 'America/Belem', weekday: 'long', day: 'numeric', month: 'long' };
+    const dataExtenso = agora.toLocaleDateString('pt-BR', optionsData);
+    const elData = document.getElementById('clock-brasilia-data');
+    if (elData) {
+        elData.innerText = dataExtenso.charAt(0).toUpperCase() + dataExtenso.slice(1);
+    }
+
+    // 2. Nova York (America/New_York)
+    formatarHoraCidade('clock-ny', 'America/New_York');
+
+    // 3. Londres (Europe/London)
+    formatarHoraCidade('clock-london', 'Europe/London');
+
+    // 4. Dubai (Asia/Dubai)
+    formatarHoraCidade('clock-dubai', 'Asia/Dubai');
+
+    // 5. Tóquio (Asia/Tokyo)
+    formatarHoraCidade('clock-tokyo', 'Asia/Tokyo');
+}
+
+function formatarHoraCidade(elementId, timeZone) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    const hora = new Date().toLocaleTimeString('pt-BR', { timeZone: timeZone, hour: '2-digit', minute: '2-digit', hour12: false });
+    el.innerText = hora;
+}
+
+setInterval(atualizarRelogiosMundiais, 1000);
+
+// 3. AUDITORIA & PROVA DE EXIBIÇÃO (PROOF OF PLAY - LOCALSTORAGE)
 const STORAGE_KEY = 'visioflow_proof_of_play';
 
 function registrarAuditoria(tipo) {
@@ -44,7 +87,7 @@ function registrarAuditoria(tipo) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(metricas));
 }
 
-// 3. GESTO SECRETO: 3 TOQUES NA LOGO ABREM O HUD EXECUTIVO
+// 4. GESTO SECRETO: 3 TOQUES NA LOGO ABREM O HUD EXECUTIVO
 let contadorCliquesLogo = 0;
 let timerCliqueLogo = null;
 
@@ -91,7 +134,7 @@ function zerarMetricas() {
     }
 }
 
-// 4. FALLBACKS DE LOGO E IMAGENS
+// 5. FALLBACKS DE LOGO E IMAGENS
 function aplicarLogoSVG(elementoImg) {
     elementoImg.style.display = 'none';
     const container = elementoImg.parentElement;
@@ -108,7 +151,7 @@ function tratarErroImagem(img) {
     img.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80';
 }
 
-// 5. MOTOR METEOROLÓGICO DE ALTA PRECISÃO (OPEN-METEO)
+// 6. MOTOR METEOROLÓGICO DE ALTA PRECISÃO (OPEN-METEO)
 async function carregarPrevisaoBelem() {
     try {
         const opcoesData = { weekday: 'long', day: 'numeric', month: 'short' };
@@ -235,7 +278,7 @@ function traduzirClimaComPeriodo(codigo, isDay) {
     return { texto: "Mormaço Tropical", icone: "☁️" };
 }
 
-// 6. ACERVO EDITORIAL: BELEZA, CABELOS, VISAGISMO & ESTILO
+// 7. ACERVO EDITORIAL: BELEZA, CABELOS, VISAGISMO & ESTILO
 const acervoBelezaEstilo = [
     {
         tag: "COLORAÇÃO & TENDÊNCIA",
@@ -300,7 +343,7 @@ function trocarNoticiaVisual() {
     indexInfo = (indexInfo + 1) % acervoBelezaEstilo.length;
 }
 
-// 7. CÂMBIO EM TEMPO REAL (AWESOMEAPI)
+// 8. CÂMBIO EM TEMPO REAL (AWESOMEAPI)
 async function carregarCambio() {
     try {
         const res = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL');
@@ -329,9 +372,10 @@ async function carregarCambio() {
     }
 }
 
-// 8. MÁQUINA DE TRANSMISSÃO EM 7 FASES (GRADE COMPLETA)
+// 9. MÁQUINA DE TRANSMISSÃO EM 8 FASES (GRADE COMPLETA)
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
+const telaRelogio = document.getElementById('fase-relogio-mundial');
 const telaNoticias = document.getElementById('fase-noticias');
 const telaAnuncio = document.getElementById('fase-anuncio');
 const telaAgenda = document.getElementById('fase-agenda');
@@ -342,7 +386,7 @@ const videoSalao = document.getElementById('player-video');
 const videoAnuncio = document.getElementById('player-anuncio');
 const videoProduto = document.getElementById('player-produto');
 
-const todasAsTelas = [telaVideo, telaClima, telaNoticias, telaAnuncio, telaAgenda, telaAnuncieAqui, telaProduto];
+const todasAsTelas = [telaVideo, telaClima, telaRelogio, telaNoticias, telaAnuncio, telaAgenda, telaAnuncieAqui, telaProduto];
 
 function ativarApenas(telaAlvo) {
     todasAsTelas.forEach(t => {
@@ -351,18 +395,28 @@ function ativarApenas(telaAlvo) {
     if (telaAlvo) telaAlvo.classList.add('ativa');
 }
 
+// 1 ➔ 2
 function irParaClima() {
     ativarApenas(telaClima);
     carregarPrevisaoBelem();
-    setTimeout(irParaNoticias, 12000);
+    setTimeout(irParaRelogioMundial, 12000);
 }
 
+// 2 ➔ 3 (NOVA FASE: WORLD CLOCK)
+function irParaRelogioMundial() {
+    ativarApenas(telaRelogio);
+    atualizarRelogiosMundiais();
+    setTimeout(irParaNoticias, 11000);
+}
+
+// 3 ➔ 4
 function irParaNoticias() {
     ativarApenas(telaNoticias);
     trocarNoticiaVisual();
     setTimeout(irParaAnuncio, 12000);
 }
 
+// 4 ➔ 5
 function irParaAnuncio() {
     ativarApenas(telaAnuncio);
     registrarAuditoria('anuncio');
@@ -374,16 +428,19 @@ function irParaAnuncio() {
     }
 }
 
+// 5 ➔ 6
 function irParaAgenda() {
     ativarApenas(telaAgenda);
     setTimeout(irParaAnuncieAqui, 12000);
 }
 
+// 6 ➔ 7
 function irParaAnuncieAqui() {
     ativarApenas(telaAnuncieAqui);
     setTimeout(irParaProduto, 11000);
 }
 
+// 7 ➔ 8
 function irParaProduto() {
     ativarApenas(telaProduto);
     registrarAuditoria('produto_salao');
@@ -395,6 +452,7 @@ function irParaProduto() {
     }
 }
 
+// 8 ➔ 1 (Reinicia o ciclo completo)
 function voltarParaVideoPrincipal() {
     ativarApenas(telaVideo);
     registrarAuditoria('ciclo_fechado');
@@ -406,7 +464,7 @@ function voltarParaVideoPrincipal() {
     }
 }
 
-// Listeners de Término de Vídeo
+// Gatilhos de Término de Vídeo
 if (videoSalao) videoSalao.onended = irParaClima;
 if (videoAnuncio) videoAnuncio.onended = irParaAgenda;
 if (videoProduto) videoProduto.onended = voltarParaVideoPrincipal;
@@ -419,6 +477,7 @@ if (videoProduto) videoProduto.onerror = () => setTimeout(voltarParaVideoPrincip
 // Inicialização Global
 window.addEventListener('DOMContentLoaded', () => {
     ativarWakeLock();
+    atualizarRelogiosMundiais();
     registrarAuditoria('salao');
     trocarNoticiaVisual();
     carregarPrevisaoBelem();
