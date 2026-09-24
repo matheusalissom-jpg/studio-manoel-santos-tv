@@ -1,5 +1,5 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE DE TRANSMISSÃO, TELEMETRIA & WORLD CLOCK
+// VISIOFLOW MEDIA - ENGINE DE TRANSMISSÃO, TELEMETRIA & CIRCUITO BELÉM
 // ==========================================================================
 
 // 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
@@ -43,16 +43,16 @@ function atualizarRelogiosMundiais() {
         elData.innerText = dataExtenso.charAt(0).toUpperCase() + dataExtenso.slice(1);
     }
 
-    // 2. Nova York (UTC-4 no inverno / UTC-4 atual)
+    // 2. Nova York
     formatarHoraCidade('clock-ny', 'America/New_York');
 
-    // 3. Londres (UTC+1 no verão / UTC+0 no inverno)
+    // 3. Londres
     formatarHoraCidade('clock-london', 'Europe/London');
 
-    // 4. Dubai (UTC+4 Fixo)
+    // 4. Dubai
     formatarHoraCidade('clock-dubai', 'Asia/Dubai');
 
-    // 5. Tóquio (UTC+9 Fixo)
+    // 5. Tóquio
     formatarHoraCidade('clock-tokyo', 'Asia/Tokyo');
 }
 
@@ -151,6 +151,10 @@ function tratarErroImagem(img) {
     img.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80';
 }
 
+function tratarErroImagemAgenda(img) {
+    img.src = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80';
+}
+
 // 6. MOTOR METEOROLÓGICO DE ALTA PRECISÃO (OPEN-METEO)
 async function carregarPrevisaoBelem() {
     try {
@@ -199,12 +203,12 @@ async function carregarPrevisaoBelem() {
                 const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
 
                 containerHoras.innerHTML += `
-                    <div class="capsula-hora">
-                        <div class="hora">${horaFormatada}</div>
-                        <div class="icone">${infoHora.icone}</div>
-                        <div class="temp">${tempHora}°</div>
-                    </div>
-                `;
+                            <div class="capsula-hora">
+                                <div class="hora">${horaFormatada}</div>
+                                <div class="icone">${infoHora.icone}</div>
+                                <div class="temp">${tempHora}°</div>
+                            </div>
+                        `;
                 adicionados++;
             }
         }
@@ -343,7 +347,73 @@ function trocarNoticiaVisual() {
     indexInfo = (indexInfo + 1) % acervoBelezaEstilo.length;
 }
 
-// 8. CÂMBIO EM TEMPO REAL (AWESOMEAPI)
+// ==========================================================================
+// 8. ACERVO EDITORIAL: CIRCUITO BELÉM (TOURS, CULTURA & GASTRONOMIA)
+// ==========================================================================
+const acervoToursBelem = [
+    {
+        tag: "SUNSET & GASTRONOMIA",
+        local: "Estação das Docas • Baía do Guajará",
+        titulo: "O pôr do sol mais icônico de Belém com alta gastronomia amazônica e cervejarias artesanais",
+        desc: "Galpões portuários de 1870 restaurados oferecem vista panorâmica para o rio, feiras de artesanato nobre e o melhor do peixe regional com técnicas modernas.",
+        curadoria: "VisioFlow City Guide",
+        imagem: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "CULTURA & ARQUITETURA",
+        local: "Praça da República • Centro Histórico",
+        titulo: "Theatro da Paz: A imponência da Belle Époque amazônica em concertos e visitas guiadas",
+        desc: "Uma das joias neoclássicas do Brasil, inaugurado em 1878 no apogeu da borracha, conta com lustres de cristal francês e acústica incomparável.",
+        curadoria: "Circuito das Artes",
+        imagem: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "ECOTURISMO & SABORES",
+        local: "Ilha do Combu • Travessia Náutica",
+        titulo: "Passeios fluviais e alta culinária ribeirinha: a rota do cacau selvagem a minutos de Belém",
+        desc: "A poucos metros da capital, restaurantes rústicos sobre as águas e produções artesanais de chocolate orgânico proporcionam imersão sensorial única.",
+        curadoria: "Experiências Náuticas",
+        imagem: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "NATUREZA & PATRIMÔNIO",
+        local: "Cidade Velha • Margens do Guamá",
+        titulo: "Mangal das Garças: Oásis ecológico com vista de 360° no topo do Farol de Belém",
+        desc: "Parque botânico com borboletário, aves livres e arquitetura paisagística premiada às margens do rio, ideal para uma pausa tranquila ao entardecer.",
+        curadoria: "Parques & Paisagens",
+        imagem: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "DESIGN & JOALHERIA",
+        local: "São José Liberto • Cidade Velha",
+        titulo: "Polo Joalheiro: Gemas da Amazônia, ouro e design autoral em convento do século XVIII",
+        desc: "Espaço cultural preservado reúne mestres artesãos que transformam sementes nobres, minerais paraenses e ouro em joias de prestígio internacional.",
+        curadoria: "Luxo & Tradição",
+        imagem: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&q=80"
+    }
+];
+
+let indexTour = 0;
+
+function trocarAgendaVisual() {
+    const tour = acervoToursBelem[indexTour];
+    const fotoEl = document.getElementById('agenda-foto');
+
+    const preloader = new Image();
+    preloader.src = tour.imagem;
+    preloader.onload = () => { fotoEl.src = tour.imagem; };
+    preloader.onerror = () => { fotoEl.src = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80'; };
+
+    document.getElementById('agenda-tag').innerText = tour.tag;
+    document.getElementById('agenda-local').innerText = `📍 ${tour.local}`;
+    document.getElementById('agenda-titulo').innerText = tour.titulo;
+    document.getElementById('agenda-desc').innerText = tour.desc;
+    document.getElementById('agenda-curadoria').innerText = tour.curadoria;
+
+    indexTour = (indexTour + 1) % acervoToursBelem.length;
+}
+
+// 9. CÂMBIO EM TEMPO REAL (AWESOMEAPI)
 async function carregarCambio() {
     try {
         const res = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL');
@@ -373,10 +443,10 @@ async function carregarCambio() {
 }
 
 // ==========================================================================
-// 9. MÁQUINA DE TRANSMISSÃO EM 8 FASES (COM WORLD CLOCK COMO ÚLTIMA TELA)
-// 1. Salão ➔ 2. Clima ➔ 3. Editorial ➔ 4. Keune 
-// ➔ 5. Gastronomia Belém ➔ 6. Anuncie Aqui ➔ 7. Produto L'Oréal 
-// ➔ 8. World Clock (Horas Mundiais) ➔ Reinicia no Salão
+// 10. MÁQUINA DE TRANSMISSÃO EM 8 FASES (CICLO COMPLETO)
+// 1. Salão ➔ 2. Clima ➔ 3. Notícias ➔ 4. Keune 
+// ➔ 5. Circuito Belém (Tours) ➔ 6. Anuncie VisioFlow ➔ 7. Produto L'Oréal 
+// ➔ 8. World Clock ➔ Reinicia
 // ==========================================================================
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
@@ -400,21 +470,21 @@ function ativarApenas(telaAlvo) {
     if (telaAlvo) telaAlvo.classList.add('ativa');
 }
 
-// 1 ➔ 2 (Vídeo Salão ➔ Clima)
+// 1 ➔ 2
 function irParaClima() {
     ativarApenas(telaClima);
     carregarPrevisaoBelem();
     setTimeout(irParaNoticias, 12000);
 }
 
-// 2 ➔ 3 (Clima ➔ Editorial de Notícias)
+// 2 ➔ 3
 function irParaNoticias() {
     ativarApenas(telaNoticias);
     trocarNoticiaVisual();
     setTimeout(irParaAnuncio, 12000);
 }
 
-// 3 ➔ 4 (Editorial ➔ Anúncio Keune)
+// 3 ➔ 4
 function irParaAnuncio() {
     ativarApenas(telaAnuncio);
     registrarAuditoria('anuncio');
@@ -426,19 +496,20 @@ function irParaAnuncio() {
     }
 }
 
-// 4 ➔ 5 (Anúncio Keune ➔ Gastronomia Belém)
+// 4 ➔ 5 (Circuito Belém: Tours & Eventos 100% Vertical)
 function irParaAgenda() {
     ativarApenas(telaAgenda);
+    trocarAgendaVisual();
     setTimeout(irParaAnuncieAqui, 12000);
 }
 
-// 5 ➔ 6 (Gastronomia Belém ➔ Anuncie na VisioFlow)
+// 5 ➔ 6
 function irParaAnuncieAqui() {
     ativarApenas(telaAnuncieAqui);
     setTimeout(irParaProduto, 11000);
 }
 
-// 6 ➔ 7 (Anuncie VisioFlow ➔ Vídeo Produto L'Oréal)
+// 6 ➔ 7
 function irParaProduto() {
     ativarApenas(telaProduto);
     registrarAuditoria('produto_salao');
@@ -450,14 +521,14 @@ function irParaProduto() {
     }
 }
 
-// 7 ➔ 8 (Produto L'Oréal ➔ World Clock - Última Fase)
+// 7 ➔ 8 (World Clock - Última Fase)
 function irParaRelogioMundial() {
     ativarApenas(telaRelogio);
     atualizarRelogiosMundiais();
     setTimeout(voltarParaVideoPrincipal, 12000);
 }
 
-// 8 ➔ 1 (World Clock ➔ Reinicia o ciclo completo no Vídeo do Salão)
+// 8 ➔ 1 (Reinicia o ciclo completo)
 function voltarParaVideoPrincipal() {
     ativarApenas(telaVideo);
     registrarAuditoria('ciclo_fechado');
@@ -477,7 +548,7 @@ if (videoProduto) videoProduto.onended = irParaRelogioMundial;
 // Fallbacks de proteção
 if (videoSalao) videoSalao.onerror = () => setTimeout(irParaClima, 10000);
 if (videoAnuncio) videoAnuncio.onerror = () => setTimeout(irParaAgenda, 10000);
-if (videoProduto) videoProduto.onerror = () => setTimeout(irParaRelogioMundial, 10000);
+if (videoProduto) videoProduto.onerror = () => setTimeout(voltarParaVideoPrincipal, 10000);
 
 // Inicialização Global
 window.addEventListener('DOMContentLoaded', () => {
@@ -485,6 +556,7 @@ window.addEventListener('DOMContentLoaded', () => {
     atualizarRelogiosMundiais();
     registrarAuditoria('salao');
     trocarNoticiaVisual();
+    trocarAgendaVisual();
     carregarPrevisaoBelem();
     carregarCambio();
 
