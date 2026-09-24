@@ -223,7 +223,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 2: CLIMA COM NOVA TIPOGRAFIA SÉRIA (OUTFIT)
+   FASE 2: CLIMA COM TIPOGRAFIA OUTFIT
    ========================================================================== */
 #fase-clima {
     flex-direction: column;
@@ -278,7 +278,6 @@ body, html {
     padding: 10px 20px;
 }
 
-/* FONTE SÉRIA, ROBUSTA E TABULAR PARA O CLIMA */
 .temp-valor-enorme {
     font-size: 8.8rem;
     font-weight: 900;
@@ -538,179 +537,8 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 8: WORLD CLOCK PROFISSIONAL (TERMINAL GLOBAL COM DEGRADÊS)
+   FASE 3: NOTÍCIAS FULL BLEED (100% VERTICAL)
    ========================================================================== */
-#fase-relogio-mundial {
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 40px 30px 20px 30px;
-    background: radial-gradient(circle at 50% 18%, #141414 0%, #000000 85%);
-}
-
-.world-clock-hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 15px 0;
-    text-align: center;
-}
-
-.world-clock-label {
-    font-size: 1rem;
-    letter-spacing: 3px;
-    color: var(--ouro-primario);
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.chip-brasil {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #22c55e, #eab308, #3b82f6);
-    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
-    display: inline-block;
-}
-
-/* FONTE SÉRIA, PRECISA E TABULAR PARA O RELÓGIO */
-.world-clock-time {
-    font-family: 'Outfit', sans-serif;
-    font-variant-numeric: tabular-nums;
-    font-size: 6.8rem;
-    font-weight: 900;
-    line-height: 1;
-    background: var(--ouro-gradiente);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 2px;
-}
-
-.clock-segundos {
-    font-size: 3.2rem;
-    color: var(--ouro-primario);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-}
-
-.world-clock-date {
-    font-size: 1.35rem;
-    color: #e4e4e7;
-    margin-top: 10px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-/* GRADE GLOBAL DE CAPITAIS COM DEGRADÊS METÁLICOS */
-.world-cities-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    width: 100%;
-    max-width: 600px;
-}
-
-.card-cidade-global {
-    background: var(--fundo-card);
-    border: 1px solid var(--borda-suave);
-    border-radius: 18px;
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    position: relative;
-    overflow: hidden;
-}
-
-/* FILETES SUPERIORES COM DEGRADÊ DAS BANDEIRAS */
-.flag-gradient-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-}
-
-.flag-eua {
-    background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 50%, #dc2626 100%);
-}
-
-.flag-uk {
-    background: linear-gradient(90deg, #0284c7 0%, #ffffff 50%, #b91c1c 100%);
-}
-
-.flag-dubai {
-    background: linear-gradient(90deg, #16a34a 0%, #ffffff 40%, #000000 70%, #dc2626 100%);
-}
-
-.flag-japao {
-    background: linear-gradient(90deg, #ffffff 0%, #ffffff 45%, #dc2626 50%, #ffffff 55%, #ffffff 100%);
-}
-
-.cidade-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.cidade-titulo-bloco {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-.cidade-nome {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-}
-
-.cidade-pais {
-    font-size: 0.75rem;
-    color: var(--texto-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.market-badge {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: var(--ouro-primario);
-    font-size: 0.7rem;
-    font-weight: 800;
-    padding: 3px 10px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.cidade-hora {
-    font-family: 'Outfit', sans-serif;
-    font-variant-numeric: tabular-nums;
-    font-size: 2.8rem;
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1;
-    margin: 6px 0;
-    text-align: left;
-}
-
-.cidade-diff {
-    font-size: 0.85rem;
-    color: var(--ouro-primario);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-align: left;
-}
-
-/* FASE 3: NOTÍCIAS FULL BLEED */
 #fase-noticias {
     position: absolute;
     top: 0;
@@ -835,74 +663,139 @@ body, html {
     font-weight: 700;
 }
 
-/* FASE 5: AGENDA CULTURAL & GASTRONOMIA DE BELÉM */
+/* ==========================================================================
+   FASE 5: CIRCUITO BELÉM (TOURS & EVENTOS 100% VERTICAL FULL BLEED)
+   ========================================================================== */
 #fase-agenda {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 48px);
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: #000;
+    display: none;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    padding: 40px 30px 20px 30px;
-    background: radial-gradient(circle at 50% 15%, #181612 0%, #000000 85%);
 }
 
-.agenda-cards-container {
+#fase-agenda.ativa {
+    display: flex;
+}
+
+.agenda-bg-full {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin: 15px 0;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    filter: brightness(0.85);
+    transition: opacity 0.5s ease-in-out;
 }
 
-.card-gastronomia {
-    background: var(--fundo-card);
-    border: 1px solid var(--borda-dourada);
-    border-radius: 18px;
-    padding: 20px 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-    text-align: left;
+.agenda-vignette-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0.85) 0%, 
+        rgba(0, 0, 0, 0.25) 30%, 
+        rgba(0, 0, 0, 0.75) 60%, 
+        rgba(0, 0, 0, 0.98) 95%);
+    z-index: 2;
 }
 
-.card-gastronomia-header {
+.agenda-topo-flutuante {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding: 45px 35px 20px 35px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.badge-bairro {
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid var(--borda-dourada);
+.agenda-topo-flutuante .logo-container {
+    max-width: 260px;
+}
+
+.badge-agenda-full {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--ouro-primario);
     color: var(--ouro-primario);
-    font-size: 0.75rem;
+    padding: 8px 24px;
+    border-radius: 50px;
+    font-size: 0.85rem;
     font-weight: 800;
-    padding: 4px 14px;
-    border-radius: 30px;
     letter-spacing: 2px;
     text-transform: uppercase;
 }
 
-.categoria-tag {
-    color: var(--texto-muted);
-    font-size: 0.85rem;
-    font-weight: 600;
+.agenda-conteudo-full {
+    position: relative;
+    z-index: 3;
+    padding: 0 45px 40px 45px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
 }
 
-.local-nome {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.65rem;
+.agenda-localizacao {
+    font-size: 0.95rem;
+    color: var(--ouro-primario);
+    letter-spacing: 3px;
+    text-transform: uppercase;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.agenda-titulo-full {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.7rem;
+    font-weight: 800;
     color: #ffffff;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
 }
 
-.local-desc {
-    font-size: 1.05rem;
-    color: #d1d5db;
-    line-height: 1.5;
+.agenda-resumo-full {
+    font-size: 1.35rem;
+    line-height: 1.6;
+    color: #e4e4e7;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+    max-width: 95%;
 }
 
-/* FASE 6: VISIOFLOW "ANUNCIE CONOSCO" */
+.agenda-rodape-full {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(212, 175, 55, 0.25);
+    padding-top: 16px;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: var(--texto-muted);
+}
+
+.agenda-rodape-full span {
+    color: var(--ouro-primario);
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   FASE 6: VISIOFLOW "ANUNCIE CONOSCO"
+   ========================================================================== */
 #fase-anuncie-aqui {
     flex-direction: column;
     justify-content: space-between;
@@ -993,6 +886,176 @@ body, html {
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-top: 10px;
+}
+
+/* ==========================================================================
+   FASE 8: WORLD CLOCK PROFISSIONAL (PÁGINA FINAL)
+   ========================================================================== */
+#fase-relogio-mundial {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 30px 20px 30px;
+    background: radial-gradient(circle at 50% 18%, #141414 0%, #000000 85%);
+}
+
+.world-clock-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.world-clock-label {
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--ouro-primario);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chip-brasil {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #22c55e, #eab308, #3b82f6);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+    display: inline-block;
+}
+
+.world-clock-time {
+    font-family: 'Outfit', sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 6.8rem;
+    font-weight: 900;
+    line-height: 1;
+    background: var(--ouro-gradiente);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+}
+
+.clock-segundos {
+    font-size: 3.2rem;
+    color: var(--ouro-primario);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+}
+
+.world-clock-date {
+    font-size: 1.35rem;
+    color: #e4e4e7;
+    margin-top: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.world-cities-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.card-cidade-global {
+    background: var(--fundo-card);
+    border: 1px solid var(--borda-suave);
+    border-radius: 18px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    position: relative;
+    overflow: hidden;
+}
+
+.flag-gradient-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+}
+
+.flag-eua {
+    background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 50%, #dc2626 100%);
+}
+
+.flag-uk {
+    background: linear-gradient(90deg, #0284c7 0%, #ffffff 50%, #b91c1c 100%);
+}
+
+.flag-dubai {
+    background: linear-gradient(90deg, #16a34a 0%, #ffffff 40%, #000000 70%, #dc2626 100%);
+}
+
+.flag-japao {
+    background: linear-gradient(90deg, #ffffff 0%, #ffffff 45%, #dc2626 50%, #ffffff 55%, #ffffff 100%);
+}
+
+.cidade-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.cidade-titulo-bloco {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.cidade-nome {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.cidade-pais {
+    font-size: 0.75rem;
+    color: var(--texto-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.market-badge {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--ouro-primario);
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cidade-hora {
+    font-family: 'Outfit', sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    margin: 6px 0;
+    text-align: left;
+}
+
+.cidade-diff {
+    font-size: 0.85rem;
+    color: var(--ouro-primario);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: left;
 }
 
 /* RODAPÉ TICKER TAPE FINANCEIRO */
