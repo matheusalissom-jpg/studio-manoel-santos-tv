@@ -172,7 +172,7 @@ body, html {
     object-fit: cover;
 }
 
-/* FASE 4: VÍDEO DO ANUNCIANTE (KEUNE) */
+/* FASE 5: VÍDEO DO ANUNCIANTE (KEUNE) */
 #fase-anuncio {
     background-color: var(--fundo-preto);
     justify-content: center;
@@ -203,7 +203,7 @@ body, html {
     z-index: 10;
 }
 
-/* FASE 7: VÍDEO DO PRODUTO (L'ORÉAL) */
+/* FASE 8: VÍDEO DO PRODUTO (L'ORÉAL) */
 #fase-produto {
     background-color: var(--fundo-preto);
     justify-content: center;
@@ -471,7 +471,7 @@ body, html {
     color: #ffffff;
 }
 
-/* ANIMAÇÕES ATMOSFÉRICAS (GOOGLE WEATHER) */
+/* ANIMAÇÕES ATMOSFÉRICAS */
 .cenario-atmosferico {
     position: absolute;
     top: 0;
@@ -557,7 +557,120 @@ body, html {
     100% { transform: translateY(100vh); opacity: 0.3; }
 }
 
-/* FASE 3: NOTÍCIAS FULL BLEED */
+/* ==========================================================================
+   FASE 3: WORLD CLOCK (TERMINAL DE FUSOS HORÁRIOS)
+   ========================================================================== */
+#fase-relogio-mundial {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 30px 20px 30px;
+    background: radial-gradient(circle at 50% 18%, #141414 0%, #000000 85%);
+}
+
+.world-clock-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.world-clock-label {
+    font-size: 1.05rem;
+    letter-spacing: 3px;
+    color: var(--ouro-primario);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.world-clock-time {
+    font-family: 'Playfair Display', serif;
+    font-size: 6.8rem;
+    font-weight: 900;
+    line-height: 1;
+    background: var(--ouro-gradiente);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+}
+
+.clock-segundos {
+    font-size: 3.2rem;
+    color: var(--ouro-primario);
+    font-family: 'Playfair Display', serif;
+}
+
+.world-clock-date {
+    font-size: 1.35rem;
+    color: #e4e4e7;
+    margin-top: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.world-cities-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.card-cidade-global {
+    background: var(--fundo-card);
+    border: 1px solid var(--borda-dourada);
+    border-radius: 18px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.cidade-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cidade-nome {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+
+.cidade-status-badge {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--ouro-primario);
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cidade-hora {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    margin: 4px 0;
+}
+
+.cidade-diff {
+    font-size: 0.8rem;
+    color: var(--texto-muted);
+    letter-spacing: 1px;
+}
+
+/* FASE 4: NOTÍCIAS FULL BLEED */
 #fase-noticias {
     position: absolute;
     top: 0;
@@ -682,7 +795,7 @@ body, html {
     font-weight: 700;
 }
 
-/* FASE 5: AGENDA CULTURAL & GASTRONOMIA DE BELÉM */
+/* FASE 6: AGENDA CULTURAL & GASTRONOMIA DE BELÉM */
 #fase-agenda {
     flex-direction: column;
     justify-content: space-between;
@@ -749,7 +862,7 @@ body, html {
     line-height: 1.5;
 }
 
-/* FASE 6: VISIOFLOW "ANUNCIE CONOSCO" */
+/* FASE 7: VISIOFLOW "ANUNCIE CONOSCO" */
 #fase-anuncie-aqui {
     flex-direction: column;
     justify-content: space-between;
