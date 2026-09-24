@@ -7,10 +7,10 @@
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
-    <!-- Fontes Séries e de Alta Precisão: Outfit + Montserrat + Playfair Display -->
+    <!-- Fontes Oficiais: Inter + Outfit + Montserrat + Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 
     <!-- Conexão Externa da Folha de Estilos -->
     <link rel="stylesheet" href="style.css">
@@ -165,13 +165,11 @@
             </video>
         </section>
 
-        <!-- FASE 5: CIRCUITO BELÉM (TOURS, CULTURA & EVENTOS - 100% VERTICAL FULL BLEED) -->
+        <!-- FASE 5: CIRCUITO BELÉM (TOURS, CULTURA & GASTRONOMIA - 100% VERTICAL) -->
         <section class="tela-fase" id="fase-agenda">
-            <!-- Imagem de Fundo Dinâmica 100% Vertical -->
             <img class="agenda-bg-full" id="agenda-foto" src="" alt="Turismo Belém" onerror="tratarErroImagemAgenda(this)">
             <div class="agenda-vignette-overlay"></div>
 
-            <!-- Topo com Logo Oficial Mantida -->
             <div class="agenda-topo-flutuante">
                 <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
@@ -179,7 +177,6 @@
                 <span class="badge-agenda-full" id="agenda-tag">SUNSET & GASTRONOMIA</span>
             </div>
 
-            <!-- Conteúdo Flutuante da Atração na Base -->
             <div class="agenda-conteudo-full">
                 <div class="agenda-localizacao" id="agenda-local">Estação das Docas • Baía do Guajará</div>
                 <h1 class="agenda-titulo-full" id="agenda-titulo">Carregando roteiro exclusivo de Belém...</h1>
@@ -191,38 +188,40 @@
             </div>
         </section>
 
-        <!-- FASE 6: VISIOFLOW "ANUNCIE CONOSCO" -->
+        <!-- FASE 6: ANUNCIE AQUI (DESIGN EXCLUSIVO VISIONFLOW COM ORBS E PULSO) -->
         <section class="tela-fase" id="fase-anuncie-aqui">
-            <div class="anuncie-hero">
-                <div class="badge-visioflow">VisioFlow Media Network</div>
-                <h2 class="anuncie-titulo">Sua marca na TV do salão mais exclusivo</h2>
-                <p style="font-size: 1.15rem; color: #d4d4d8;">Conecte sua empresa a clientes de alto poder aquisitivo enquanto eles cuidam do visual.</p>
+            <!-- Fundo Animado CSS (Orbs Flutuantes) -->
+            <div class="bg-container">
+                <div class="orb orb-ouro"></div>
+                <div class="orb orb-ciano"></div>
+                <div class="orb orb-azul"></div>
+                <div class="bg-overlay"></div>
             </div>
 
-            <div class="metricas-totem-row" style="max-width: 580px;">
-                <div class="metrica-pilula">
-                    <strong>+3.500</strong>
-                    <span>Impactos / Mês</span>
+            <!-- Conteúdo da Tela (Vertical) -->
+            <div class="conteudo-principal">
+                <!-- Topo: Logo VisionFlow Oficial -->
+                <div class="logo-oficial">
+                    <div class="logo-simbolo"></div>
+                    <div class="logo-texto"><span class="visio">VISION</span><span class="flow">FLOW</span></div>
                 </div>
-                <div class="metrica-pilula">
-                    <strong>Classe A/B</strong>
-                    <span>Público Executivo</span>
-                </div>
-                <div class="metrica-pilula">
-                    <strong>100%</strong>
-                    <span>Atenção Retida</span>
-                </div>
-            </div>
 
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <div class="qr-conversao-box">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://wa.me/5591981249767?text=Olá!%20Vi%20a%20tela%20na%20Bodytech%20e%20gostaria%20de%20anunciar%20minha%20marca%20na%20VisioFlow." alt="Anuncie na VisioFlow">
+                <!-- Meio: Mensagem Atualizada -->
+                <div class="bloco-textos">
+                    <span class="badge-premium">Mídia Local Inovadora</span>
+                    <h1 class="titulo-principal">Conecte sua marca<br>ao público.</h1>
+                    <p class="subtitulo">Democratizamos a mídia indoor. Destaque o seu negócio em sua tela de forma acessível, moderna e integrada.</p>
                 </div>
-                <div class="cta-scan-text">Aponte a câmera e anuncie</div>
-            </div>
 
-            <div class="rodape-local">
-                <div class="bodytech-tag">Powered by VisioFlow • Mídia Indoor Inteligente</div>
+                <!-- Base: Conversão QR Code Glassmorphism com Pulso -->
+                <div class="qr-card">
+                    <div class="qr-pulso-bg"></div>
+                    <div class="qr-imagem-container">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://wa.me/5591981249767?text=Olá!%20Vi%20a%20tela%20na%20Bodytech%20e%20gostaria%20de%20anunciar%20minha%20marca%20na%20VisionFlow." alt="QR Code WhatsApp VisionFlow">
+                    </div>
+                    <div class="qr-instrucao">Aponte a câmera do celular</div>
+                    <div class="qr-numero">WHATSAPP: (91) 98124-9767</div>
+                </div>
             </div>
         </section>
 
@@ -255,7 +254,6 @@
 
             <!-- GRADE GLOBAL COM BANDEIRAS EM DEGRADÊ METÁLICO -->
             <div class="world-cities-grid">
-                
                 <div class="card-cidade-global border-eua">
                     <div class="flag-gradient-bar flag-eua"></div>
                     <div class="cidade-header">
@@ -307,7 +305,6 @@
                     <div class="cidade-hora" id="clock-tokyo">00:00</div>
                     <div class="cidade-diff" id="diff-tokyo">+12h de Brasília</div>
                 </div>
-
             </div>
 
             <div class="rodape-local">
