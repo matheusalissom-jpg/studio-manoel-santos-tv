@@ -134,7 +134,69 @@
             </div>
         </section>
 
-        <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO) -->
+        <!-- FASE 3: WORLD CLOCK (TERMINAL DE FUSOS HORÁRIOS MUNDIAIS) -->
+        <section class="tela-fase" id="fase-relogio-mundial">
+            <div class="clima-header-destaque">
+                <div class="logo-container" onclick="registrarCliqueLogo()">
+                    <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
+                </div>
+                <div class="badge-data-hoje">Terminal Global • Fusos Horários</div>
+            </div>
+
+            <!-- RELÓGIO PRINCIPAL: BRASÍLIA / BELÉM -->
+            <div class="world-clock-hero">
+                <div class="world-clock-label">Horário de Brasília • Brasil</div>
+                <div class="world-clock-time" id="clock-brasilia">00:00<span class="clock-segundos" id="clock-brasilia-seg">:00</span></div>
+                <div class="world-clock-date" id="clock-brasilia-data">Terça-feira, 22 de Setembro</div>
+            </div>
+
+            <!-- CAPITAIS GLOBAIS (CENTROS FINANCEIROS) -->
+            <div class="world-cities-grid">
+                
+                <div class="card-cidade-global">
+                    <div class="cidade-header">
+                        <span class="cidade-nome">Nova York</span>
+                        <span class="cidade-status-badge" id="badge-ny">Wall Street</span>
+                    </div>
+                    <div class="cidade-hora" id="clock-ny">00:00</div>
+                    <div class="cidade-diff">Fuso UTC-4</div>
+                </div>
+
+                <div class="card-cidade-global">
+                    <div class="cidade-header">
+                        <span class="cidade-nome">Londres</span>
+                        <span class="cidade-status-badge" id="badge-london">Europa</span>
+                    </div>
+                    <div class="cidade-hora" id="clock-london">00:00</div>
+                    <div class="cidade-diff">Fuso UTC+1</div>
+                </div>
+
+                <div class="card-cidade-global">
+                    <div class="cidade-header">
+                        <span class="cidade-nome">Dubai</span>
+                        <span class="cidade-status-badge" id="badge-dubai">Emirados</span>
+                    </div>
+                    <div class="cidade-hora" id="clock-dubai">00:00</div>
+                    <div class="cidade-diff">Fuso UTC+4</div>
+                </div>
+
+                <div class="card-cidade-global">
+                    <div class="cidade-header">
+                        <span class="cidade-nome">Tóquio</span>
+                        <span class="cidade-status-badge" id="badge-tokyo">Ásia</span>
+                    </div>
+                    <div class="cidade-hora" id="clock-tokyo">00:00</div>
+                    <div class="cidade-diff">Fuso UTC+9</div>
+                </div>
+
+            </div>
+
+            <div class="rodape-local">
+                <div class="bodytech-tag">Unidade Bodytech Belém</div>
+            </div>
+        </section>
+
+        <!-- FASE 4: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO) -->
         <section class="tela-fase" id="fase-noticias">
             <img class="noticia-bg-full" id="noticia-foto" src="" alt="Tendência" onerror="tratarErroImagem(this)">
             <div class="noticia-vignette-overlay"></div>
@@ -157,7 +219,7 @@
             </div>
         </section>
 
-        <!-- FASE 4: VÍDEO DO ANUNCIANTE (KEUNE) -->
+        <!-- FASE 5: VÍDEO DO ANUNCIANTE (KEUNE) -->
         <section class="tela-fase" id="fase-anuncio">
             <div class="selo-patrocinio">Parceiro Oficial • Keune</div>
             <video id="player-anuncio" muted playsinline preload="auto">
@@ -165,7 +227,7 @@
             </video>
         </section>
 
-        <!-- FASE 5: AGENDA CULTURAL & GASTRONOMIA DE BELÉM -->
+        <!-- FASE 6: AGENDA CULTURAL & GASTRONOMIA DE BELÉM -->
         <section class="tela-fase" id="fase-agenda">
             <div class="clima-header-destaque">
                 <div class="logo-container" onclick="registrarCliqueLogo()">
@@ -208,7 +270,7 @@
             </div>
         </section>
 
-        <!-- FASE 6: VISIOFLOW "ANUNCIE CONOSCO" -->
+        <!-- FASE 7: VISIOFLOW "ANUNCIE CONOSCO" -->
         <section class="tela-fase" id="fase-anuncie-aqui">
             <div class="anuncie-hero">
                 <div class="badge-visioflow">VisioFlow Media Network</div>
@@ -243,7 +305,7 @@
             </div>
         </section>
 
-        <!-- FASE 7: VÍDEO DO PRODUTO DO SALÃO (L'ORÉAL) -->
+        <!-- FASE 8: VÍDEO DO PRODUTO DO SALÃO (L'ORÉAL) -->
         <section class="tela-fase" id="fase-produto">
             <div class="selo-patrocinio">Tratamento de Luxo • L'Oréal Professionnel</div>
             <video id="player-produto" muted playsinline preload="auto">
