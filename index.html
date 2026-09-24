@@ -7,10 +7,10 @@
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
-    <!-- Fontes Séries e de Alta Precisão: Outfit (Engenharia Suíça) + Montserrat -->
+    <!-- Fontes Séries e de Alta Precisão: Outfit + Montserrat + Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 
     <!-- Conexão Externa da Folha de Estilos -->
     <link rel="stylesheet" href="style.css">
@@ -165,46 +165,29 @@
             </video>
         </section>
 
-        <!-- FASE 5: AGENDA CULTURAL & GASTRONOMIA DE BELÉM -->
+        <!-- FASE 5: CIRCUITO BELÉM (TOURS, CULTURA & EVENTOS - 100% VERTICAL FULL BLEED) -->
         <section class="tela-fase" id="fase-agenda">
-            <div class="clima-header-destaque">
+            <!-- Imagem de Fundo Dinâmica 100% Vertical -->
+            <img class="agenda-bg-full" id="agenda-foto" src="" alt="Turismo Belém" onerror="tratarErroImagemAgenda(this)">
+            <div class="agenda-vignette-overlay"></div>
+
+            <!-- Topo com Logo Oficial Mantida -->
+            <div class="agenda-topo-flutuante">
                 <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
-                <div class="badge-data-hoje">Circuito Belém • Gastronomia & Cultura</div>
+                <span class="badge-agenda-full" id="agenda-tag">SUNSET & GASTRONOMIA</span>
             </div>
 
-            <div class="agenda-cards-container">
-                <div class="card-gastronomia">
-                    <div class="card-gastronomia-header">
-                        <span class="badge-bairro">Umarizal</span>
-                        <span class="categoria-tag">Alta Cozinha Contemporânea</span>
-                    </div>
-                    <div class="local-nome">Experiências Gastronômicas</div>
-                    <div class="local-desc">Técnicas modernas valorizam os ingredientes amazônicos no polo gastronômico mais sofisticado da cidade.</div>
+            <!-- Conteúdo Flutuante da Atração na Base -->
+            <div class="agenda-conteudo-full">
+                <div class="agenda-localizacao" id="agenda-local">Estação das Docas • Baía do Guajará</div>
+                <h1 class="agenda-titulo-full" id="agenda-titulo">Carregando roteiro exclusivo de Belém...</h1>
+                <p class="agenda-resumo-full" id="agenda-desc">Descubra as melhores experiências culturais, passeios fluviais e alta gastronomia na capital paraense.</p>
+                <div class="agenda-rodape-full">
+                    <div>Guia: <span id="agenda-curadoria">VisioFlow City Guide</span></div>
+                    <div>Belém • Pará</div>
                 </div>
-
-                <div class="card-gastronomia">
-                    <div class="card-gastronomia-header">
-                        <span class="badge-bairro">Baía do Guajará</span>
-                        <span class="categoria-tag">Sunset & Cultura</span>
-                    </div>
-                    <div class="local-nome">Estação das Docas</div>
-                    <div class="local-desc">O ponto de encontro tradicional do fim de tarde com cervejarias artesanais, alta gastronomia e vista para o rio.</div>
-                </div>
-
-                <div class="card-gastronomia">
-                    <div class="card-gastronomia-header">
-                        <span class="badge-bairro">Ilha do Combu</span>
-                        <span class="categoria-tag">Ecoturismo de Charme</span>
-                    </div>
-                    <div class="local-nome">Gastronomia Ribeirinha</div>
-                    <div class="local-desc">A poucos minutos da cidade, travessias náuticas levam a restaurantes com chocolates artesanais e pratos autorais.</div>
-                </div>
-            </div>
-
-            <div class="rodape-local">
-                <div class="bodytech-tag">Unidade Bodytech Belém</div>
             </div>
         </section>
 
@@ -273,7 +256,6 @@
             <!-- GRADE GLOBAL COM BANDEIRAS EM DEGRADÊ METÁLICO -->
             <div class="world-cities-grid">
                 
-                <!-- 1. NOVA YORK -->
                 <div class="card-cidade-global border-eua">
                     <div class="flag-gradient-bar flag-eua"></div>
                     <div class="cidade-header">
@@ -287,7 +269,6 @@
                     <div class="cidade-diff" id="diff-ny">-1h de Brasília</div>
                 </div>
 
-                <!-- 2. LONDRES -->
                 <div class="card-cidade-global border-uk">
                     <div class="flag-gradient-bar flag-uk"></div>
                     <div class="cidade-header">
@@ -301,7 +282,6 @@
                     <div class="cidade-diff" id="diff-london">+4h de Brasília</div>
                 </div>
 
-                <!-- 3. DUBAI -->
                 <div class="card-cidade-global border-dubai">
                     <div class="flag-gradient-bar flag-dubai"></div>
                     <div class="cidade-header">
@@ -315,7 +295,6 @@
                     <div class="cidade-diff" id="diff-dubai">+7h de Brasília</div>
                 </div>
 
-                <!-- 4. TÓQUIO -->
                 <div class="card-cidade-global border-japao">
                     <div class="flag-gradient-bar flag-japao"></div>
                     <div class="cidade-header">
