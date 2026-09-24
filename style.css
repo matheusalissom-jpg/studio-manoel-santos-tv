@@ -159,28 +159,15 @@ body, html {
     opacity: 1;
 }
 
-/* FASE 1: VÍDEO PRINCIPAL DO SALÃO */
-#fase-video {
-    background-color: var(--fundo-preto);
-    justify-content: center;
-    align-items: center;
-}
-
-#fase-video video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* FASE 5: VÍDEO DO ANUNCIANTE (KEUNE) */
-#fase-anuncio {
+/* FASES DE VÍDEO (1, 4 E 7) */
+#fase-video, #fase-anuncio, #fase-produto {
     background-color: var(--fundo-preto);
     justify-content: center;
     align-items: center;
     position: relative;
 }
 
-#fase-anuncio video {
+#fase-video video, #fase-anuncio video, #fase-produto video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -201,20 +188,6 @@ body, html {
     letter-spacing: 2px;
     text-transform: uppercase;
     z-index: 10;
-}
-
-/* FASE 8: VÍDEO DO PRODUTO (L'ORÉAL) */
-#fase-produto {
-    background-color: var(--fundo-preto);
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-#fase-produto video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 
 /* LOGO OFICIAL COMPARTILHADA */
@@ -249,7 +222,9 @@ body, html {
     font-weight: 600;
 }
 
-/* FASE 2: CLIMA COM INTELIGÊNCIA DIA/NOITE */
+/* ==========================================================================
+   FASE 2: CLIMA COM NOVA TIPOGRAFIA SÉRIA (OUTFIT)
+   ========================================================================== */
 #fase-clima {
     flex-direction: column;
     justify-content: space-between;
@@ -299,24 +274,26 @@ body, html {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    line-height: 1.05;
+    line-height: 1;
     padding: 10px 20px;
 }
 
+/* FONTE SÉRIA, ROBUSTA E TABULAR PARA O CLIMA */
 .temp-valor-enorme {
     font-size: 8.8rem;
     font-weight: 900;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Outfit', sans-serif;
+    font-variant-numeric: tabular-nums;
     background: var(--ouro-gradiente);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
-    letter-spacing: 0px;
+    letter-spacing: -2px;
 }
 
 .temp-simbolo-enorme {
     font-size: 3.8rem;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Outfit', sans-serif;
     color: var(--ouro-primario);
     margin-top: 15px;
     margin-left: 8px;
@@ -407,6 +384,8 @@ body, html {
     font-size: 2rem;
     font-weight: 800;
     color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-variant-numeric: tabular-nums;
 }
 
 .card-metrica-valor span {
@@ -469,6 +448,7 @@ body, html {
     font-size: 1.45rem;
     font-weight: 800;
     color: #ffffff;
+    font-family: 'Outfit', sans-serif;
 }
 
 /* ANIMAÇÕES ATMOSFÉRICAS */
@@ -558,7 +538,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 3: WORLD CLOCK (TERMINAL DE FUSOS HORÁRIOS)
+   FASE 8: WORLD CLOCK PROFISSIONAL (TERMINAL GLOBAL COM DEGRADÊS)
    ========================================================================== */
 #fase-relogio-mundial {
     flex-direction: column;
@@ -578,16 +558,30 @@ body, html {
 }
 
 .world-clock-label {
-    font-size: 1.05rem;
+    font-size: 1rem;
     letter-spacing: 3px;
     color: var(--ouro-primario);
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
+.chip-brasil {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #22c55e, #eab308, #3b82f6);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+    display: inline-block;
+}
+
+/* FONTE SÉRIA, PRECISA E TABULAR PARA O RELÓGIO */
 .world-clock-time {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Outfit', sans-serif;
+    font-variant-numeric: tabular-nums;
     font-size: 6.8rem;
     font-weight: 900;
     line-height: 1;
@@ -600,17 +594,19 @@ body, html {
 .clock-segundos {
     font-size: 3.2rem;
     color: var(--ouro-primario);
-    font-family: 'Playfair Display', serif;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
 }
 
 .world-clock-date {
     font-size: 1.35rem;
     color: #e4e4e7;
     margin-top: 10px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
+/* GRADE GLOBAL DE CAPITAIS COM DEGRADÊS METÁLICOS */
 .world-cities-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -621,31 +617,71 @@ body, html {
 
 .card-cidade-global {
     background: var(--fundo-card);
-    border: 1px solid var(--borda-dourada);
+    border: 1px solid var(--borda-suave);
     border-radius: 18px;
-    padding: 20px 22px;
+    padding: 18px 20px;
     display: flex;
     flex-direction: column;
     gap: 6px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    position: relative;
+    overflow: hidden;
+}
+
+/* FILETES SUPERIORES COM DEGRADÊ DAS BANDEIRAS */
+.flag-gradient-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+}
+
+.flag-eua {
+    background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 50%, #dc2626 100%);
+}
+
+.flag-uk {
+    background: linear-gradient(90deg, #0284c7 0%, #ffffff 50%, #b91c1c 100%);
+}
+
+.flag-dubai {
+    background: linear-gradient(90deg, #16a34a 0%, #ffffff 40%, #000000 70%, #dc2626 100%);
+}
+
+.flag-japao {
+    background: linear-gradient(90deg, #ffffff 0%, #ffffff 45%, #dc2626 50%, #ffffff 55%, #ffffff 100%);
 }
 
 .cidade-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+}
+
+.cidade-titulo-bloco {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 
 .cidade-nome {
-    font-size: 1.15rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 800;
     color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.cidade-pais {
+    font-size: 0.75rem;
+    color: var(--texto-muted);
+    text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.cidade-status-badge {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.market-badge {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     color: var(--ouro-primario);
     font-size: 0.7rem;
     font-weight: 800;
@@ -656,21 +692,25 @@ body, html {
 }
 
 .cidade-hora {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 2.8rem;
     font-weight: 800;
     color: #ffffff;
     line-height: 1;
-    margin: 4px 0;
+    margin: 6px 0;
+    text-align: left;
 }
 
 .cidade-diff {
-    font-size: 0.8rem;
-    color: var(--texto-muted);
-    letter-spacing: 1px;
+    font-size: 0.85rem;
+    color: var(--ouro-primario);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: left;
 }
 
-/* FASE 4: NOTÍCIAS FULL BLEED */
+/* FASE 3: NOTÍCIAS FULL BLEED */
 #fase-noticias {
     position: absolute;
     top: 0;
@@ -795,7 +835,7 @@ body, html {
     font-weight: 700;
 }
 
-/* FASE 6: AGENDA CULTURAL & GASTRONOMIA DE BELÉM */
+/* FASE 5: AGENDA CULTURAL & GASTRONOMIA DE BELÉM */
 #fase-agenda {
     flex-direction: column;
     justify-content: space-between;
@@ -862,7 +902,7 @@ body, html {
     line-height: 1.5;
 }
 
-/* FASE 7: VISIOFLOW "ANUNCIE CONOSCO" */
+/* FASE 6: VISIOFLOW "ANUNCIE CONOSCO" */
 #fase-anuncie-aqui {
     flex-direction: column;
     justify-content: space-between;
