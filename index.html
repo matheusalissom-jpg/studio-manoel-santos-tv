@@ -7,10 +7,10 @@
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
-    <!-- Fontes Premium de Luxo -->
+    <!-- Fontes Séries e de Alta Precisão: Outfit (Engenharia Suíça) + Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
     <!-- Conexão Externa da Folha de Estilos -->
     <link rel="stylesheet" href="style.css">
@@ -134,69 +134,7 @@
             </div>
         </section>
 
-        <!-- FASE 3: WORLD CLOCK (TERMINAL DE FUSOS HORÁRIOS MUNDIAIS) -->
-        <section class="tela-fase" id="fase-relogio-mundial">
-            <div class="clima-header-destaque">
-                <div class="logo-container" onclick="registrarCliqueLogo()">
-                    <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
-                </div>
-                <div class="badge-data-hoje">Terminal Global • Fusos Horários</div>
-            </div>
-
-            <!-- RELÓGIO PRINCIPAL: BRASÍLIA / BELÉM -->
-            <div class="world-clock-hero">
-                <div class="world-clock-label">Horário de Brasília • Brasil</div>
-                <div class="world-clock-time" id="clock-brasilia">00:00<span class="clock-segundos" id="clock-brasilia-seg">:00</span></div>
-                <div class="world-clock-date" id="clock-brasilia-data">Terça-feira, 22 de Setembro</div>
-            </div>
-
-            <!-- CAPITAIS GLOBAIS (CENTROS FINANCEIROS) -->
-            <div class="world-cities-grid">
-                
-                <div class="card-cidade-global">
-                    <div class="cidade-header">
-                        <span class="cidade-nome">Nova York</span>
-                        <span class="cidade-status-badge" id="badge-ny">Wall Street</span>
-                    </div>
-                    <div class="cidade-hora" id="clock-ny">00:00</div>
-                    <div class="cidade-diff">Fuso UTC-4</div>
-                </div>
-
-                <div class="card-cidade-global">
-                    <div class="cidade-header">
-                        <span class="cidade-nome">Londres</span>
-                        <span class="cidade-status-badge" id="badge-london">Europa</span>
-                    </div>
-                    <div class="cidade-hora" id="clock-london">00:00</div>
-                    <div class="cidade-diff">Fuso UTC+1</div>
-                </div>
-
-                <div class="card-cidade-global">
-                    <div class="cidade-header">
-                        <span class="cidade-nome">Dubai</span>
-                        <span class="cidade-status-badge" id="badge-dubai">Emirados</span>
-                    </div>
-                    <div class="cidade-hora" id="clock-dubai">00:00</div>
-                    <div class="cidade-diff">Fuso UTC+4</div>
-                </div>
-
-                <div class="card-cidade-global">
-                    <div class="cidade-header">
-                        <span class="cidade-nome">Tóquio</span>
-                        <span class="cidade-status-badge" id="badge-tokyo">Ásia</span>
-                    </div>
-                    <div class="cidade-hora" id="clock-tokyo">00:00</div>
-                    <div class="cidade-diff">Fuso UTC+9</div>
-                </div>
-
-            </div>
-
-            <div class="rodape-local">
-                <div class="bodytech-tag">Unidade Bodytech Belém</div>
-            </div>
-        </section>
-
-        <!-- FASE 4: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO) -->
+        <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO) -->
         <section class="tela-fase" id="fase-noticias">
             <img class="noticia-bg-full" id="noticia-foto" src="" alt="Tendência" onerror="tratarErroImagem(this)">
             <div class="noticia-vignette-overlay"></div>
@@ -219,7 +157,7 @@
             </div>
         </section>
 
-        <!-- FASE 5: VÍDEO DO ANUNCIANTE (KEUNE) -->
+        <!-- FASE 4: VÍDEO DO ANUNCIANTE (KEUNE) -->
         <section class="tela-fase" id="fase-anuncio">
             <div class="selo-patrocinio">Parceiro Oficial • Keune</div>
             <video id="player-anuncio" muted playsinline preload="auto">
@@ -227,7 +165,7 @@
             </video>
         </section>
 
-        <!-- FASE 6: AGENDA CULTURAL & GASTRONOMIA DE BELÉM -->
+        <!-- FASE 5: AGENDA CULTURAL & GASTRONOMIA DE BELÉM -->
         <section class="tela-fase" id="fase-agenda">
             <div class="clima-header-destaque">
                 <div class="logo-container" onclick="registrarCliqueLogo()">
@@ -270,7 +208,7 @@
             </div>
         </section>
 
-        <!-- FASE 7: VISIOFLOW "ANUNCIE CONOSCO" -->
+        <!-- FASE 6: VISIOFLOW "ANUNCIE CONOSCO" -->
         <section class="tela-fase" id="fase-anuncie-aqui">
             <div class="anuncie-hero">
                 <div class="badge-visioflow">VisioFlow Media Network</div>
@@ -305,12 +243,97 @@
             </div>
         </section>
 
-        <!-- FASE 8: VÍDEO DO PRODUTO DO SALÃO (L'ORÉAL) -->
+        <!-- FASE 7: VÍDEO DO PRODUTO DO SALÃO (L'ORÉAL) -->
         <section class="tela-fase" id="fase-produto">
             <div class="selo-patrocinio">Tratamento de Luxo • L'Oréal Professionnel</div>
             <video id="player-produto" muted playsinline preload="auto">
                 <source src="produto.mp4" type="video/mp4">
             </video>
+        </section>
+
+        <!-- FASE 8: WORLD CLOCK (TERMINAL GLOBAL DE FUSOS HORÁRIOS - PÁGINA FINAL) -->
+        <section class="tela-fase" id="fase-relogio-mundial">
+            <div class="clima-header-destaque">
+                <div class="logo-container" onclick="registrarCliqueLogo()">
+                    <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
+                </div>
+                <div class="badge-data-hoje">Terminal Global • Fusos Horários</div>
+            </div>
+
+            <!-- CHRONOMETER PRINCIPAL: BRASÍLIA / BELÉM -->
+            <div class="world-clock-hero">
+                <div class="world-clock-label">
+                    <span class="bandeira-chip chip-brasil"></span>
+                    Horário Oficial de Brasília
+                </div>
+                <div class="world-clock-time" id="clock-brasilia">00:00<span class="clock-segundos" id="clock-brasilia-seg">:00</span></div>
+                <div class="world-clock-date" id="clock-brasilia-data">Terça-feira, 22 de Setembro</div>
+            </div>
+
+            <!-- GRADE GLOBAL COM BANDEIRAS EM DEGRADÊ METÁLICO -->
+            <div class="world-cities-grid">
+                
+                <!-- 1. NOVA YORK -->
+                <div class="card-cidade-global border-eua">
+                    <div class="flag-gradient-bar flag-eua"></div>
+                    <div class="cidade-header">
+                        <div class="cidade-titulo-bloco">
+                            <span class="cidade-nome">Nova York</span>
+                            <span class="cidade-pais">Estados Unidos</span>
+                        </div>
+                        <span class="market-badge" id="mkt-ny">NYSE • NASDAQ</span>
+                    </div>
+                    <div class="cidade-hora" id="clock-ny">00:00</div>
+                    <div class="cidade-diff" id="diff-ny">-1h de Brasília</div>
+                </div>
+
+                <!-- 2. LONDRES -->
+                <div class="card-cidade-global border-uk">
+                    <div class="flag-gradient-bar flag-uk"></div>
+                    <div class="cidade-header">
+                        <div class="cidade-titulo-bloco">
+                            <span class="cidade-nome">Londres</span>
+                            <span class="cidade-pais">Reino Unido</span>
+                        </div>
+                        <span class="market-badge" id="mkt-london">LSE • Europa</span>
+                    </div>
+                    <div class="cidade-hora" id="clock-london">00:00</div>
+                    <div class="cidade-diff" id="diff-london">+4h de Brasília</div>
+                </div>
+
+                <!-- 3. DUBAI -->
+                <div class="card-cidade-global border-dubai">
+                    <div class="flag-gradient-bar flag-dubai"></div>
+                    <div class="cidade-header">
+                        <div class="cidade-titulo-bloco">
+                            <span class="cidade-nome">Dubai</span>
+                            <span class="cidade-pais">Emirados Árabes</span>
+                        </div>
+                        <span class="market-badge" id="mkt-dubai">DFM • Oriente</span>
+                    </div>
+                    <div class="cidade-hora" id="clock-dubai">00:00</div>
+                    <div class="cidade-diff" id="diff-dubai">+7h de Brasília</div>
+                </div>
+
+                <!-- 4. TÓQUIO -->
+                <div class="card-cidade-global border-japao">
+                    <div class="flag-gradient-bar flag-japao"></div>
+                    <div class="cidade-header">
+                        <div class="cidade-titulo-bloco">
+                            <span class="cidade-nome">Tóquio</span>
+                            <span class="cidade-pais">Japão</span>
+                        </div>
+                        <span class="market-badge" id="mkt-tokyo">TSE • Ásia</span>
+                    </div>
+                    <div class="cidade-hora" id="clock-tokyo">00:00</div>
+                    <div class="cidade-diff" id="diff-tokyo">+12h de Brasília</div>
+                </div>
+
+            </div>
+
+            <div class="rodape-local">
+                <div class="bodytech-tag">Unidade Bodytech Belém</div>
+            </div>
         </section>
 
         <!-- TICKER TAPE FINANCEIRO -->
