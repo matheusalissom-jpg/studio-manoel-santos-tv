@@ -10,7 +10,7 @@
     <!-- Fontes Oficiais: Inter + Outfit + Montserrat + Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 
     <!-- Conexão Externa da Folha de Estilos -->
     <link rel="stylesheet" href="style.css">
@@ -58,79 +58,74 @@
             </video>
         </section>
 
-        <!-- FASE 2: CLIMA COM INTELIGÊNCIA DIA/NOITE & ANIMAÇÕES VIVAS -->
+        <!-- FASE 2: CLIMA PREMIUM DINÂMICO (NOVO DESIGN ULTRA-LUXO) -->
         <section class="tela-fase" id="fase-clima">
-            <div class="cenario-atmosferico" id="cenario-clima"></div>
+            <!-- Camadas de Cenário Atmosférico Vivo -->
+            <div class="vignette-topo"></div>
+            <div id="cenario-clima"></div>
 
-            <div class="clima-header-destaque">
+            <div class="ui-container">
+                <!-- Logo Original do Salão (Mantida com gatilho secreto) -->
                 <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
-                <div class="badge-data-hoje" id="clima-data-hoje">
-                    Hoje • Belém, PA
-                </div>
-            </div>
 
-            <div class="clima-hero-monumental">
-                <div class="bloco-temp-gigante">
-                    <span class="temp-valor-enorme" id="temp-agora">--</span>
-                    <span class="temp-simbolo-enorme">°C</span>
-                </div>
-                <div class="condicao-destaque-hoje" id="condicao-agora">Atualizando...</div>
-                
-                <div class="extremos-hoje-pill">
-                    <span class="extremos-max">▲ <span id="temp-hoje-max">--</span>° Máxima</span>
-                    <span style="color: rgba(212, 175, 55, 0.3);">|</span>
-                    <span class="extremos-min">▼ <span id="temp-hoje-min">--</span>° Mínima</span>
-                </div>
-            </div>
+                <!-- Pílula de Data Oficial -->
+                <div class="data-pill" id="clima-data-hoje">Hoje • Belém, PA</div>
 
-            <div class="grid-metricas-hoje">
-                <div class="card-metrica-hoje">
-                    <div class="card-metrica-icone">🌡️</div>
-                    <div class="card-metrica-textos">
-                        <span class="card-metrica-label">Sensação Real</span>
-                        <span class="card-metrica-valor"><span id="clima-sensacao">--</span>°C</span>
+                <!-- Hero: Temperatura Monumental e Extremos -->
+                <div class="clima-hero">
+                    <div class="temp-gigante" id="temp-agora">--<span>°C</span></div>
+                    <div class="condicao-texto" id="condicao-agora">Atualizando...</div>
+                    <div class="clima-extremos-pill">
+                        <span style="color: #EAB308;">▲ <span id="temp-hoje-max">--</span>°</span> &nbsp;|&nbsp; 
+                        <span style="color: #cbd5e1;">▼ <span id="temp-hoje-min">--</span>°</span>
                     </div>
                 </div>
 
-                <div class="card-metrica-hoje">
-                    <div class="card-metrica-icone">🌧️</div>
-                    <div class="card-metrica-textos">
-                        <span class="card-metrica-label">Prob. Chuva</span>
-                        <span class="card-metrica-valor"><span id="clima-chuva-hoje">--</span>%</span>
+                <!-- Grid de Métricas em Glassmorphism Colorido -->
+                <div class="grid-metricas">
+                    <div class="glass-card">
+                        <div class="icone-box bg-rosa">🌡️</div>
+                        <div class="info-box">
+                            <span class="info-label">Sensação</span>
+                            <span class="info-valor" id="clima-sensacao">--°C</span>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="icone-box bg-azul">🌧️</div>
+                        <div class="info-box">
+                            <span class="info-label">Chuva</span>
+                            <span class="info-valor" id="clima-chuva-hoje">--%</span>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="icone-box bg-verde">💧</div>
+                        <div class="info-box">
+                            <span class="info-label">Umidade</span>
+                            <span class="info-valor" id="clima-umidade-hoje">--%</span>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="icone-box bg-roxo">💨</div>
+                        <div class="info-box">
+                            <span class="info-label">Vento</span>
+                            <span class="info-valor" id="clima-vento-hoje">-- km/h</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card-metrica-hoje">
-                    <div class="card-metrica-icone">💧</div>
-                    <div class="card-metrica-textos">
-                        <span class="card-metrica-label">Umidade do Ar</span>
-                        <span class="card-metrica-valor"><span id="clima-umidade-hoje">--</span>%</span>
-                    </div>
+                <!-- Previsão Horária em Vidro Fosco -->
+                <div class="glass-horas" id="container-horas-capsula">
+                    <div class="hora-item"><span>--:00</span><div class="emoji">🌙</div><span>--°</span></div>
+                    <div class="hora-item"><span>--:00</span><div class="emoji">🌙</div><span>--°</span></div>
+                    <div class="hora-item"><span>--:00</span><div class="emoji">🌙</div><span>--°</span></div>
+                    <div class="hora-item"><span>--:00</span><div class="emoji">🌙</div><span>--°</span></div>
                 </div>
 
-                <div class="card-metrica-hoje">
-                    <div class="card-metrica-icone">💨</div>
-                    <div class="card-metrica-textos">
-                        <span class="card-metrica-label">Veloc. Vento</span>
-                        <span class="card-metrica-valor"><span id="clima-vento-hoje">--</span> km/h</span>
-                    </div>
+                <div class="rodape-local">
+                    <div class="bodytech-tag">Unidade Bodytech Belém</div>
                 </div>
-            </div>
-
-            <div class="secao-evolucao-dia">
-                <div class="evolucao-titulo">Clima no restante do dia</div>
-                <div class="fita-horas-capsula" id="container-horas-capsula">
-                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
-                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
-                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
-                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
-                </div>
-            </div>
-
-            <div class="rodape-local">
-                <div class="bodytech-tag">Unidade Bodytech Belém</div>
             </div>
         </section>
 
@@ -165,7 +160,7 @@
             </video>
         </section>
 
-        <!-- FASE 5: CIRCUITO BELÉM (TOURS, CULTURA & GASTRONOMIA - 100% VERTICAL) -->
+        <!-- FASE 5: CIRCUITO BELÉM (TOURS & EVENTOS 100% VERTICAL) -->
         <section class="tela-fase" id="fase-agenda">
             <img class="agenda-bg-full" id="agenda-foto" src="" alt="Turismo Belém" onerror="tratarErroImagemAgenda(this)">
             <div class="agenda-vignette-overlay"></div>
@@ -188,9 +183,8 @@
             </div>
         </section>
 
-        <!-- FASE 6: ANUNCIE AQUI (DESIGN EXCLUSIVO VISIONFLOW COM ORBS E PULSO) -->
+        <!-- FASE 6: ANUNCIE AQUI (DESIGN VISIONFLOW COM ORBS E PULSO) -->
         <section class="tela-fase" id="fase-anuncie-aqui">
-            <!-- Fundo Animado CSS (Orbs Flutuantes) -->
             <div class="bg-container">
                 <div class="orb orb-ouro"></div>
                 <div class="orb orb-ciano"></div>
@@ -198,22 +192,18 @@
                 <div class="bg-overlay"></div>
             </div>
 
-            <!-- Conteúdo da Tela (Vertical) -->
             <div class="conteudo-principal">
-                <!-- Topo: Logo VisionFlow Oficial -->
                 <div class="logo-oficial">
                     <div class="logo-simbolo"></div>
                     <div class="logo-texto"><span class="visio">VISION</span><span class="flow">FLOW</span></div>
                 </div>
 
-                <!-- Meio: Mensagem Atualizada -->
                 <div class="bloco-textos">
                     <span class="badge-premium">Mídia Local Inovadora</span>
                     <h1 class="titulo-principal">Conecte sua marca<br>ao público.</h1>
                     <p class="subtitulo">Democratizamos a mídia indoor. Destaque o seu negócio em sua tela de forma acessível, moderna e integrada.</p>
                 </div>
 
-                <!-- Base: Conversão QR Code Glassmorphism com Pulso -->
                 <div class="qr-card">
                     <div class="qr-pulso-bg"></div>
                     <div class="qr-imagem-container">
