@@ -22,7 +22,7 @@
     --texto-claro: #f5f5f5;
     --texto-muted: #a1a1aa;
     
-    /* Variáveis Específicas do Design VisionFlow */
+    /* Variáveis VisionFlow Anuncie Aqui */
     --azul-meia-noite: #0F172A;
     --ouro-executivo: #EAB308;
     --ciano-digital: #38BDF8;
@@ -218,6 +218,7 @@ body, html {
     border-top: 1px solid var(--borda-suave);
     padding-top: 12px;
     width: 90%;
+    margin: 15px auto 0 auto;
 }
 
 .bodytech-tag {
@@ -229,318 +230,274 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 2: CLIMA COM TIPOGRAFIA OUTFIT
+   FASE 2: NOVO CLIMA DINÂMICO E ULTRA-LUXO
    ========================================================================== */
 #fase-clima {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #020617;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 40px 30px 20px 30px;
-    background: radial-gradient(circle at 50% 18%, #1c1810 0%, #000000 80%);
-    position: relative;
 }
 
-.clima-header-destaque {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    position: relative;
-    z-index: 2;
-}
-
-.badge-data-hoje {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid var(--borda-dourada);
-    padding: 8px 26px;
-    border-radius: 50px;
-    font-size: 0.95rem;
-    color: var(--ouro-primario);
-    letter-spacing: 3px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.clima-hero-monumental {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 10px 0;
-    position: relative;
-    width: 100%;
-    z-index: 2;
-}
-
-.bloco-temp-gigante {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    line-height: 1;
-    padding: 10px 20px;
-}
-
-.temp-valor-enorme {
-    font-size: 8.8rem;
-    font-weight: 900;
-    font-family: 'Outfit', sans-serif;
-    font-variant-numeric: tabular-nums;
-    background: var(--ouro-gradiente);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-    letter-spacing: -2px;
-}
-
-.temp-simbolo-enorme {
-    font-size: 3.8rem;
-    font-family: 'Outfit', sans-serif;
-    color: var(--ouro-primario);
-    margin-top: 15px;
-    margin-left: 8px;
-    display: inline-block;
-}
-
-.condicao-destaque-hoje {
-    font-size: 2.3rem;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-top: 8px;
-    text-align: center;
-}
-
-.extremos-hoje-pill {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    margin-top: 16px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--borda-dourada);
-    padding: 12px 32px;
-    border-radius: 40px;
-    font-size: 1.35rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.extremos-max {
-    color: var(--ouro-primario);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.extremos-min {
-    color: #9ca3af;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.grid-metricas-hoje {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    width: 100%;
-    max-width: 600px;
-    position: relative;
-    z-index: 2;
-}
-
-.card-metrica-hoje {
-    background: var(--fundo-card);
-    border: 1px solid var(--borda-dourada);
-    border-radius: 18px;
-    padding: 22px 24px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 12px 35px rgba(0,0,0,0.85);
-}
-
-.card-metrica-icone {
-    font-size: 2.8rem;
-    line-height: 1;
-}
-
-.card-metrica-textos {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-.card-metrica-label {
-    font-size: 0.95rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--texto-muted);
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-
-.card-metrica-valor {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #ffffff;
-    font-family: 'Outfit', sans-serif;
-    font-variant-numeric: tabular-nums;
-}
-
-.card-metrica-valor span {
-    color: var(--ouro-primario);
-}
-
-.secao-evolucao-dia {
-    width: 100%;
-    max-width: 600px;
-    position: relative;
-    z-index: 2;
-}
-
-.evolucao-titulo {
-    font-size: 1rem;
-    letter-spacing: 3px;
-    color: var(--ouro-primario);
-    text-transform: uppercase;
-    font-weight: 800;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.evolucao-titulo::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--borda-suave);
-}
-
-.fita-horas-capsula {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    width: 100%;
-}
-
-.capsula-hora {
-    background: rgba(20, 20, 20, 0.75);
-    border: 1px solid var(--borda-suave);
-    border-radius: 14px;
-    padding: 14px 6px;
-    text-align: center;
-}
-
-.capsula-hora .hora {
-    font-size: 1rem;
-    color: var(--texto-muted);
-    font-weight: 700;
-}
-
-.capsula-hora .icone {
-    font-size: 1.8rem;
-    margin: 6px 0;
-}
-
-.capsula-hora .temp {
-    font-size: 1.45rem;
-    font-weight: 800;
-    color: #ffffff;
-    font-family: 'Outfit', sans-serif;
-}
-
-/* ANIMAÇÕES ATMOSFÉRICAS */
-.cenario-atmosferico {
+/* Background com Efeitos Atmosféricos Vivos */
+#cenario-clima {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    pointer-events: none;
     z-index: 1;
+    transition: background 2s ease-in-out;
 }
 
-.sol-vivo-glow {
+.vignette-topo {
     position: absolute;
-    top: 18%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+    z-index: 2;
+}
+
+/* Astros e Partículas do Clima */
+.sol-vivo {
+    position: absolute;
+    top: 15%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 320px;
-    height: 320px;
-    background: radial-gradient(circle, rgba(234, 179, 8, 0.28) 0%, rgba(212, 175, 55, 0.1) 45%, transparent 70%);
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(253, 224, 71, 0.8) 0%, rgba(234, 179, 8, 0.2) 50%, transparent 70%);
     border-radius: 50%;
-    animation: pulsarSolGlow 4s ease-in-out infinite alternate;
+    animation: pulsarSol 4s ease-in-out infinite alternate;
 }
 
-@keyframes pulsarSolGlow {
-    0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.6; }
-    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-}
-
-.lua-brilho-noturno {
+.sol-poente {
     position: absolute;
-    top: 16%;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(251, 146, 60, 0.9) 0%, rgba(225, 29, 72, 0.4) 40%, transparent 70%);
+    border-radius: 50%;
+    animation: pulsarSol 5s ease-in-out infinite alternate;
+}
+
+.lua {
+    position: absolute;
+    top: 15%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 280px;
-    height: 280px;
-    background: radial-gradient(circle, rgba(148, 163, 184, 0.25) 0%, rgba(100, 116, 139, 0.08) 50%, transparent 70%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(226, 232, 240, 0.6) 0%, rgba(148, 163, 184, 0.1) 60%, transparent 70%);
     border-radius: 50%;
-    animation: respirarLua 5s ease-in-out infinite alternate;
+    animation: pulsarSol 6s ease-in-out infinite alternate;
 }
 
-@keyframes respirarLua {
-    0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
-    100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+@keyframes pulsarSol {
+    0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
 }
 
-.estrela-viva {
+.nuvem {
     position: absolute;
-    background-color: #ffffff;
     border-radius: 50%;
-    box-shadow: 0 0 8px #ffffff;
-    animation: cintilarEstrela 3s ease-in-out infinite alternate;
+    filter: blur(18px);
+    animation: flutuarNuvem linear infinite;
 }
-
-@keyframes cintilarEstrela {
-    0% { opacity: 0.1; transform: scale(0.5); }
-    100% { opacity: 1; transform: scale(1.3); }
-}
-
-.nuvem-deriva {
-    position: absolute;
-    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    filter: blur(14px);
-    animation: flutuarNuvem 22s linear infinite;
-}
+.nuvem-branca { background: radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, transparent 70%); }
+.nuvem-cinza { background: radial-gradient(ellipse at center, rgba(148,163,184,0.6) 0%, transparent 70%); }
+.nuvem-rosada { background: radial-gradient(ellipse at center, rgba(251,146,60,0.4) 0%, transparent 70%); }
 
 @keyframes flutuarNuvem {
-    0% { transform: translateX(-120%); }
+    0% { transform: translateX(-150%); }
     100% { transform: translateX(120vw); }
 }
 
-.gota-chuva {
+.estrela {
     position: absolute;
-    width: 2px;
-    height: 28px;
-    background: linear-gradient(180deg, transparent, rgba(56, 189, 248, 0.8));
-    animation: cairChuva 1s linear infinite;
+    background-color: #fff;
+    border-radius: 50%;
+    animation: piscar 3s infinite alternate;
 }
 
-@keyframes cairChuva {
-    0% { transform: translateY(-30px); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translateY(100vh); opacity: 0.3; }
+@keyframes piscar {
+    0% { opacity: 0.2; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1.2); }
 }
+
+.gota {
+    position: absolute;
+    width: 2px;
+    height: 35px;
+    background: linear-gradient(180deg, transparent, rgba(255,255,255,0.6));
+    animation: chover 0.8s linear infinite;
+}
+
+@keyframes chover {
+    0% { transform: translateY(-50px); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* UI Container do Clima */
+.ui-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 30px 20px 30px;
+}
+
+.data-pill {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #EAB308;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 8px 24px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    align-self: center;
+    margin: 8px 0 15px 0;
+}
+
+.clima-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px 0 15px 0;
+}
+
+.temp-gigante {
+    font-family: 'Outfit', 'Inter', sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 8.5rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -4px;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    position: relative;
+    display: inline-block;
+}
+
+.temp-gigante span {
+    font-size: 3.5rem;
+    color: #EAB308;
+    position: absolute;
+    top: 10px;
+    right: -50px;
+    letter-spacing: 0;
+}
+
+.condicao-texto {
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    margin-top: 10px;
+    text-align: center;
+}
+
+.clima-extremos-pill {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #cbd5e1;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+/* Glassmorphism dos Cards de Métricas */
+.grid-metricas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.glass-card {
+    background: rgba(20, 25, 35, 0.45);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 28px;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.icone-box {
+    width: 58px;
+    height: 58px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+.bg-rosa { background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.35); }
+.bg-azul { background: rgba(56, 189, 248, 0.2); border: 1px solid rgba(56, 189, 248, 0.35); }
+.bg-verde { background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.35); }
+.bg-roxo { background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.35); }
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.info-label {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.info-valor {
+    font-size: 1.8rem;
+    font-weight: 800;
+    font-family: 'Outfit', 'Inter', sans-serif;
+    color: #ffffff;
+}
+
+/* Fita de Previsão Horária em Vidro Fosco */
+.glass-horas {
+    background: rgba(20, 25, 35, 0.45);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 28px;
+    padding: 18px 24px;
+    width: 100%;
+    max-width: 600px;
+    margin: 10px auto 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hora-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.hora-item span:first-child { font-size: 0.9rem; font-weight: 600; color: #cbd5e1; }
+.hora-item .emoji { font-size: 1.7rem; }
+.hora-item span:last-child { font-size: 1.35rem; font-weight: 800; font-family: 'Outfit', sans-serif; }
 
 /* ==========================================================================
    FASE 3: NOTÍCIAS FULL BLEED (100% VERTICAL)
@@ -671,7 +628,7 @@ body, html {
 
 /* ==========================================================================
    FASE 5: CIRCUITO BELÉM (TOURS & EVENTOS 100% VERTICAL FULL BLEED)
-   ========================================================================== */
+   ========================================================================= */
 #fase-agenda {
     position: absolute;
     top: 0;
@@ -820,7 +777,6 @@ body, html {
     display: flex;
 }
 
-/* Fundo Animado com Luzes Fluidas */
 .bg-container {
     position: absolute;
     top: 0;
@@ -883,7 +839,6 @@ body, html {
     z-index: 1;
 }
 
-/* Conteúdo Vertical */
 .conteudo-principal {
     position: relative;
     z-index: 2;
@@ -971,7 +926,6 @@ body, html {
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
-/* Painel do QR Code Glassmorphism com Pulso */
 .qr-card {
     background: rgba(15, 23, 42, 0.5);
     backdrop-filter: blur(20px);
