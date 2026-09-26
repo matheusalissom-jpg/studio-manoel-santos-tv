@@ -1,5 +1,5 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE DE TRANSMISSÃO, TELEMETRIA & CIRCUITO BELÉM
+// VISIOFLOW MEDIA - ENGINE DE TRANSMISSÃO, TELEMETRIA & CLIMA ULTRA-LUXO
 // ==========================================================================
 
 // 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
@@ -155,7 +155,7 @@ function tratarErroImagemAgenda(img) {
     img.src = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80';
 }
 
-// 6. MOTOR METEOROLÓGICO DE ALTA PRECISÃO (OPEN-METEO)
+// 6. MOTOR METEOROLÓGICO DE ALTA PRECISÃO (OPEN-METEO COM EFEITOS DINÂMICOS)
 async function carregarPrevisaoBelem() {
     try {
         const opcoesData = { weekday: 'long', day: 'numeric', month: 'short' };
@@ -177,18 +177,20 @@ async function carregarPrevisaoBelem() {
         const minHoje = Math.round(dados.daily.temperature_2m_min[0]);
         const chuvaHoje = dados.daily.precipitation_probability_max[0] || 30;
 
-        document.getElementById('temp-agora').innerText = tempAtual;
+        document.getElementById('temp-agora').innerHTML = `${tempAtual}<span>°C</span>`;
         document.getElementById('condicao-agora').innerText = traduzirClimaComPeriodo(codeAtual, isDayAtual).texto;
         document.getElementById('temp-hoje-max').innerText = maxHoje;
         document.getElementById('temp-hoje-min').innerText = minHoje;
 
-        document.getElementById('clima-sensacao').innerText = sensacao;
-        document.getElementById('clima-chuva-hoje').innerText = chuvaHoje;
-        document.getElementById('clima-umidade-hoje').innerText = umidade;
-        document.getElementById('clima-vento-hoje').innerText = vento;
+        document.getElementById('clima-sensacao').innerText = `${sensacao}°C`;
+        document.getElementById('clima-chuva-hoje').innerText = `${chuvaHoje}%`;
+        document.getElementById('clima-umidade-hoje').innerText = `${umidade}%`;
+        document.getElementById('clima-vento-hoje').innerText = `${vento} km/h`;
 
+        // Renderiza o Cenário Dinâmico
         renderizarCenarioAtmosferico(codeAtual, isDayAtual);
 
+        // Previsão Horária em Glassmorphism
         const horaAtual = new Date().getHours();
         const containerHoras = document.getElementById('container-horas-capsula');
         containerHoras.innerHTML = '';
@@ -203,12 +205,12 @@ async function carregarPrevisaoBelem() {
                 const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
 
                 containerHoras.innerHTML += `
-                            <div class="capsula-hora">
-                                <div class="hora">${horaFormatada}</div>
-                                <div class="icone">${infoHora.icone}</div>
-                                <div class="temp">${tempHora}°</div>
-                            </div>
-                        `;
+                    <div class="hora-item">
+                        <span>${horaFormatada}</span>
+                        <div class="emoji">${infoHora.icone}</div>
+                        <span>${tempHora}°</span>
+                    </div>
+                `;
                 adicionados++;
             }
         }
@@ -217,50 +219,82 @@ async function carregarPrevisaoBelem() {
     }
 }
 
+// RENDERIZADOR DA NOVA ATMOSFERA (SOL, LUA, NUVENS, PÔR DO SOL OU CHUVA)
 function renderizarCenarioAtmosferico(codigo, isDay) {
     const cenario = document.getElementById('cenario-clima');
     cenario.innerHTML = '';
 
+    const horaAtual = new Date().getHours();
+    const minutos = new Date().getMinutes();
+    const horarioDecimal = horaAtual + (minutos / 60);
+
+    // 1. CHUVA
     if (codigo >= 51) {
-        for (let i = 0; i < 35; i++) {
+        cenario.style.background = 'linear-gradient(180deg, #0F172A 0%, #1E293B 100%)';
+        gerarNuvens(6, 'nuvem-cinza');
+        for (let i = 0; i < 40; i++) {
             const gota = document.createElement('div');
-            gota.className = 'gota-chuva';
+            gota.className = 'gota';
             gota.style.left = `${Math.random() * 100}%`;
-            gota.style.animationDelay = `${Math.random() * 1.5}s`;
-            gota.style.animationDuration = `${0.8 + Math.random() * 0.5}s`;
+            gota.style.animationDelay = `${Math.random() * 1}s`;
             cenario.appendChild(gota);
         }
         return;
     }
 
-    if (isDay === 1) {
-        const solGlow = document.createElement('div');
-        solGlow.className = 'sol-vivo-glow';
-        cenario.appendChild(solGlow);
-
-        const nuvem = document.createElement('div');
-        nuvem.className = 'nuvem-deriva';
-        nuvem.style.top = '22%';
-        nuvem.style.width = '350px';
-        nuvem.style.height = '140px';
-        cenario.appendChild(nuvem);
+    // 2. FIM DE TARDE / PÔR DO SOL EM BELÉM (Entre 17:30 e 18:35)
+    if (horarioDecimal >= 17.5 && horarioDecimal <= 18.6) {
+        cenario.style.background = 'linear-gradient(180deg, #4C1D95 0%, #E11D48 40%, #F59E0B 100%)';
+        cenario.innerHTML = '<div class="sol-poente"></div>';
+        gerarNuvens(5, 'nuvem-rosada');
         return;
     }
 
-    const luaGlow = document.createElement('div');
-    luaGlow.className = 'lua-brilho-noturno';
-    cenario.appendChild(luaGlow);
+    // 3. NOITE (isDay === 0)
+    if (isDay === 0) {
+        cenario.style.background = 'linear-gradient(180deg, #020617 0%, #0F172A 100%)';
+        cenario.innerHTML = '<div class="lua"></div>';
+        for (let i = 0; i < 30; i++) {
+            const estrela = document.createElement('div');
+            estrela.className = 'estrela';
+            estrela.style.width = `${2 + Math.random() * 3}px`;
+            estrela.style.height = estrela.style.width;
+            estrela.style.top = `${Math.random() * 55}%`;
+            estrela.style.left = `${Math.random() * 100}%`;
+            estrela.style.animationDelay = `${Math.random() * 3}s`;
+            cenario.appendChild(estrela);
+        }
+        return;
+    }
 
-    for (let i = 0; i < 25; i++) {
-        const estrela = document.createElement('div');
-        estrela.className = 'estrela-viva';
-        const tamanho = 2 + Math.random() * 3;
-        estrela.style.width = `${tamanho}px`;
-        estrela.style.height = `${tamanho}px`;
-        estrela.style.top = `${Math.random() * 55}%`;
-        estrela.style.left = `${Math.random() * 100}%`;
-        estrela.style.animationDelay = `${Math.random() * 3}s`;
-        cenario.appendChild(estrela);
+    // 4. DIA ENSOLARADO OU COM NUVENS (isDay === 1)
+    if (codigo === 0) {
+        // Céu Limpo
+        cenario.style.background = 'linear-gradient(180deg, #0284C7 0%, #38BDF8 100%)';
+        cenario.innerHTML = '<div class="sol-vivo"></div>';
+    } else if (codigo <= 3) {
+        // Sol com Nuvens
+        cenario.style.background = 'linear-gradient(180deg, #0369A1 0%, #7DD3FC 100%)';
+        cenario.innerHTML = '<div class="sol-vivo"></div>';
+        gerarNuvens(4, 'nuvem-branca');
+    } else {
+        // Nublado
+        cenario.style.background = 'linear-gradient(180deg, #334155 0%, #94A3B8 100%)';
+        gerarNuvens(7, 'nuvem-cinza');
+    }
+}
+
+function gerarNuvens(qtd, classeCor) {
+    const cenario = document.getElementById('cenario-clima');
+    for (let i = 0; i < qtd; i++) {
+        const nuvem = document.createElement('div');
+        nuvem.className = `nuvem ${classeCor}`;
+        nuvem.style.width = `${160 + Math.random() * 200}px`;
+        nuvem.style.height = `${80 + Math.random() * 100}px`;
+        nuvem.style.top = `${5 + Math.random() * 35}%`;
+        nuvem.style.animationDuration = `${16 + Math.random() * 18}s`;
+        nuvem.style.animationDelay = `-${Math.random() * 18}s`;
+        cenario.appendChild(nuvem);
     }
 }
 
@@ -274,12 +308,12 @@ function traduzirClimaComPeriodo(codigo, isDay) {
         return { texto: "Noite Tropical com Nuvens", icone: "☁️" };
     }
 
-    if (codigo === 0) return { texto: "Céu Limpo com Sol", icone: "☀️" };
-    if (codigo <= 3) return { texto: "Sol entre Nuvens", icone: "⛅" };
+    if (codigo === 0) return { texto: "Dia Ensolarado", icone: "☀️" };
+    if (codigo <= 3) return { texto: "Sol com Nuvens", icone: "⛅" };
     if (codigo >= 51 && codigo <= 67) return { texto: "Chuva Passageira", icone: "🌧️" };
     if (codigo >= 80 && codigo <= 82) return { texto: "Pancadas de Chuva", icone: "🌦️" };
     if (codigo >= 95) return { texto: "Chuva com Trovoadas", icone: "⛈️" };
-    return { texto: "Mormaço Tropical", icone: "☁️" };
+    return { texto: "Tempo Nublado", icone: "☁️" };
 }
 
 // 7. ACERVO EDITORIAL: BELEZA, CABELOS, VISAGISMO & ESTILO
@@ -347,9 +381,7 @@ function trocarNoticiaVisual() {
     indexInfo = (indexInfo + 1) % acervoBelezaEstilo.length;
 }
 
-// ==========================================================================
 // 8. ACERVO EDITORIAL: CIRCUITO BELÉM (TOURS, CULTURA & GASTRONOMIA)
-// ==========================================================================
 const acervoToursBelem = [
     {
         tag: "SUNSET & GASTRONOMIA",
@@ -444,9 +476,6 @@ async function carregarCambio() {
 
 // ==========================================================================
 // 10. MÁQUINA DE TRANSMISSÃO EM 8 FASES (CICLO COMPLETO)
-// 1. Salão ➔ 2. Clima ➔ 3. Notícias ➔ 4. Keune 
-// ➔ 5. Circuito Belém (Tours) ➔ 6. Anuncie VisioFlow ➔ 7. Produto L'Oréal 
-// ➔ 8. World Clock ➔ Reinicia
 // ==========================================================================
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
@@ -503,13 +532,13 @@ function irParaAgenda() {
     setTimeout(irParaAnuncieAqui, 12000);
 }
 
-// 5 ➔ 6
+// 5 ➔ 6 (Anuncie na VisionFlow)
 function irParaAnuncieAqui() {
     ativarApenas(telaAnuncieAqui);
     setTimeout(irParaProduto, 11000);
 }
 
-// 6 ➔ 7
+// 6 ➔ 7 (Vídeo do Produto L'Oréal)
 function irParaProduto() {
     ativarApenas(telaProduto);
     registrarAuditoria('produto_salao');
