@@ -162,7 +162,6 @@ body, html {
 
 .tela-fase.ativa {
     display: flex;
-    opacity: 1;
 }
 
 /* FASES DE VÍDEO (1, 4 E 7) */
@@ -199,12 +198,13 @@ body, html {
 /* LOGO OFICIAL COMPARTILHADA */
 .logo-container {
     width: 100%;
-    max-width: 320px;
+    max-width: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
     filter: drop-shadow(0 4px 14px rgba(212, 175, 55, 0.25));
     cursor: pointer;
+    margin-bottom: 5px;
 }
 
 .logo-container img {
@@ -216,13 +216,13 @@ body, html {
 .rodape-local {
     text-align: center;
     border-top: 1px solid var(--borda-suave);
-    padding-top: 12px;
+    padding-top: 10px;
     width: 90%;
-    margin: 10px auto 0 auto;
+    margin: 5px auto 0 auto;
 }
 
 .bodytech-tag {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     letter-spacing: 5px;
     color: var(--texto-muted);
     text-transform: uppercase;
@@ -230,14 +230,14 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 2: CLIMA COM ESPAÇAMENTO DESACOPLADO NO °C
+   FASE 2: CLIMA GOOGLE WEATHER EDITION (DESIGN INOVADOR)
    ========================================================================== */
 #fase-clima {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #020617;
+    background-color: #0b0f19;
     flex-direction: column;
 }
 
@@ -257,14 +257,14 @@ body, html {
     left: 0;
     width: 100%;
     height: 25%;
-    background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
     z-index: 2;
 }
 
-/* Astros e Partículas */
+/* Astros e Partículas Atmosféricas */
 .sol-vivo {
     position: absolute;
-    top: 15%;
+    top: 16%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 250px;
@@ -288,7 +288,7 @@ body, html {
 
 .lua {
     position: absolute;
-    top: 15%;
+    top: 16%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 200px;
@@ -345,7 +345,7 @@ body, html {
 }
 
 /* UI Container do Clima */
-.ui-container {
+.ui-container-clima {
     position: relative;
     z-index: 10;
     width: 100%;
@@ -353,158 +353,229 @@ body, html {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 40px 30px 20px 30px;
+    padding: 35px 25px 15px 25px;
 }
 
-.data-pill {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #EAB308;
-    font-size: 0.9rem;
-    font-weight: 700;
+.clima-local-tag {
+    font-size: 0.85rem;
     letter-spacing: 2px;
-    padding: 8px 24px;
-    border-radius: 50px;
     text-transform: uppercase;
-    align-self: center;
-    margin: 8px 0 10px 0;
+    color: var(--ouro-primario);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
-.clima-hero {
+/* HERO NOVO ESTILO GOOGLE CLIMA */
+.google-hero-clima {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 26px;
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    margin-bottom: 8px;
+}
+
+.google-temp-bloco {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 5px 0 10px 0;
+    align-items: flex-start;
 }
 
-/* ESTRUTURA FLEX DESACOPLADA PARA O °C NÃO GRUDAR NO NÚMERO */
-.temp-wrapper-flex {
+.google-agora-label {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.google-temp-numero {
+    font-family: 'Outfit', 'Inter', sans-serif;
+    font-size: 6rem;
+    font-weight: 900;
+    line-height: 1;
+    color: #ffffff;
     display: flex;
     align-items: flex-start;
-    justify-content: center;
-    gap: 14px; /* Espaço de segurança garantido */
-    line-height: 1;
-}
-
-.temp-valor-digitos {
-    font-family: 'Outfit', sans-serif;
-    font-variant-numeric: tabular-nums;
-    font-size: 8.5rem;
-    font-weight: 800;
     letter-spacing: -2px;
-    background: var(--ouro-gradiente);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
-.temp-unidade-grau {
-    font-family: 'Outfit', sans-serif;
-    font-size: 3.5rem;
-    font-weight: 700;
+.google-grau {
+    font-size: 2.8rem;
     color: var(--ouro-primario);
-    margin-top: 15px; /* Alinhamento sutil no topo do número */
+    margin-top: 5px;
 }
 
-.condicao-texto {
-    font-size: 2.1rem;
+.google-icone-destaque {
+    font-size: 2.8rem;
+    margin-top: 4px;
+}
+
+.google-condicoes-bloco {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    max-width: 58%;
+    gap: 6px;
+}
+
+.google-condicao-titulo {
+    font-size: 1.55rem;
     font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    margin-top: 8px;
-    text-align: center;
+    color: #ffffff;
+    line-height: 1.25;
 }
 
-.clima-extremos-pill {
+.google-sensacao-texto {
     font-size: 1.15rem;
-    font-weight: 700;
     color: #cbd5e1;
-    margin-top: 8px;
+    font-weight: 500;
+}
+
+.google-sensacao-texto strong {
+    color: var(--ouro-primario);
+    font-weight: 800;
+}
+
+.google-extremos-texto {
+    font-size: 1.1rem;
+    font-weight: 700;
     letter-spacing: 1px;
 }
 
-/* Glassmorphism dos Cards de Métricas */
-.grid-metricas {
+/* RÉGUA HORÁRIA CONSECUTIVA (COM CHUVA %) */
+.google-timeline-horas {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 22px;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.g-hora-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.g-hora-txt {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.g-hora-chuva {
+    font-size: 0.75rem;
+    color: #38bdf8;
+    font-weight: 700;
+    min-height: 15px;
+}
+
+.g-hora-ico {
+    font-size: 1.6rem;
+}
+
+.g-hora-graus {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+}
+
+/* PREVISÃO DOS PRÓXIMOS 5 DIAS */
+.google-previsao-dias {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 22px;
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.g-dia-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.g-dia-nome {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #cbd5e1;
+    text-transform: uppercase;
+}
+
+.g-dia-ico {
+    font-size: 1.5rem;
+}
+
+.g-dia-extremos {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #94a3b8;
+}
+
+.g-dia-extremos strong {
+    color: var(--ouro-primario);
+}
+
+/* 4 CARDS DE MÉTRICAS */
+.google-grid-metricas {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
 }
 
-.glass-card {
-    background: rgba(20, 25, 35, 0.45);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 28px;
-    padding: 20px 22px;
+.google-metrica-card {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    padding: 12px 16px;
     display: flex;
     align-items: center;
-    gap: 16px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    gap: 12px;
 }
 
-.icone-box {
-    width: 58px;
-    height: 58px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
+.g-icon {
+    font-size: 1.8rem;
 }
-.bg-rosa { background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.35); }
-.bg-azul { background: rgba(56, 189, 248, 0.2); border: 1px solid rgba(56, 189, 248, 0.35); }
-.bg-verde { background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.35); }
-.bg-roxo { background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.35); }
 
-.info-box {
+.g-info {
     display: flex;
     flex-direction: column;
     text-align: left;
 }
-.info-label {
-    font-size: 0.85rem;
-    color: #cbd5e1;
-    font-weight: 600;
-    letter-spacing: 1px;
+
+.g-label {
+    font-size: 0.75rem;
+    color: #94a3b8;
     text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
 }
-.info-valor {
-    font-size: 1.8rem;
+
+.g-valor {
+    font-size: 1.35rem;
     font-weight: 800;
-    font-family: 'Outfit', sans-serif;
     color: #ffffff;
+    font-family: 'Outfit', sans-serif;
 }
-
-/* Fita de Previsão Horária em Vidro Fosco */
-.glass-horas {
-    background: rgba(20, 25, 35, 0.45);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 28px;
-    padding: 16px 24px;
-    width: 100%;
-    max-width: 600px;
-    margin: 8px auto 0 auto;
-    display: flex;
-    justify-content: space-between;
-}
-
-.hora-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-}
-.hora-item span:first-child { font-size: 0.9rem; font-weight: 600; color: #cbd5e1; }
-.hora-item .emoji { font-size: 1.7rem; }
-.hora-item span:last-child { font-size: 1.35rem; font-weight: 800; font-family: 'Outfit', sans-serif; }
 
 /* ==========================================================================
    FASE 3: NOTÍCIAS FULL BLEED (100% VERTICAL)
@@ -1003,7 +1074,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 8: WORLD CLOCK PROFISSIONAL (PÁGINA FINAL)
+   FASE 8: WORLD CLOCK PROFISSIONAL (PÁGINA FINAL LIMPA)
    ========================================================================== */
 #fase-relogio-mundial {
     flex-direction: column;
