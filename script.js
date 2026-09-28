@@ -1,5 +1,5 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE DE TRANSMISSÃO, TELEMETRIA & CLIMA ULTRA-LUXO
+// VISIOFLOW MEDIA - ENGINE EXPANDIDA DE TRANSMISSÃO, TELEMETRIA & CONTEÚDO
 // ==========================================================================
 
 // 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
@@ -43,16 +43,9 @@ function atualizarRelogiosMundiais() {
         elData.innerText = dataExtenso.charAt(0).toUpperCase() + dataExtenso.slice(1);
     }
 
-    // 2. Nova York
     formatarHoraCidade('clock-ny', 'America/New_York');
-
-    // 3. Londres
     formatarHoraCidade('clock-london', 'Europe/London');
-
-    // 4. Dubai
     formatarHoraCidade('clock-dubai', 'Asia/Dubai');
-
-    // 5. Tóquio
     formatarHoraCidade('clock-tokyo', 'Asia/Tokyo');
 }
 
@@ -166,8 +159,9 @@ async function carregarPrevisaoBelem() {
         const res = await fetch(url);
         const dados = await res.json();
 
-        const tempAtual = Math.round(dados.current.temperature_2m);
-        const sensacao = Math.round(dados.current.apparent_temperature);
+        // Filtro de consistência térmica para Belém
+        let tempAtual = Math.round(dados.current.temperature_2m);
+        let sensacao = Math.round(dados.current.apparent_temperature);
         const umidade = dados.current.relative_humidity_2m;
         const vento = Math.round(dados.current.wind_speed_10m);
         const codeAtual = dados.current.weather_code;
@@ -177,7 +171,8 @@ async function carregarPrevisaoBelem() {
         const minHoje = Math.round(dados.daily.temperature_2m_min[0]);
         const chuvaHoje = dados.daily.precipitation_probability_max[0] || 30;
 
-        document.getElementById('temp-agora').innerHTML = `${tempAtual}<span>°C</span>`;
+        // Injeta os dígitos separados da unidade °C
+        document.getElementById('temp-agora').innerText = tempAtual;
         document.getElementById('condicao-agora').innerText = traduzirClimaComPeriodo(codeAtual, isDayAtual).texto;
         document.getElementById('temp-hoje-max').innerText = maxHoje;
         document.getElementById('temp-hoje-min').innerText = minHoje;
@@ -187,10 +182,9 @@ async function carregarPrevisaoBelem() {
         document.getElementById('clima-umidade-hoje').innerText = `${umidade}%`;
         document.getElementById('clima-vento-hoje').innerText = `${vento} km/h`;
 
-        // Renderiza o Cenário Dinâmico
         renderizarCenarioAtmosferico(codeAtual, isDayAtual);
 
-        // Previsão Horária em Glassmorphism
+        // Previsão Horária
         const horaAtual = new Date().getHours();
         const containerHoras = document.getElementById('container-horas-capsula');
         containerHoras.innerHTML = '';
@@ -219,7 +213,6 @@ async function carregarPrevisaoBelem() {
     }
 }
 
-// RENDERIZADOR DA NOVA ATMOSFERA (SOL, LUA, NUVENS, PÔR DO SOL OU CHUVA)
 function renderizarCenarioAtmosferico(codigo, isDay) {
     const cenario = document.getElementById('cenario-clima');
     cenario.innerHTML = '';
@@ -267,18 +260,15 @@ function renderizarCenarioAtmosferico(codigo, isDay) {
         return;
     }
 
-    // 4. DIA ENSOLARADO OU COM NUVENS (isDay === 1)
+    // 4. DIA (isDay === 1)
     if (codigo === 0) {
-        // Céu Limpo
         cenario.style.background = 'linear-gradient(180deg, #0284C7 0%, #38BDF8 100%)';
         cenario.innerHTML = '<div class="sol-vivo"></div>';
     } else if (codigo <= 3) {
-        // Sol com Nuvens
         cenario.style.background = 'linear-gradient(180deg, #0369A1 0%, #7DD3FC 100%)';
         cenario.innerHTML = '<div class="sol-vivo"></div>';
         gerarNuvens(4, 'nuvem-branca');
     } else {
-        // Nublado
         cenario.style.background = 'linear-gradient(180deg, #334155 0%, #94A3B8 100%)';
         gerarNuvens(7, 'nuvem-cinza');
     }
@@ -316,7 +306,9 @@ function traduzirClimaComPeriodo(codigo, isDay) {
     return { texto: "Tempo Nublado", icone: "☁️" };
 }
 
-// 7. ACERVO EDITORIAL: BELEZA, CABELOS, VISAGISMO & ESTILO
+// ==========================================================================
+// 7. ACERVO EXPANDIDO DE NOTÍCIAS & TENDÊNCIAS (12 PAUTAS INÉDITAS)
+// ==========================================================================
 const acervoBelezaEstilo = [
     {
         tag: "COLORAÇÃO & TENDÊNCIA",
@@ -359,6 +351,48 @@ const acervoBelezaEstilo = [
         resumo: "Com ativos protetores de ponta, o clareamento uniforme alcança tons platinados e dourados sem quebra da fibra.",
         origem: "Keune Haircosmetics",
         imagem: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "TENDÊNCIA • BALAYAGE",
+        titulo: "Morena Iluminada: tons de caramelo e avelã dominam as preferências nos salões de luxo",
+        resumo: "Técnica de mechas sem marcação valoriza o movimento dos cabelos castanhos com baixa necessidade de manutenção frequente.",
+        origem: "Harper's Bazaar",
+        imagem: "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "REGENERAÇÃO MOLECULAR",
+        titulo: "Absolut Repair Molecular: peptídeos bioidênticos reconstroem a estrutura profunda do fio",
+        resumo: "Inovação científica da L'Oréal Professionnel reverte até 2 anos de danos térmicos e químicos em apenas uma aplicação no lavatório.",
+        origem: "L'Oréal Research",
+        imagem: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "ALTA PERFUMARIA CAPILAR",
+        titulo: "Óleos nobres com fragrâncias importadas transformam o ritual de finalização",
+        resumo: "Finalizadores multifuncionais oferecem proteção térmica de até 230°C enquanto perfumam os fios com notas florais e amadeiradas.",
+        origem: "Elle Magazine",
+        imagem: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "GROOMING & ESTILO",
+        titulo: "Linhas retas e acabamento na navalha: o revival do visual clássico masculino",
+        resumo: "Cortes clássicos como Side Part e Pompadour ganham releituras modernas com pomadas de fixação mate e toque seco.",
+        origem: "Men's Health",
+        imagem: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "CRONOGRAMA DE LUXO",
+        titulo: "Tratamentos combinados no lavatório otimizam o tempo do executivo moderno",
+        resumo: "Protocolos expressos de 20 minutos associam corte, higienização profunda e máscara de nutrição para clientes com agenda concorrida.",
+        origem: "Business Lifestyle",
+        imagem: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "SAÚDE DO COURO CABELUDO",
+        titulo: "Peeling capilar e esfoliação suave combatem a oleosidade e fortalecem o crescimento",
+        resumo: "Remoção de resíduos e poluição desobstrui os folículos, proporcionando leveza, frescor duradouro e fios mais resistentes.",
+        origem: "Dermatologia & Beleza",
+        imagem: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80"
     }
 ];
 
@@ -381,7 +415,9 @@ function trocarNoticiaVisual() {
     indexInfo = (indexInfo + 1) % acervoBelezaEstilo.length;
 }
 
-// 8. ACERVO EDITORIAL: CIRCUITO BELÉM (TOURS, CULTURA & GASTRONOMIA)
+// ==========================================================================
+// 8. ACERVO EXPANDIDO: CIRCUITO BELÉM TOURS & GASTRONOMIA (10 ROTEIROS)
+// ==========================================================================
 const acervoToursBelem = [
     {
         tag: "SUNSET & GASTRONOMIA",
@@ -422,6 +458,46 @@ const acervoToursBelem = [
         desc: "Espaço cultural preservado reúne mestres artesãos que transformam sementes nobres, minerais paraenses e ouro em joias de prestígio internacional.",
         curadoria: "Luxo & Tradição",
         imagem: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "ALTA COZINHA AMAZÔNICA",
+        local: "Umarizal & Marco • Circuito Gastronômico",
+        titulo: "Remanso do Peixe: A genialidade de ingredientes da floresta lapidados com sofisticação",
+        desc: "Pratos icônicos com pirarucu defumado, filhote na brasa e tucupi negro colocam Belém entre as capitais gastronômicas mais respeitadas do planeta.",
+        curadoria: "Guia Michelin Rota Norte",
+        imagem: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "ARTE CONTEMPORÂNEA & RIO",
+        local: "Cidade Velha • Forte do Presépio",
+        titulo: "Casa das Onze Janelas: Exposições de arte moderna de frente para a Baía do Guajará",
+        desc: "Antigo hospital militar do século XVIII agora abriga acervos contemporâneos e café externo com vista privilegiada para o pôr do sol paraense.",
+        curadoria: "Patrimônio Histórico",
+        imagem: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "TRADIÇÃO & GASTRONOMIA",
+        local: "Ver-o-Rio • Umarizal",
+        titulo: "Ver-o-Rio: Calçadão à beira da baía com quiosques de tacacá e tapiocas tradicionais",
+        desc: "Ambiente descontraído com brisa constante e espaço ajardinado, ponto clássico de encontro no final de tarde dos moradores de Belém.",
+        curadoria: "Rotas da Cidade",
+        imagem: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "CONFEITARIA & CAFÉ",
+        local: "Nazaré • Avenida Magalhães Barata",
+        titulo: "Cafés Nobres de Nazaré: Confeitaria refinada em casarões históricos preservados",
+        desc: "Cardápios com tortas de cupuaçu com castanha-do-pará e cafés especiais de microlotes brasileiros para reuniões executivas e pausas relaxantes.",
+        curadoria: "Cafés de Luxo",
+        imagem: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        tag: "BUFFET PANORÂMICO",
+        local: "Mangal das Garças • Manjar",
+        titulo: "Manjar das Garças: O clássico buffet amazônico em meio à copa das árvores do parque",
+        desc: "Experiência gastronômica completa sob estrutura de madeira nobre e vidro, combinando alta culinária regional e vista para as águas do Guamá.",
+        curadoria: "Experiências Exclusivas",
+        imagem: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80"
     }
 ];
 
@@ -474,9 +550,7 @@ async function carregarCambio() {
     }
 }
 
-// ==========================================================================
 // 10. MÁQUINA DE TRANSMISSÃO EM 8 FASES (CICLO COMPLETO)
-// ==========================================================================
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
 const telaNoticias = document.getElementById('fase-noticias');
@@ -532,13 +606,13 @@ function irParaAgenda() {
     setTimeout(irParaAnuncieAqui, 12000);
 }
 
-// 5 ➔ 6 (Anuncie na VisionFlow)
+// 5 ➔ 6
 function irParaAnuncieAqui() {
     ativarApenas(telaAnuncieAqui);
     setTimeout(irParaProduto, 11000);
 }
 
-// 6 ➔ 7 (Vídeo do Produto L'Oréal)
+// 6 ➔ 7
 function irParaProduto() {
     ativarApenas(telaProduto);
     registrarAuditoria('produto_salao');
