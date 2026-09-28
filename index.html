@@ -10,7 +10,7 @@
     <!-- Fontes Oficiais: Inter + Outfit + Montserrat + Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 
     <!-- Conexão Externa da Folha de Estilos -->
     <link rel="stylesheet" href="style.css">
@@ -58,67 +58,78 @@
             </video>
         </section>
 
-        <!-- FASE 2: CLIMA COM ESPAÇAMENTO PERFEITO NO °C & ANIMAÇÕES VIVAS -->
+        <!-- FASE 2: CLIMA GOOGLE WEATHER EDITION (ULTRA-PRECISO & DESIGN DINÂMICO) -->
         <section class="tela-fase" id="fase-clima">
             <div class="vignette-topo"></div>
             <div id="cenario-clima"></div>
 
-            <div class="ui-container">
+            <div class="ui-container-clima">
+                <!-- Topo: Logo Oficial Mantida -->
                 <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
 
-                <div class="data-pill" id="clima-data-hoje">Hoje • Belém, PA</div>
+                <div class="clima-local-tag" id="clima-data-hoje">Belém, PA • Tempo Agora</div>
 
-                <!-- Hero com espaçamento desacoplado do °C -->
-                <div class="clima-hero">
-                    <div class="temp-wrapper-flex">
-                        <span class="temp-valor-digitos" id="temp-agora">--</span>
-                        <span class="temp-unidade-grau">°C</span>
-                    </div>
-                    <div class="condicao-texto" id="condicao-agora">Atualizando tempo...</div>
-                    <div class="clima-extremos-pill">
-                        <span style="color: #EAB308;">▲ <span id="temp-hoje-max">--</span>°</span> &nbsp;|&nbsp; 
-                        <span style="color: #cbd5e1;">▼ <span id="temp-hoje-min">--</span>°</span>
-                    </div>
-                </div>
-
-                <div class="grid-metricas">
-                    <div class="glass-card">
-                        <div class="icone-box bg-rosa">🌡️</div>
-                        <div class="info-box">
-                            <span class="info-label">Sensação</span>
-                            <span class="info-valor" id="clima-sensacao">--°C</span>
+                <!-- Hero Estilo Google Clima -->
+                <div class="google-hero-clima">
+                    <div class="google-temp-bloco">
+                        <span class="google-agora-label">Agora</span>
+                        <div class="google-temp-numero">
+                            <span id="temp-agora">28</span><span class="google-grau">°</span>
                         </div>
+                        <div class="google-icone-destaque" id="google-icone-hero">🌙</div>
                     </div>
-                    <div class="glass-card">
-                        <div class="icone-box bg-azul">🌧️</div>
-                        <div class="info-box">
-                            <span class="info-label">Chuva</span>
-                            <span class="info-valor" id="clima-chuva-hoje">--%</span>
-                        </div>
-                    </div>
-                    <div class="glass-card">
-                        <div class="icone-box bg-verde">💧</div>
-                        <div class="info-box">
-                            <span class="info-label">Umidade</span>
-                            <span class="info-valor" id="clima-umidade-hoje">--%</span>
-                        </div>
-                    </div>
-                    <div class="glass-card">
-                        <div class="icone-box bg-roxo">💨</div>
-                        <div class="info-box">
-                            <span class="info-label">Vento</span>
-                            <span class="info-valor" id="clima-vento-hoje">-- km/h</span>
+                    <div class="google-condicoes-bloco">
+                        <h2 class="google-condicao-titulo" id="condicao-agora">Céu limpo com períodos nublados</h2>
+                        <div class="google-sensacao-texto">Sensação térmica: <strong id="clima-sensacao">33°</strong></div>
+                        <div class="google-extremos-texto">
+                            <span style="color:#eab308;">▲ <span id="temp-hoje-max">33</span>°</span>
+                            <span style="color:#94a3b8;">▼ <span id="temp-hoje-min">24</span>°</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="glass-horas" id="container-horas-capsula">
-                    <div class="hora-item"><span>--:00</span><div class="emoji">🌙</div><span>--°</span></div>
-                    <div class="hora-item"><span>--:00</span><div class="emoji">🌙</div><span>--°</span></div>
-                    <div class="hora-item"><span>--:00</span><div class="emoji">🌙</div><span>--°</span></div>
-                    <div class="hora-item"><span>--:00</span><div class="emoji">🌙</div><span>--°</span></div>
+                <!-- Linha do Tempo Consecutiva das Próximas Horas (com Chuva %) -->
+                <div class="google-timeline-horas" id="container-timeline-horas">
+                    <!-- Gerado dinamicamente via JS com dados reais da Open-Meteo -->
+                </div>
+
+                <!-- Previsão dos Próximos 5 Dias (Estilo Google) -->
+                <div class="google-previsao-dias" id="container-previsao-dias">
+                    <!-- Gerado dinamicamente via JS -->
+                </div>
+
+                <!-- Grid de Métricas Oficiais em Tempo Real -->
+                <div class="google-grid-metricas">
+                    <div class="google-metrica-card">
+                        <span class="g-icon">🌧️</span>
+                        <div class="g-info">
+                            <span class="g-label">Chuva</span>
+                            <strong class="g-valor" id="clima-chuva-hoje">0%</strong>
+                        </div>
+                    </div>
+                    <div class="google-metrica-card">
+                        <span class="g-icon">💨</span>
+                        <div class="g-info">
+                            <span class="g-label">Vento</span>
+                            <strong class="g-valor" id="clima-vento-hoje">10 km/h</strong>
+                        </div>
+                    </div>
+                    <div class="google-metrica-card">
+                        <span class="g-icon">💧</span>
+                        <div class="g-info">
+                            <span class="g-label">Umidade</span>
+                            <strong class="g-valor" id="clima-umidade-hoje">82%</strong>
+                        </div>
+                    </div>
+                    <div class="google-metrica-card">
+                        <span class="g-icon">🍃</span>
+                        <div class="g-info">
+                            <span class="g-label">Qualidade do Ar</span>
+                            <strong class="g-valor" id="clima-ar-hoje">Boa</strong>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="rodape-local">
@@ -127,7 +138,7 @@
             </div>
         </section>
 
-        <!-- FASE 3: NOTÍCIAS DINÂMICAS 100% VERTICAL (SEM BORDAS / COM LOGO) -->
+        <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO) -->
         <section class="tela-fase" id="fase-noticias">
             <img class="noticia-bg-full" id="noticia-foto" src="" alt="Tendência" onerror="tratarErroImagem(this)">
             <div class="noticia-vignette-overlay"></div>
@@ -221,13 +232,12 @@
             </video>
         </section>
 
-        <!-- FASE 8: WORLD CLOCK (TERMINAL GLOBAL DE FUSOS HORÁRIOS - PÁGINA FINAL) -->
+        <!-- FASE 8: WORLD CLOCK (PÁGINA FINAL LIMPA - SEM A FRASE TERMINAL GLOBAL) -->
         <section class="tela-fase" id="fase-relogio-mundial">
             <div class="clima-header-destaque">
                 <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
-                <div class="badge-data-hoje">Terminal Global • Fusos Horários</div>
             </div>
 
             <!-- CHRONOMETER PRINCIPAL: BRASÍLIA / BELÉM -->
@@ -237,7 +247,7 @@
                     Horário Oficial de Brasília
                 </div>
                 <div class="world-clock-time" id="clock-brasilia">00:00<span class="clock-segundos" id="clock-brasilia-seg">:00</span></div>
-                <div class="world-clock-date" id="clock-brasilia-data">Terça-feira, 22 de Setembro</div>
+                <div class="world-clock-date" id="clock-brasilia-data">Carregando data...</div>
             </div>
 
             <div class="world-cities-grid">
