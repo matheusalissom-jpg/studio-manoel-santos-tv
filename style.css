@@ -218,7 +218,7 @@ body, html {
     border-top: 1px solid var(--borda-suave);
     padding-top: 12px;
     width: 90%;
-    margin: 15px auto 0 auto;
+    margin: 10px auto 0 auto;
 }
 
 .bodytech-tag {
@@ -230,7 +230,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 2: NOVO CLIMA DINÂMICO E ULTRA-LUXO
+   FASE 2: CLIMA COM ESPAÇAMENTO DESACOPLADO NO °C
    ========================================================================== */
 #fase-clima {
     position: relative;
@@ -241,7 +241,6 @@ body, html {
     flex-direction: column;
 }
 
-/* Background com Efeitos Atmosféricos Vivos */
 #cenario-clima {
     position: absolute;
     top: 0;
@@ -262,7 +261,7 @@ body, html {
     z-index: 2;
 }
 
-/* Astros e Partículas do Clima */
+/* Astros e Partículas */
 .sol-vivo {
     position: absolute;
     top: 15%;
@@ -369,35 +368,43 @@ body, html {
     border-radius: 50px;
     text-transform: uppercase;
     align-self: center;
-    margin: 8px 0 15px 0;
+    margin: 8px 0 10px 0;
 }
 
 .clima-hero {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 5px 0 15px 0;
+    margin: 5px 0 10px 0;
 }
 
-.temp-gigante {
-    font-family: 'Outfit', 'Inter', sans-serif;
+/* ESTRUTURA FLEX DESACOPLADA PARA O °C NÃO GRUDAR NO NÚMERO */
+.temp-wrapper-flex {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 14px; /* Espaço de segurança garantido */
+    line-height: 1;
+}
+
+.temp-valor-digitos {
+    font-family: 'Outfit', sans-serif;
     font-variant-numeric: tabular-nums;
     font-size: 8.5rem;
     font-weight: 800;
-    line-height: 1;
-    letter-spacing: -4px;
+    letter-spacing: -2px;
+    background: var(--ouro-gradiente);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    position: relative;
-    display: inline-block;
 }
 
-.temp-gigante span {
+.temp-unidade-grau {
+    font-family: 'Outfit', sans-serif;
     font-size: 3.5rem;
-    color: #EAB308;
-    position: absolute;
-    top: 10px;
-    right: -50px;
-    letter-spacing: 0;
+    font-weight: 700;
+    color: var(--ouro-primario);
+    margin-top: 15px; /* Alinhamento sutil no topo do número */
 }
 
 .condicao-texto {
@@ -406,7 +413,7 @@ body, html {
     letter-spacing: 2px;
     text-transform: uppercase;
     text-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    margin-top: 10px;
+    margin-top: 8px;
     text-align: center;
 }
 
@@ -414,7 +421,7 @@ body, html {
     font-size: 1.15rem;
     font-weight: 700;
     color: #cbd5e1;
-    margin-top: 10px;
+    margin-top: 8px;
     letter-spacing: 1px;
 }
 
@@ -470,7 +477,7 @@ body, html {
 .info-valor {
     font-size: 1.8rem;
     font-weight: 800;
-    font-family: 'Outfit', 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     color: #ffffff;
 }
 
@@ -481,10 +488,10 @@ body, html {
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 28px;
-    padding: 18px 24px;
+    padding: 16px 24px;
     width: 100%;
     max-width: 600px;
-    margin: 10px auto 0 auto;
+    margin: 8px auto 0 auto;
     display: flex;
     justify-content: space-between;
 }
@@ -628,7 +635,7 @@ body, html {
 
 /* ==========================================================================
    FASE 5: CIRCUITO BELÉM (TOURS & EVENTOS 100% VERTICAL FULL BLEED)
-   ========================================================================= */
+   ========================================================================== */
 #fase-agenda {
     position: absolute;
     top: 0;
