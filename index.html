@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh preventivo a cada 40 minutos para limpeza de RAM na Smart TV -->
+    <!-- Auto-refresh preventivo a cada 40 minutos para limpeza de RAM na TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
@@ -53,18 +53,15 @@
 
         <!-- FASE 1: VÍDEO PRINCIPAL (STUDIO MANOEL SANTOS) -->
         <section class="tela-fase ativa" id="fase-video">
-            <video id="player-video" autoplay muted playsinline preload="auto">
-                <source src="video.mp4" type="video/mp4">
-            </video>
+            <video id="player-video" src="video.mp4" autoplay muted playsinline preload="auto"></video>
         </section>
 
-        <!-- FASE 2: CLIMA GOOGLE WEATHER EDITION (ULTRA-PRECISO & DESIGN DINÂMICO) -->
+        <!-- FASE 2: CLIMA GOOGLE WEATHER EDITION -->
         <section class="tela-fase" id="fase-clima">
             <div class="vignette-topo"></div>
             <div id="cenario-clima"></div>
 
             <div class="ui-container-clima">
-                <!-- Topo: Logo Oficial Mantida -->
                 <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
@@ -90,17 +87,17 @@
                     </div>
                 </div>
 
-                <!-- Linha do Tempo Consecutiva das Próximas Horas (com Chuva %) -->
+                <!-- Linha do Tempo Horária Consecutiva -->
                 <div class="google-timeline-horas" id="container-timeline-horas">
-                    <!-- Gerado dinamicamente via JS com dados reais da Open-Meteo -->
+                    <!-- Gerado via JS com fallback ativo -->
                 </div>
 
-                <!-- Previsão dos Próximos 5 Dias (Estilo Google) -->
+                <!-- Previsão dos Próximos 5 Dias -->
                 <div class="google-previsao-dias" id="container-previsao-dias">
-                    <!-- Gerado dinamicamente via JS -->
+                    <!-- Gerado via JS -->
                 </div>
 
-                <!-- Grid de Métricas Oficiais em Tempo Real -->
+                <!-- Grid de Métricas Oficiais -->
                 <div class="google-grid-metricas">
                     <div class="google-metrica-card">
                         <span class="g-icon">🌧️</span>
@@ -127,7 +124,7 @@
                         <span class="g-icon">🍃</span>
                         <div class="g-info">
                             <span class="g-label">Qualidade do Ar</span>
-                            <strong class="g-valor" id="clima-ar-hoje">Boa</strong>
+                            <strong class="g-valor" id="clima-ar-hoje">26 • Boa</strong>
                         </div>
                     </div>
                 </div>
@@ -138,7 +135,7 @@
             </div>
         </section>
 
-        <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM BORDAS / COM LOGO) -->
+        <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED -->
         <section class="tela-fase" id="fase-noticias">
             <img class="noticia-bg-full" id="noticia-foto" src="" alt="Tendência" onerror="tratarErroImagem(this)">
             <div class="noticia-vignette-overlay"></div>
@@ -164,12 +161,10 @@
         <!-- FASE 4: VÍDEO DO ANUNCIANTE (KEUNE) -->
         <section class="tela-fase" id="fase-anuncio">
             <div class="selo-patrocinio">Parceiro Oficial • Keune</div>
-            <video id="player-anuncio" muted playsinline preload="auto">
-                <source src="anuncio.mp4" type="video/mp4">
-            </video>
+            <video id="player-anuncio" src="anuncio.mp4" muted playsinline preload="auto"></video>
         </section>
 
-        <!-- FASE 5: CIRCUITO BELÉM (TOURS & EVENTOS 100% VERTICAL FULL BLEED) -->
+        <!-- FASE 5: CIRCUITO BELÉM (TOURS & EVENTOS 100% VERTICAL) -->
         <section class="tela-fase" id="fase-agenda">
             <img class="agenda-bg-full" id="agenda-foto" src="" alt="Turismo Belém" onerror="tratarErroImagemAgenda(this)">
             <div class="agenda-vignette-overlay"></div>
@@ -227,12 +222,10 @@
         <!-- FASE 7: VÍDEO DO PRODUTO DO SALÃO (L'ORÉAL) -->
         <section class="tela-fase" id="fase-produto">
             <div class="selo-patrocinio">Tratamento de Luxo • L'Oréal Professionnel</div>
-            <video id="player-produto" muted playsinline preload="auto">
-                <source src="produto.mp4" type="video/mp4">
-            </video>
+            <video id="player-produto" src="produto.mp4" muted playsinline preload="auto"></video>
         </section>
 
-        <!-- FASE 8: WORLD CLOCK (PÁGINA FINAL LIMPA - SEM A FRASE TERMINAL GLOBAL) -->
+        <!-- FASE 8: WORLD CLOCK (PÁGINA FINAL LIMPA) -->
         <section class="tela-fase" id="fase-relogio-mundial">
             <div class="clima-header-destaque">
                 <div class="logo-container" onclick="registrarCliqueLogo()">
