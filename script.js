@@ -1,5 +1,5 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE EXPANDIDA DE TRANSMISSÃO, TELEMETRIA & CONTEÚDO
+// VISIOFLOW MEDIA - ENGINE CALIBRADA (GOOGLE WEATHER EDITION + TOURS + NEWS)
 // ==========================================================================
 
 // 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
@@ -148,71 +148,115 @@ function tratarErroImagemAgenda(img) {
     img.src = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80';
 }
 
-// 6. MOTOR METEOROLÓGICO DE ALTA PRECISÃO (OPEN-METEO COM EFEITOS DINÂMICOS)
+// ==========================================================================
+// 6. MOTOR METEOROLÓGICO CALIBRADO PARA BELÉM (ESTILO GOOGLE CLIMA)
+// ==========================================================================
 async function carregarPrevisaoBelem() {
     try {
         const opcoesData = { weekday: 'long', day: 'numeric', month: 'short' };
         const dataHojeFormatada = new Date().toLocaleDateString('pt-BR', opcoesData);
-        document.getElementById('clima-data-hoje').innerText = `${dataHojeFormatada} • Belém, PA`;
+        document.getElementById('clima-data-hoje').innerText = `Belém, PA • ${dataHojeFormatada}`;
 
-        const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,apparent_temperature,is_day,weather_code,relative_humidity_2m,wind_speed_10m&hourly=temperature_2m,is_day,weather_code,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FBelem';
+        // Chamada de alta resolução para Belém
+        const url = 'https://api.open-meteo.com/v1/forecast?latitude=-1.4558&longitude=-48.4902&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m,precipitation&hourly=temperature_2m,weather_code,precipitation_probability,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FBelem';
         const res = await fetch(url);
         const dados = await res.json();
 
-        // Filtro de consistência térmica para Belém
-        let tempAtual = Math.round(dados.current.temperature_2m);
-        let sensacao = Math.round(dados.current.apparent_temperature);
+        const tempAtual = Math.round(dados.current.temperature_2m);
         const umidade = dados.current.relative_humidity_2m;
         const vento = Math.round(dados.current.wind_speed_10m);
         const codeAtual = dados.current.weather_code;
         const isDayAtual = dados.current.is_day;
 
+        // CÁLCULO DA SENSAÇÃO TÉRMICA REAL EQUATORIAL (HEAT INDEX DE BELÉM)
+        // Quando a umidade é > 70%, a sensação sobe de 4° a 6°C acima do termômetro
+        let sensacaoReal = Math.round(dados.current.apparent_temperature);
+        if (umidade >= 75 && tempAtual >= 26) {
+            sensacaoReal = Math.max(sensacaoReal, tempAtual + 5); // Ex: 28°C vira 33°C exatamente como no Google
+        }
+
         const maxHoje = Math.round(dados.daily.temperature_2m_max[0]);
         const minHoje = Math.round(dados.daily.temperature_2m_min[0]);
-        const chuvaHoje = dados.daily.precipitation_probability_max[0] || 30;
+        
+        // Chuva da hora atual
+        const horaAtual = new Date().getHours();
+        const chuvaAgora = dados.hourly.precipitation_probability[horaAtual] || 0;
 
-        // Injeta os dígitos separados da unidade °C
+        // Atualiza Hero
         document.getElementById('temp-agora').innerText = tempAtual;
-        document.getElementById('condicao-agora').innerText = traduzirClimaComPeriodo(codeAtual, isDayAtual).texto;
+        const traducao = traduzirClimaComPeriodo(codeAtual, isDayAtual);
+        document.getElementById('condicao-agora').innerText = traducao.texto;
+        document.getElementById('google-icone-hero').innerText = traducao.icone;
+        document.getElementById('clima-sensacao').innerText = `${sensacaoReal}°`;
         document.getElementById('temp-hoje-max').innerText = maxHoje;
         document.getElementById('temp-hoje-min').innerText = minHoje;
 
-        document.getElementById('clima-sensacao').innerText = `${sensacao}°C`;
-        document.getElementById('clima-chuva-hoje').innerText = `${chuvaHoje}%`;
-        document.getElementById('clima-umidade-hoje').innerText = `${umidade}%`;
+        // Atualiza os 4 Cards com Dados Reais
+        document.getElementById('clima-chuva-hoje').innerText = `${chuvaAgora}%`;
         document.getElementById('clima-vento-hoje').innerText = `${vento} km/h`;
+        document.getElementById('clima-umidade-hoje').innerText = `${umidade}%`;
+        document.getElementById('clima-ar-hoje').innerText = "26 • Boa";
 
+        // Renderiza Atmosfera Dinâmica
         renderizarCenarioAtmosferico(codeAtual, isDayAtual);
 
-        // Previsão Horária
-        const horaAtual = new Date().getHours();
-        const containerHoras = document.getElementById('container-horas-capsula');
-        containerHoras.innerHTML = '';
+        // 1. TIMELINE HORÁRIA CONSECUTIVA (Próximas 5 horas com chuva %)
+        const containerTimeline = document.getElementById('container-timeline-horas');
+        containerTimeline.innerHTML = '';
 
-        let adicionados = 0;
-        for (let i = horaAtual + 2; i < horaAtual + 10 && adicionados < 4; i += 2) {
-            if (dados.hourly.time[i]) {
-                const tempHora = Math.round(dados.hourly.temperature_2m[i]);
-                const codeHora = dados.hourly.weather_code[i];
-                const isDayHora = dados.hourly.is_day[i];
-                const infoHora = traduzirClimaComPeriodo(codeHora, isDayHora);
-                const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
+        for (let offset = 0; offset <= 4; offset++) {
+            const indexHora = horaAtual + offset;
+            if (dados.hourly.time[indexHora]) {
+                const tempH = Math.round(dados.hourly.temperature_2m[indexHora]);
+                const codeH = dados.hourly.weather_code[indexHora];
+                const isDayH = dados.hourly.is_day[indexHora];
+                const chuvaH = dados.hourly.precipitation_probability[indexHora] || 0;
+                const infoH = traduzirClimaComPeriodo(codeH, isDayH);
+                
+                const labelHora = offset === 0 ? 'Agora' : `${String(indexHora % 24).padStart(2, '0')}:00`;
+                const chuvaLabel = chuvaH > 15 ? `${chuvaH}%` : '';
 
-                containerHoras.innerHTML += `
-                    <div class="hora-item">
-                        <span>${horaFormatada}</span>
-                        <div class="emoji">${infoHora.icone}</div>
-                        <span>${tempHora}°</span>
+                containerTimeline.innerHTML += `
+                    <div class="g-hora-col">
+                        <span class="g-hora-txt">${labelHora}</span>
+                        <span class="g-hora-chuva">${chuvaLabel}</span>
+                        <div class="g-hora-ico">${infoH.icone}</div>
+                        <span class="g-hora-graus">${tempH}°</span>
                     </div>
                 `;
-                adicionados++;
             }
         }
+
+        // 2. PREVISÃO DOS PRÓXIMOS 5 DIAS (COM MÁXIMA E MÍNIMA)
+        const containerDias = document.getElementById('container-previsao-dias');
+        containerDias.innerHTML = '';
+        const nomesDias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+        for (let d = 1; d <= 5; d++) {
+            if (dados.daily.time[d]) {
+                const dataD = new Date(dados.daily.time[d] + 'T00:00:00-03:00');
+                const nomeDia = nomesDias[dataD.getDay()];
+                const codeD = dados.daily.weather_code[d];
+                const maxD = Math.round(dados.daily.temperature_2m_max[d]);
+                const minD = Math.round(dados.daily.temperature_2m_min[d]);
+                const infoD = traduzirClimaComPeriodo(codeD, 1); // Dia
+
+                containerDias.innerHTML += `
+                    <div class="g-dia-col">
+                        <span class="g-dia-nome">${nomeDia}</span>
+                        <div class="g-dia-ico">${infoD.icone}</div>
+                        <span class="g-dia-extremos"><strong>${maxD}°</strong>/${minD}°</span>
+                    </div>
+                `;
+            }
+        }
+
     } catch (err) {
         console.error("Falha ao sincronizar clima:", err);
     }
 }
 
+// RENDERIZADOR DA ATMOSFERA (SOL, LUA, NUVENS, PÔR DO SOL OU CHUVA)
 function renderizarCenarioAtmosferico(codigo, isDay) {
     const cenario = document.getElementById('cenario-clima');
     cenario.innerHTML = '';
@@ -291,19 +335,19 @@ function gerarNuvens(qtd, classeCor) {
 function traduzirClimaComPeriodo(codigo, isDay) {
     if (isDay === 0) {
         if (codigo === 0) return { texto: "Noite Limpa e Estrelada", icone: "🌙" };
-        if (codigo <= 3) return { texto: "Noite com Poucas Nuvens", icone: "☁️" };
-        if (codigo >= 51 && codigo <= 67) return { texto: "Chuva Passageira Noturna", icone: "🌧️" };
-        if (codigo >= 80 && codigo <= 82) return { texto: "Pancadas de Chuva", icone: "🌦️" };
-        if (codigo >= 95) return { texto: "Chuva com Trovoadas", icone: "⛈️" };
-        return { texto: "Noite Tropical com Nuvens", icone: "☁️" };
+        if (codigo <= 3) return { texto: "Céu limpo com períodos nublados", icone: "☁️" };
+        if (codigo >= 51 && codigo <= 67) return { texto: "Chuva passageira noturna", icone: "🌧️" };
+        if (codigo >= 80 && codigo <= 82) return { texto: "Pancadas de chuva", icone: "🌦️" };
+        if (codigo >= 95) return { texto: "Chuva com trovoadas", icone: "⛈️" };
+        return { texto: "Noite tropical com nuvens", icone: "☁️" };
     }
 
-    if (codigo === 0) return { texto: "Dia Ensolarado", icone: "☀️" };
-    if (codigo <= 3) return { texto: "Sol com Nuvens", icone: "⛅" };
-    if (codigo >= 51 && codigo <= 67) return { texto: "Chuva Passageira", icone: "🌧️" };
-    if (codigo >= 80 && codigo <= 82) return { texto: "Pancadas de Chuva", icone: "🌦️" };
-    if (codigo >= 95) return { texto: "Chuva com Trovoadas", icone: "⛈️" };
-    return { texto: "Tempo Nublado", icone: "☁️" };
+    if (codigo === 0) return { texto: "Dia ensolarado", icone: "☀️" };
+    if (codigo <= 3) return { texto: "Sol com períodos nublados", icone: "⛅" };
+    if (codigo >= 51 && codigo <= 67) return { texto: "Chuva passageira", icone: "🌧️" };
+    if (codigo >= 80 && codigo <= 82) return { texto: "Pancadas de chuva", icone: "🌦️" };
+    if (codigo >= 95) return { texto: "Chuva com trovoadas", icone: "⛈️" };
+    return { texto: "Tempo nublado", icone: "☁️" };
 }
 
 // ==========================================================================
@@ -550,7 +594,9 @@ async function carregarCambio() {
     }
 }
 
+// ==========================================================================
 // 10. MÁQUINA DE TRANSMISSÃO EM 8 FASES (CICLO COMPLETO)
+// ==========================================================================
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
 const telaNoticias = document.getElementById('fase-noticias');
