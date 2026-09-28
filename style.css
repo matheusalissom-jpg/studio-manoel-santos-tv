@@ -148,7 +148,7 @@ body, html {
     background-color: var(--fundo-preto);
 }
 
-/* GERENCIADOR DE TELAS (FASES) */
+/* GERENCIADOR DE TELAS (FASES) - RIGOROSAMENTE ABSOLUTAS */
 .tela-fase {
     position: absolute;
     top: 0;
@@ -162,6 +162,7 @@ body, html {
 
 .tela-fase.ativa {
     display: flex;
+    opacity: 1;
 }
 
 /* FASES DE VÍDEO (1, 4 E 7) */
@@ -169,13 +170,16 @@ body, html {
     background-color: var(--fundo-preto);
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 #fase-video video, #fase-anuncio video, #fase-produto video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    background-color: #000;
 }
 
 .selo-patrocinio {
@@ -204,7 +208,7 @@ body, html {
     align-items: center;
     filter: drop-shadow(0 4px 14px rgba(212, 175, 55, 0.25));
     cursor: pointer;
-    margin-bottom: 5px;
+    margin: 0 auto 5px auto;
 }
 
 .logo-container img {
@@ -230,12 +234,14 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 2: CLIMA GOOGLE WEATHER EDITION (DESIGN INOVADOR)
+   FASE 2: CLIMA GOOGLE WEATHER EDITION (SEGURO E ABSOLUTO)
    ========================================================================== */
 #fase-clima {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 48px);
     overflow: hidden;
     background-color: #0b0f19;
     flex-direction: column;
@@ -1077,11 +1083,21 @@ body, html {
    FASE 8: WORLD CLOCK PROFISSIONAL (PÁGINA FINAL LIMPA)
    ========================================================================== */
 #fase-relogio-mundial {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 48px);
+    display: none;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding: 40px 30px 20px 30px;
     background: radial-gradient(circle at 50% 18%, #141414 0%, #000000 85%);
+}
+
+#fase-relogio-mundial.ativa {
+    display: flex;
 }
 
 .world-clock-hero {
