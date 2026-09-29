@@ -148,7 +148,7 @@ body, html {
     background-color: var(--fundo-preto);
 }
 
-/* TRANSIÇÃO ANTI-JUMPSCARE: SEM DISPLAY NONE, CROSSFADE DE 0.6S CONTÍNUO */
+/* TRANSIÇÃO ANTI-JUMPSCARE */
 .tela-fase {
     position: absolute;
     top: 0;
@@ -170,7 +170,7 @@ body, html {
     z-index: 5;
 }
 
-/* FASES DE VÍDEO (1, 4, 7 E 8) */
+/* FASES DE VÍDEO (1, 4, 7 E 9) - LIMPÍSSIMAS SEM TARJAS */
 #fase-video, #fase-anuncio, #fase-produto, #fase-video-extra {
     background-color: var(--fundo-preto);
     justify-content: center;
@@ -182,23 +182,6 @@ body, html {
     height: 100%;
     object-fit: cover;
     background-color: #000;
-}
-
-.selo-patrocinio {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--ouro-primario);
-    color: var(--ouro-primario);
-    padding: 8px 20px;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    z-index: 10;
 }
 
 /* LOGO OFICIAL COMPARTILHADA */
@@ -236,7 +219,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 2: CLIMA GOOGLE WEATHER COM TIPOGRAFIA AMPLIADA
+   FASE 2: CLIMA GOOGLE WEATHER EDITION
    ========================================================================== */
 #fase-clima {
     overflow: hidden;
@@ -368,7 +351,6 @@ body, html {
     margin-bottom: 5px;
 }
 
-/* HERO GOOGLE CLIMA COM TAMANHO AMPLIADO */
 .google-hero-clima {
     background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(20px);
@@ -398,7 +380,7 @@ body, html {
 
 .google-temp-numero {
     font-family: 'Outfit', sans-serif;
-    font-size: 7.2rem; /* Ampliado para grande legibilidade */
+    font-size: 7.2rem;
     font-weight: 900;
     line-height: 1;
     color: #ffffff;
@@ -427,14 +409,14 @@ body, html {
 }
 
 .google-condicao-titulo {
-    font-size: 1.9rem; /* Ampliado */
+    font-size: 1.9rem;
     font-weight: 800;
     color: #ffffff;
     line-height: 1.25;
 }
 
 .google-sensacao-texto {
-    font-size: 1.35rem; /* Ampliado */
+    font-size: 1.35rem;
     color: #cbd5e1;
     font-weight: 600;
 }
@@ -445,12 +427,11 @@ body, html {
 }
 
 .google-extremos-texto {
-    font-size: 1.35rem; /* Ampliado */
+    font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: 1px;
 }
 
-/* RÉGUA HORÁRIA AMPLIADA */
 .google-timeline-horas {
     background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(20px);
@@ -471,7 +452,7 @@ body, html {
 }
 
 .g-hora-txt {
-    font-size: 1rem; /* Ampliado */
+    font-size: 1rem;
     color: #cbd5e1;
     font-weight: 700;
 }
@@ -484,17 +465,16 @@ body, html {
 }
 
 .g-hora-ico {
-    font-size: 2rem; /* Ampliado */
+    font-size: 2rem;
 }
 
 .g-hora-graus {
-    font-size: 1.4rem; /* Ampliado */
+    font-size: 1.4rem;
     font-weight: 800;
     color: #ffffff;
     font-family: 'Outfit', sans-serif;
 }
 
-/* PREVISÃO DE 5 DIAS AMPLIADA */
 .google-previsao-dias {
     background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(20px);
@@ -515,18 +495,18 @@ body, html {
 }
 
 .g-dia-nome {
-    font-size: 1.05rem; /* Ampliado */
+    font-size: 1.05rem;
     font-weight: 800;
     color: #cbd5e1;
     text-transform: uppercase;
 }
 
 .g-dia-ico {
-    font-size: 1.8rem; /* Ampliado */
+    font-size: 1.8rem;
 }
 
 .g-dia-extremos {
-    font-size: 1.05rem; /* Ampliado */
+    font-size: 1.05rem;
     font-weight: 700;
     color: #94a3b8;
 }
@@ -535,7 +515,6 @@ body, html {
     color: var(--ouro-primario);
 }
 
-/* 4 CARDS DE MÉTRICAS AMPLIADOS */
 .google-grid-metricas {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -555,7 +534,7 @@ body, html {
 }
 
 .g-icon {
-    font-size: 2.2rem; /* Ampliado */
+    font-size: 2.2rem;
 }
 
 .g-info {
@@ -565,7 +544,7 @@ body, html {
 }
 
 .g-label {
-    font-size: 0.9rem; /* Ampliado */
+    font-size: 0.9rem;
     color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -573,14 +552,14 @@ body, html {
 }
 
 .g-valor {
-    font-size: 1.7rem; /* Ampliado */
+    font-size: 1.7rem;
     font-weight: 800;
     color: #ffffff;
     font-family: 'Outfit', sans-serif;
 }
 
 /* ==========================================================================
-   FASE 3: NOTÍCIAS FULL BLEED (SEM JUMPSCARES)
+   FASE 3: NOTÍCIAS (TOPO LIMPO SEM TARJA)
    ========================================================================== */
 #fase-noticias {
     overflow: hidden;
@@ -619,27 +598,10 @@ body, html {
     position: relative;
     z-index: 3;
     width: 100%;
-    padding: 45px 35px 20px 35px;
+    padding: 40px 35px 15px 35px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-}
-
-.noticia-topo-flutuante .logo-container {
-    max-width: 260px;
-}
-
-.badge-editorial-full {
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--ouro-primario);
-    color: var(--ouro-primario);
-    padding: 8px 24px;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
 }
 
 .noticia-conteudo-full {
@@ -653,11 +615,11 @@ body, html {
 }
 
 .noticia-chapeu-tempo {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--ouro-primario);
     letter-spacing: 3px;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .noticia-titulo-full {
@@ -695,7 +657,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 5: CIRCUITO BELÉM (SEM JUMPSCARES)
+   FASE 5: CIRCUITO BELÉM (TOPO LIMPO SEM TARJA)
    ========================================================================== */
 #fase-agenda {
     overflow: hidden;
@@ -734,27 +696,10 @@ body, html {
     position: relative;
     z-index: 3;
     width: 100%;
-    padding: 45px 35px 20px 35px;
+    padding: 40px 35px 15px 35px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-}
-
-.agenda-topo-flutuante .logo-container {
-    max-width: 260px;
-}
-
-.badge-agenda-full {
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--ouro-primario);
-    color: var(--ouro-primario);
-    padding: 8px 24px;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
 }
 
 .agenda-conteudo-full {
@@ -768,11 +713,11 @@ body, html {
 }
 
 .agenda-localizacao {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--ouro-primario);
     letter-spacing: 3px;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 800;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -1042,142 +987,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 9: AVALIAÇÕES GOOGLE MAPS (PÁGINA PRESUNÇOSA & LUXO)
-   ========================================================================== */
-#fase-feedback {
-    background-color: #05070f;
-    overflow: hidden;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-}
-
-.feedback-bg-glow {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 450px;
-    height: 450px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, transparent 70%);
-    border-radius: 50%;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.ui-container-feedback {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 35px 30px 15px 30px;
-    text-align: center;
-}
-
-.badge-autoridade-feedback {
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid var(--borda-dourada);
-    color: var(--ouro-primario);
-    padding: 8px 24px;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.feedback-hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    max-width: 580px;
-}
-
-.estrelas-douradas {
-    font-size: 3rem;
-    color: #eab308;
-    letter-spacing: 6px;
-    text-shadow: 0 0 20px rgba(234, 179, 8, 0.6);
-}
-
-.nota-google {
-    font-family: 'Outfit', sans-serif;
-    font-size: 4.5rem;
-    font-weight: 900;
-    line-height: 1;
-    color: #ffffff;
-}
-
-.nota-google span {
-    font-size: 2rem;
-    color: var(--ouro-primario);
-    font-weight: 600;
-}
-
-.feedback-titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.8rem;
-    font-weight: 900;
-    color: #ffffff;
-    line-height: 1.15;
-    letter-spacing: -0.5px;
-}
-
-.feedback-subtitulo {
-    font-size: 1.25rem;
-    color: #cbd5e1;
-    line-height: 1.55;
-    font-weight: 400;
-}
-
-.qr-feedback-card {
-    background: rgba(15, 23, 42, 0.65);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--borda-dourada);
-    border-radius: 28px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-}
-
-.qr-feedback-img-box {
-    background: #ffffff;
-    padding: 14px;
-    border-radius: 18px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    margin-bottom: 15px;
-}
-
-.qr-feedback-img-box img {
-    width: 200px;
-    height: 200px;
-    display: block;
-}
-
-.qr-feedback-call {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: var(--ouro-primario);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
-
-.qr-feedback-subcall {
-    font-size: 0.95rem;
-    color: #94a3b8;
-    margin-top: 4px;
-    font-weight: 500;
-}
-
-/* ==========================================================================
-   FASE 10: WORLD CLOCK PROFISSIONAL (PÁGINA FINAL LIMPA)
+   FASE 8: WORLD CLOCK PROFISSIONAL (PÁGINA LIMPA)
    ========================================================================== */
 #fase-relogio-mundial {
     overflow: hidden;
@@ -1345,6 +1155,129 @@ body, html {
     font-weight: 600;
     letter-spacing: 0.5px;
     text-align: left;
+}
+
+/* ==========================================================================
+   FASE 10: GOSTOU DA EXPERIÊNCIA? (FEEDBACK 5 ESTRELAS LUXO)
+   ========================================================================== */
+#fase-feedback {
+    background-color: #05070f;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.feedback-bg-glow {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.ui-container-feedback {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 30px 15px 30px;
+    text-align: center;
+}
+
+.feedback-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 580px;
+}
+
+.estrelas-douradas {
+    font-size: 3rem;
+    color: #eab308;
+    letter-spacing: 6px;
+    text-shadow: 0 0 20px rgba(234, 179, 8, 0.6);
+}
+
+.nota-google {
+    font-family: 'Outfit', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: #ffffff;
+}
+
+.nota-google span {
+    font-size: 2rem;
+    color: var(--ouro-primario);
+    font-weight: 600;
+}
+
+.feedback-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+}
+
+.feedback-subtitulo {
+    font-size: 1.25rem;
+    color: #cbd5e1;
+    line-height: 1.55;
+    font-weight: 400;
+}
+
+.qr-feedback-card {
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--borda-dourada);
+    border-radius: 28px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+}
+
+.qr-feedback-img-box {
+    background: #ffffff;
+    padding: 14px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    margin-bottom: 15px;
+}
+
+.qr-feedback-img-box img {
+    width: 200px;
+    height: 200px;
+    display: block;
+}
+
+.qr-feedback-call {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--ouro-primario);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.qr-feedback-subcall {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    margin-top: 4px;
+    font-weight: 500;
 }
 
 /* RODAPÉ TICKER TAPE FINANCEIRO */
