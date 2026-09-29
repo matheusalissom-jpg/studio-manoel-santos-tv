@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Auto-refresh preventivo a cada 40 minutos para limpeza de RAM na TV -->
+    <!-- Auto-refresh preventivo a cada 40 minutos para limpeza de RAM na Smart TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
@@ -56,7 +56,7 @@
             <video id="player-video" src="video.mp4" autoplay muted playsinline preload="auto"></video>
         </section>
 
-        <!-- FASE 2: CLIMA GOOGLE WEATHER EDITION -->
+        <!-- FASE 2: CLIMA GOOGLE WEATHER COM INFORMAÇÕES AMPLIADAS -->
         <section class="tela-fase" id="fase-clima">
             <div class="vignette-topo"></div>
             <div id="cenario-clima"></div>
@@ -68,7 +68,7 @@
 
                 <div class="clima-local-tag" id="clima-data-hoje">Belém, PA • Tempo Agora</div>
 
-                <!-- Hero Estilo Google Clima -->
+                <!-- Hero com Números e Textos Maiores -->
                 <div class="google-hero-clima">
                     <div class="google-temp-bloco">
                         <span class="google-agora-label">Agora</span>
@@ -82,22 +82,22 @@
                         <div class="google-sensacao-texto">Sensação térmica: <strong id="clima-sensacao">33°</strong></div>
                         <div class="google-extremos-texto">
                             <span style="color:#eab308;">▲ <span id="temp-hoje-max">33</span>°</span>
-                            <span style="color:#94a3b8;">▼ <span id="temp-hoje-min">24</span>°</span>
+                            <span style="color:#cbd5e1;">▼ <span id="temp-hoje-min">24</span>°</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Linha do Tempo Horária Consecutiva -->
+                <!-- Linha do Tempo Horária Ampliada -->
                 <div class="google-timeline-horas" id="container-timeline-horas">
-                    <!-- Gerado via JS com fallback ativo -->
+                    <!-- Gerado via JS com dados da Open-Meteo -->
                 </div>
 
-                <!-- Previsão dos Próximos 5 Dias -->
+                <!-- Previsão dos Próximos 5 Dias Ampliada -->
                 <div class="google-previsao-dias" id="container-previsao-dias">
                     <!-- Gerado via JS -->
                 </div>
 
-                <!-- Grid de Métricas Oficiais -->
+                <!-- Grid de Métricas Ampliadas -->
                 <div class="google-grid-metricas">
                     <div class="google-metrica-card">
                         <span class="g-icon">🌧️</span>
@@ -135,7 +135,7 @@
             </div>
         </section>
 
-        <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED -->
+        <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM PISCADAS) -->
         <section class="tela-fase" id="fase-noticias">
             <img class="noticia-bg-full" id="noticia-foto" src="" alt="Tendência" onerror="tratarErroImagem(this)">
             <div class="noticia-vignette-overlay"></div>
@@ -225,7 +225,46 @@
             <video id="player-produto" src="produto.mp4" muted playsinline preload="auto"></video>
         </section>
 
-        <!-- FASE 8: WORLD CLOCK (PÁGINA FINAL LIMPA) -->
+        <!-- FASE 8: VÍDEO NOVO DO SALÃO / CLIENTE (NOVA PÁGINA) -->
+        <section class="tela-fase" id="fase-video-extra">
+            <div class="selo-patrocinio">Exclusividade • Studio Manoel Santos</div>
+            <video id="player-video-extra" src="video-extra.mp4" muted playsinline preload="auto"></video>
+        </section>
+
+        <!-- FASE 9: AVALIAÇÕES 5 ESTRELAS GOOGLE MAPS (PÁGINA PRESUNÇOSA & LUXO) -->
+        <section class="tela-fase" id="fase-feedback">
+            <div class="feedback-bg-glow"></div>
+            
+            <div class="ui-container-feedback">
+                <div class="logo-container" onclick="registrarCliqueLogo()">
+                    <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
+                </div>
+
+                <div class="badge-autoridade-feedback">Autoridade Máxima • Google Reviews</div>
+
+                <div class="feedback-hero">
+                    <div class="estrelas-douradas">★★★★★</div>
+                    <div class="nota-google">5.0 <span>/ 5.0</span></div>
+                    <h1 class="feedback-titulo">Experiência Impecável</h1>
+                    <p class="feedback-subtitulo">A sua satisfação define o padrão do salão mais exclusivo de Belém. Aponte a câmera e compartilhe sua avaliação no Google Maps.</p>
+                </div>
+
+                <div class="qr-feedback-card">
+                    <div class="qr-feedback-img-box">
+                        <!-- QR Code Oficial Real direcionando para o link de avaliações do salão -->
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=https%3A%2F%2Fshare.google%2F1WMK81vgpdOdMs8jV" alt="Avalie no Google Maps">
+                    </div>
+                    <div class="qr-feedback-call">Escaneie para Avaliar no Google</div>
+                    <div class="qr-feedback-subcall">Leva menos de 1 minuto</div>
+                </div>
+
+                <div class="rodape-local">
+                    <div class="bodytech-tag">Studio Manoel Santos • Bodytech Belém</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FASE 10: WORLD CLOCK (PÁGINA FINAL LIMPA) -->
         <section class="tela-fase" id="fase-relogio-mundial">
             <div class="clima-header-destaque">
                 <div class="logo-container" onclick="registrarCliqueLogo()">
@@ -233,7 +272,6 @@
                 </div>
             </div>
 
-            <!-- CHRONOMETER PRINCIPAL: BRASÍLIA / BELÉM -->
             <div class="world-clock-hero">
                 <div class="world-clock-label">
                     <span class="bandeira-chip chip-brasil"></span>
