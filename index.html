@@ -7,10 +7,10 @@
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
-    <!-- Fontes Oficiais: Inter + Outfit + Montserrat + Playfair Display -->
+    <!-- Tipografia de Precisão: Outfit + Montserrat + Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
 
     <!-- Conexão Externa da Folha de Estilos -->
     <link rel="stylesheet" href="style.css">
@@ -56,7 +56,7 @@
             <video id="player-video" src="video.mp4" autoplay muted playsinline preload="auto"></video>
         </section>
 
-        <!-- FASE 2: CLIMA GOOGLE WEATHER COM INFORMAÇÕES AMPLIADAS -->
+        <!-- FASE 2: CLIMA GOOGLE WEATHER EDITION (SEM PISCAR NÚMEROS FALSOS) -->
         <section class="tela-fase" id="fase-clima">
             <div class="vignette-topo"></div>
             <div id="cenario-clima"></div>
@@ -68,7 +68,7 @@
 
                 <div class="clima-local-tag" id="clima-data-hoje">Belém, PA • Tempo Agora</div>
 
-                <!-- Hero com Números e Textos Maiores -->
+                <!-- Hero Estilo Google Clima -->
                 <div class="google-hero-clima">
                     <div class="google-temp-bloco">
                         <span class="google-agora-label">Agora</span>
@@ -87,17 +87,13 @@
                     </div>
                 </div>
 
-                <!-- Linha do Tempo Horária Ampliada -->
-                <div class="google-timeline-horas" id="container-timeline-horas">
-                    <!-- Gerado via JS com dados da Open-Meteo -->
-                </div>
+                <!-- Linha do Tempo Horária Consecutiva com Chuva % -->
+                <div class="google-timeline-horas" id="container-timeline-horas"></div>
 
-                <!-- Previsão dos Próximos 5 Dias Ampliada -->
-                <div class="google-previsao-dias" id="container-previsao-dias">
-                    <!-- Gerado via JS -->
-                </div>
+                <!-- Previsão dos Próximos 5 Dias -->
+                <div class="google-previsao-dias" id="container-previsao-dias"></div>
 
-                <!-- Grid de Métricas Ampliadas -->
+                <!-- Grid de Métricas Oficiais -->
                 <div class="google-grid-metricas">
                     <div class="google-metrica-card">
                         <span class="g-icon">🌧️</span>
@@ -135,7 +131,7 @@
             </div>
         </section>
 
-        <!-- FASE 3: NOTÍCIAS 100% VERTICAL FULL BLEED (SEM PISCADAS) -->
+        <!-- FASE 3: NOTÍCIAS & TENDÊNCIAS (100% VERTICAL / TOPO LIMPO) -->
         <section class="tela-fase" id="fase-noticias">
             <img class="noticia-bg-full" id="noticia-foto" src="" alt="Tendência" onerror="tratarErroImagem(this)">
             <div class="noticia-vignette-overlay"></div>
@@ -144,27 +140,25 @@
                 <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
-                <span class="badge-editorial-full" id="noticia-tag">TENDÊNCIA</span>
             </div>
 
             <div class="noticia-conteudo-full">
-                <div class="noticia-chapeu-tempo" id="noticia-tempo-label">Tendências & Estilo • Edição Atualizada</div>
-                <h1 class="noticia-titulo-full" id="noticia-titulo">Carregando pauta de beleza...</h1>
-                <p class="noticia-resumo-full" id="noticia-resumo">As interpretações contemporâneas mais sofisticadas para inspirar sua transformação.</p>
+                <div class="noticia-chapeu-tempo" id="noticia-chapeu">Tendências & Cuidado Capilar</div>
+                <h1 class="noticia-titulo-full" id="noticia-titulo">Carregando pauta editorial...</h1>
+                <p class="noticia-resumo-full" id="noticia-resumo">Informações selecionadas para inspirar sua transformação e rotina de cuidados em Belém.</p>
                 <div class="noticia-rodape-full">
                     <div>Fonte Oficial: <span id="noticia-origem-label">Keune + CNN Brasil</span></div>
-                    <div>Consulte a Recepção</div>
+                    <div>Consulte nossa Recepção</div>
                 </div>
             </div>
         </section>
 
-        <!-- FASE 4: VÍDEO DO ANUNCIANTE (KEUNE) -->
+        <!-- FASE 4: VÍDEO DO PATROCINADOR (KEUNE) -->
         <section class="tela-fase" id="fase-anuncio">
-            <div class="selo-patrocinio">Parceiro Oficial • Keune</div>
             <video id="player-anuncio" src="anuncio.mp4" muted playsinline preload="auto"></video>
         </section>
 
-        <!-- FASE 5: CIRCUITO BELÉM (TOURS & EVENTOS 100% VERTICAL) -->
+        <!-- FASE 5: CIRCUITO BELÉM (GASTRONOMIA & CULTURA REAL / TOPO LIMPO) -->
         <section class="tela-fase" id="fase-agenda">
             <img class="agenda-bg-full" id="agenda-foto" src="" alt="Turismo Belém" onerror="tratarErroImagemAgenda(this)">
             <div class="agenda-vignette-overlay"></div>
@@ -173,7 +167,6 @@
                 <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
-                <span class="badge-agenda-full" id="agenda-tag">SUNSET & GASTRONOMIA</span>
             </div>
 
             <div class="agenda-conteudo-full">
@@ -181,13 +174,13 @@
                 <h1 class="agenda-titulo-full" id="agenda-titulo">Carregando roteiro exclusivo de Belém...</h1>
                 <p class="agenda-resumo-full" id="agenda-desc">Descubra as melhores experiências culturais, passeios fluviais e alta gastronomia na capital paraense.</p>
                 <div class="agenda-rodape-full">
-                    <div>Guia: <span id="agenda-curadoria">VisioFlow City Guide</span></div>
+                    <div>Curadoria: <span id="agenda-curadoria">VisioFlow City Guide</span></div>
                     <div>Belém • Pará</div>
                 </div>
             </div>
         </section>
 
-        <!-- FASE 6: ANUNCIE AQUI (DESIGN VISIONFLOW COM ORBS E PULSO) -->
+        <!-- FASE 6: ANUNCIE AQUI (VISIONFLOW COM ORBS FLUIDOS) -->
         <section class="tela-fase" id="fase-anuncie-aqui">
             <div class="bg-container">
                 <div class="orb orb-ouro"></div>
@@ -221,50 +214,10 @@
 
         <!-- FASE 7: VÍDEO DO PRODUTO DO SALÃO (L'ORÉAL) -->
         <section class="tela-fase" id="fase-produto">
-            <div class="selo-patrocinio">Tratamento de Luxo • L'Oréal Professionnel</div>
             <video id="player-produto" src="produto.mp4" muted playsinline preload="auto"></video>
         </section>
 
-        <!-- FASE 8: VÍDEO NOVO DO SALÃO / CLIENTE (NOVA PÁGINA) -->
-        <section class="tela-fase" id="fase-video-extra">
-            <div class="selo-patrocinio">Exclusividade • Studio Manoel Santos</div>
-            <video id="player-video-extra" src="video-extra.mp4" muted playsinline preload="auto"></video>
-        </section>
-
-        <!-- FASE 9: AVALIAÇÕES 5 ESTRELAS GOOGLE MAPS (PÁGINA PRESUNÇOSA & LUXO) -->
-        <section class="tela-fase" id="fase-feedback">
-            <div class="feedback-bg-glow"></div>
-            
-            <div class="ui-container-feedback">
-                <div class="logo-container" onclick="registrarCliqueLogo()">
-                    <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
-                </div>
-
-                <div class="badge-autoridade-feedback">Autoridade Máxima • Google Reviews</div>
-
-                <div class="feedback-hero">
-                    <div class="estrelas-douradas">★★★★★</div>
-                    <div class="nota-google">5.0 <span>/ 5.0</span></div>
-                    <h1 class="feedback-titulo">Experiência Impecável</h1>
-                    <p class="feedback-subtitulo">A sua satisfação define o padrão do salão mais exclusivo de Belém. Aponte a câmera e compartilhe sua avaliação no Google Maps.</p>
-                </div>
-
-                <div class="qr-feedback-card">
-                    <div class="qr-feedback-img-box">
-                        <!-- QR Code Oficial Real direcionando para o link de avaliações do salão -->
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=https%3A%2F%2Fshare.google%2F1WMK81vgpdOdMs8jV" alt="Avalie no Google Maps">
-                    </div>
-                    <div class="qr-feedback-call">Escaneie para Avaliar no Google</div>
-                    <div class="qr-feedback-subcall">Leva menos de 1 minuto</div>
-                </div>
-
-                <div class="rodape-local">
-                    <div class="bodytech-tag">Studio Manoel Santos • Bodytech Belém</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FASE 10: WORLD CLOCK (PÁGINA FINAL LIMPA) -->
+        <!-- FASE 8: WORLD CLOCK (FUSOS HORÁRIOS MUNDIAIS) -->
         <section class="tela-fase" id="fase-relogio-mundial">
             <div class="clima-header-destaque">
                 <div class="logo-container" onclick="registrarCliqueLogo()">
@@ -337,6 +290,41 @@
 
             <div class="rodape-local">
                 <div class="bodytech-tag">Unidade Bodytech Belém</div>
+            </div>
+        </section>
+
+        <!-- FASE 9: VÍDEO EXTRA DO SALÃO / CLIENTE -->
+        <section class="tela-fase" id="fase-video-extra">
+            <video id="player-video-extra" src="video-extra.mp4" muted playsinline preload="auto"></video>
+        </section>
+
+        <!-- FASE 10: GOSTOU DA EXPERIÊNCIA? (FEEDBACK 5 ESTRELAS GOOGLE MAPS) -->
+        <section class="tela-fase" id="fase-feedback">
+            <div class="feedback-bg-glow"></div>
+            
+            <div class="ui-container-feedback">
+                <div class="logo-container" onclick="registrarCliqueLogo()">
+                    <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
+                </div>
+
+                <div class="feedback-hero">
+                    <div class="estrelas-douradas">★★★★★</div>
+                    <div class="nota-google">5.0 <span>/ 5.0</span></div>
+                    <h1 class="feedback-titulo">Gostou da experiência?</h1>
+                    <p class="feedback-subtitulo">A sua avaliação consolida o padrão de excelência do nosso atendimento. Aponte a câmera do seu celular e compartilhe sua experiência no Google Maps.</p>
+                </div>
+
+                <div class="qr-feedback-card">
+                    <div class="qr-feedback-img-box">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=https%3A%2F%2Fshare.google%2F1WMK81vgpdOdMs8jV" alt="Avalie no Google Maps">
+                    </div>
+                    <div class="qr-feedback-call">Escaneie para Avaliar no Google</div>
+                    <div class="qr-feedback-subcall">Sua opinião é fundamental para nós</div>
+                </div>
+
+                <div class="rodape-local">
+                    <div class="bodytech-tag">Studio Manoel Santos • Bodytech Belém</div>
+                </div>
             </div>
         </section>
 
