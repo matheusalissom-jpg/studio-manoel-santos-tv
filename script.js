@@ -1,5 +1,5 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE BLINDADA (WATCHDOG + GOOGLE CLIMA + CIRCUITO)
+// VISIOFLOW MEDIA - ENGINE CALIBRADA (GRADE DE 10 FASES + FEEDBACK 5 ESTRELAS)
 // ==========================================================================
 
 // 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
@@ -22,11 +22,10 @@ document.addEventListener('visibilitychange', async () => {
     }
 });
 
-// 2. MOTOR DO WORLD CLOCK (COM PROTEÇÃO CONTRA FALHAS DE TIMEZONE)
+// 2. MOTOR DO WORLD CLOCK (COM DIFERENÇA EM RELAÇÃO A BRASÍLIA)
 function atualizarRelogiosMundiais() {
     const agora = new Date();
 
-    // 1. Brasília / Belém
     try {
         const optionsBrasilia = { timeZone: 'America/Belem', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
         const horaBrasiliaCompleta = agora.toLocaleTimeString('pt-BR', optionsBrasilia);
@@ -44,7 +43,6 @@ function atualizarRelogiosMundiais() {
             elData.innerText = dataExtenso.charAt(0).toUpperCase() + dataExtenso.slice(1);
         }
     } catch (e) {
-        // Fallback nativo
         const h = String(agora.getHours()).padStart(2, '0');
         const m = String(agora.getMinutes()).padStart(2, '0');
         const s = String(agora.getSeconds()).padStart(2, '0');
@@ -164,7 +162,6 @@ function tratarErroImagemAgenda(img) {
 // 6. MOTOR METEOROLÓGICO CALIBRADO PARA BELÉM (ESTILO GOOGLE CLIMA)
 // ==========================================================================
 async function carregarPrevisaoBelem() {
-    // 1. Aplica imediatamente os dados realistas de Belém (Zero espera / Zero bug)
     preencherClimaFallback();
 
     try {
@@ -183,10 +180,9 @@ async function carregarPrevisaoBelem() {
             const codeAtual = dados.current.weather_code;
             const isDayAtual = dados.current.is_day;
 
-            // Sensação Térmica Real Equatorial (Heat Index)
             let sensacaoReal = Math.round(dados.current.apparent_temperature);
             if (umidade >= 75 && tempAtual >= 26) {
-                sensacaoReal = Math.max(sensacaoReal, tempAtual + 5); // 28°C vira 33°C exatamente como no Google
+                sensacaoReal = Math.max(sensacaoReal, tempAtual + 5);
             }
 
             const maxHoje = Math.round(dados.daily.temperature_2m_max[0]) || 33;
@@ -266,7 +262,6 @@ async function carregarPrevisaoBelem() {
     }
 }
 
-// Fallback ativo caso a internet da TV demore a responder
 function preencherClimaFallback() {
     const h = new Date().getHours();
     const isNoite = (h >= 18 || h < 6);
@@ -442,20 +437,6 @@ const acervoBelezaEstilo = [
         resumo: "Com ativos protetores de ponta, o clareamento uniforme alcança tons platinados e dourados sem quebra da fibra.",
         origem: "Keune Haircosmetics",
         imagem: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-        tag: "TENDÊNCIA • BALAYAGE",
-        titulo: "Morena Iluminada: tons de caramelo e avelã dominam as preferências nos salões de luxo",
-        resumo: "Técnica de mechas sem marcação valoriza o movimento dos cabelos castanhos com baixa necessidade de manutenção frequente.",
-        origem: "Harper's Bazaar",
-        imagem: "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-        tag: "REGENERAÇÃO MOLECULAR",
-        titulo: "Absolut Repair Molecular: peptídeos bioidênticos reconstroem a estrutura profunda do fio",
-        resumo: "Inovação científica da L'Oréal Professionnel reverte até 2 anos de danos térmicos e químicos em apenas uma aplicação no lavatório.",
-        origem: "L'Oréal Research",
-        imagem: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=80"
     }
 ];
 
@@ -464,12 +445,9 @@ let indexInfo = 0;
 function trocarNoticiaVisual() {
     const p = acervoBelezaEstilo[indexInfo];
     const fotoEl = document.getElementById('noticia-foto');
-    if (!fotoEl) return;
-    
-    const preloader = new Image();
-    preloader.src = p.imagem;
-    preloader.onload = () => { fotoEl.src = p.imagem; };
-    preloader.onerror = () => { fotoEl.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80'; };
+    if (fotoEl) {
+        fotoEl.src = p.imagem; // Atribui direto para evitar flash
+    }
 
     document.getElementById('noticia-tag').innerText = p.tag;
     document.getElementById('noticia-titulo').innerText = p.titulo;
@@ -520,12 +498,9 @@ let indexTour = 0;
 function trocarAgendaVisual() {
     const tour = acervoToursBelem[indexTour];
     const fotoEl = document.getElementById('agenda-foto');
-    if (!fotoEl) return;
-
-    const preloader = new Image();
-    preloader.src = tour.imagem;
-    preloader.onload = () => { fotoEl.src = tour.imagem; };
-    preloader.onerror = () => { fotoEl.src = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80'; };
+    if (fotoEl) {
+        fotoEl.src = tour.imagem;
+    }
 
     document.getElementById('agenda-tag').innerText = tour.tag;
     document.getElementById('agenda-local').innerText = `📍 ${tour.local}`;
@@ -566,7 +541,10 @@ async function carregarCambio() {
 }
 
 // ==========================================================================
-// 10. MÁQUINA DE TRANSMISSÃO EM 8 FASES (COM WATCHDOG ANTI-TRAVAMENTO)
+// 10. MÁQUINA DE TRANSMISSÃO EM 10 FASES (GRADE COMPLETA + WATCHDOG)
+// 1. Salão ➔ 2. Clima ➔ 3. Notícias ➔ 4. Keune ➔ 5. Circuito Belém 
+// ➔ 6. Anuncie VisioFlow ➔ 7. Produto L'Oréal ➔ 8. Vídeo Extra 
+// ➔ 9. Avaliações Google 5 Estrelas ➔ 10. World Clock ➔ Reinicia
 // ==========================================================================
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
@@ -575,13 +553,19 @@ const telaAnuncio = document.getElementById('fase-anuncio');
 const telaAgenda = document.getElementById('fase-agenda');
 const telaAnuncieAqui = document.getElementById('fase-anuncie-aqui');
 const telaProduto = document.getElementById('fase-produto');
+const telaVideoExtra = document.getElementById('fase-video-extra');
+const telaFeedback = document.getElementById('fase-feedback');
 const telaRelogio = document.getElementById('fase-relogio-mundial');
 
 const videoSalao = document.getElementById('player-video');
 const videoAnuncio = document.getElementById('player-anuncio');
 const videoProduto = document.getElementById('player-produto');
+const videoExtra = document.getElementById('player-video-extra');
 
-const todasAsTelas = [telaVideo, telaClima, telaNoticias, telaAnuncio, telaAgenda, telaAnuncieAqui, telaProduto, telaRelogio];
+const todasAsTelas = [
+    telaVideo, telaClima, telaNoticias, telaAnuncio, telaAgenda, 
+    telaAnuncieAqui, telaProduto, telaVideoExtra, telaFeedback, telaRelogio
+];
 
 function ativarApenas(telaAlvo) {
     todasAsTelas.forEach(t => {
@@ -599,8 +583,8 @@ function irParaClima() {
 
 // 2 ➔ 3
 function irParaNoticias() {
-    ativarApenas(telaNoticias);
     trocarNoticiaVisual();
+    ativarApenas(telaNoticias);
     setTimeout(irParaAnuncio, 12000);
 }
 
@@ -609,14 +593,13 @@ function irParaAnuncio() {
     ativarApenas(telaAnuncio);
     registrarAuditoria('anuncio');
     
-    // Tenta reproduzir o vídeo. Se travar, o Watchdog pula em 2.5s!
     let videoIniciou = false;
     if (videoAnuncio) {
         videoAnuncio.currentTime = 0;
         videoAnuncio.play().then(() => {
             videoIniciou = true;
         }).catch(() => {
-            console.warn("Vídeo do anúncio com autoplay bloqueado. Avançando...");
+            console.warn("Autoplay bloqueado. Avançando...");
         });
     }
 
@@ -629,8 +612,8 @@ function irParaAnuncio() {
 
 // 4 ➔ 5
 function irParaAgenda() {
-    ativarApenas(telaAgenda);
     trocarAgendaVisual();
+    ativarApenas(telaAgenda);
     setTimeout(irParaAnuncieAqui, 12000);
 }
 
@@ -651,25 +634,53 @@ function irParaProduto() {
         videoProduto.play().then(() => {
             videoIniciou = true;
         }).catch(() => {
-            console.warn("Vídeo do produto com autoplay bloqueado. Avançando...");
+            console.warn("Autoplay bloqueado. Avançando...");
         });
     }
 
     setTimeout(() => {
         if (!videoIniciou || (videoProduto && videoProduto.paused)) {
-            irParaRelogioMundial();
+            irParaVideoExtra();
         }
     }, 2500);
 }
 
-// 7 ➔ 8
+// 7 ➔ 8 (Novo Vídeo)
+function irParaVideoExtra() {
+    ativarApenas(telaVideoExtra);
+
+    let videoIniciou = false;
+    if (videoExtra) {
+        videoExtra.currentTime = 0;
+        videoExtra.play().then(() => {
+            videoIniciou = true;
+        }).catch(() => {
+            console.warn("Vídeo extra não encontrado ou bloqueado. Pulando para Feedback...");
+        });
+    }
+
+    // Se o vídeo não estiver no repositório ainda, o Cão de Guarda pula em 2 segundos!
+    setTimeout(() => {
+        if (!videoIniciou || (videoExtra && videoExtra.paused)) {
+            irParaFeedback();
+        }
+    }, 2000);
+}
+
+// 8 ➔ 9 (Feedback 5 Estrelas no Google Maps)
+function irParaFeedback() {
+    ativarApenas(telaFeedback);
+    setTimeout(irParaRelogioMundial, 12000);
+}
+
+// 9 ➔ 10 (World Clock)
 function irParaRelogioMundial() {
     ativarApenas(telaRelogio);
     atualizarRelogiosMundiais();
     setTimeout(voltarParaVideoPrincipal, 12000);
 }
 
-// 8 ➔ 1
+// 10 ➔ 1 (Reinicia o ciclo completo no Vídeo Principal)
 function voltarParaVideoPrincipal() {
     ativarApenas(telaVideo);
     registrarAuditoria('ciclo_fechado');
@@ -681,11 +692,10 @@ function voltarParaVideoPrincipal() {
         videoSalao.play().then(() => {
             videoIniciou = true;
         }).catch(() => {
-            console.warn("Vídeo do salão bloqueado pelo navegador. Pulando para o clima...");
+            console.warn("Autoplay inicial bloqueado. Pulando para o clima...");
         });
     }
 
-    // WATCHDOG PRINCIPAL: Se o vídeo não rodar em 2.5s, pula para o clima automaticamente!
     setTimeout(() => {
         if (!videoIniciou || (videoSalao && videoSalao.paused)) {
             irParaClima();
@@ -696,7 +706,14 @@ function voltarParaVideoPrincipal() {
 // Listeners de Término Real de Vídeo
 if (videoSalao) videoSalao.onended = irParaClima;
 if (videoAnuncio) videoAnuncio.onended = irParaAgenda;
-if (videoProduto) videoProduto.onended = irParaRelogioMundial;
+if (videoProduto) videoProduto.onended = irParaVideoExtra;
+if (videoExtra) videoExtra.onended = irParaFeedback;
+
+// Fallbacks de proteção imediata
+if (videoSalao) videoSalao.onerror = () => setTimeout(irParaClima, 2500);
+if (videoAnuncio) videoAnuncio.onerror = () => setTimeout(irParaAgenda, 2500);
+if (videoProduto) videoProduto.onerror = () => setTimeout(irParaVideoExtra, 2500);
+if (videoExtra) videoExtra.onerror = () => setTimeout(irParaFeedback, 2000);
 
 // Inicialização Global
 window.addEventListener('DOMContentLoaded', () => {
@@ -706,7 +723,6 @@ window.addEventListener('DOMContentLoaded', () => {
     carregarPrevisaoBelem();
     carregarCambio();
 
-    // Inicia a transmissão
     voltarParaVideoPrincipal();
     setInterval(carregarCambio, 120000);
 });
