@@ -1,5 +1,5 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE CALIBRADA (GRADE DE 10 FASES + FEEDBACK 5 ESTRELAS)
+// VISIOFLOW MEDIA - ENGINE DEFINITIVA (CACHE DE CLIMA + BELÉM AUTÊNTICO)
 // ==========================================================================
 
 // 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
@@ -12,7 +12,7 @@ async function ativarWakeLock() {
             console.log('[VisioFlow] Wake Lock Ativo: Tela bloqueada contra suspensão.');
         }
     } catch (err) {
-        console.log('[VisioFlow] Wake Lock não disponível ou negado:', err);
+        console.log('[VisioFlow] Wake Lock não disponível:', err);
     }
 }
 
@@ -22,7 +22,7 @@ document.addEventListener('visibilitychange', async () => {
     }
 });
 
-// 2. MOTOR DO WORLD CLOCK (COM DIFERENÇA EM RELAÇÃO A BRASÍLIA)
+// 2. MOTOR DO WORLD CLOCK
 function atualizarRelogiosMundiais() {
     const agora = new Date();
 
@@ -50,10 +50,10 @@ function atualizarRelogiosMundiais() {
         if (elBrasilia) elBrasilia.innerHTML = `${h}:${m}<span class="clock-segundos">:${s}</span>`;
     }
 
-    formatarHoraSegura('clock-ny', -4);       // Nova York: UTC-4
-    formatarHoraSegura('clock-london', 1);     // Londres: UTC+1
-    formatarHoraSegura('clock-dubai', 4);      // Dubai: UTC+4
-    formatarHoraSegura('clock-tokyo', 9);      // Tóquio: UTC+9
+    formatarHoraSegura('clock-ny', -4);
+    formatarHoraSegura('clock-london', 1);
+    formatarHoraSegura('clock-dubai', 4);
+    formatarHoraSegura('clock-tokyo', 9);
 }
 
 function formatarHoraSegura(elementId, utcOffset) {
@@ -68,7 +68,7 @@ function formatarHoraSegura(elementId, utcOffset) {
 
 setInterval(atualizarRelogiosMundiais, 1000);
 
-// 3. AUDITORIA & PROVA DE EXIBIÇÃO (PROOF OF PLAY - LOCALSTORAGE)
+// 3. AUDITORIA & PROVA DE EXIBIÇÃO
 const STORAGE_KEY = 'visioflow_proof_of_play';
 
 function registrarAuditoria(tipo) {
@@ -159,10 +159,19 @@ function tratarErroImagemAgenda(img) {
 }
 
 // ==========================================================================
-// 6. MOTOR METEOROLÓGICO CALIBRADO PARA BELÉM (ESTILO GOOGLE CLIMA)
+// 6. MOTOR DE CLIMA COM CACHE PERSISTENTE (FIM DO BUG DE NÚMEROS PISCANDO)
 // ==========================================================================
+const CLIMA_CACHE_KEY = 'visioflow_weather_cache';
+
 async function carregarPrevisaoBelem() {
-    preencherClimaFallback();
+    // 1. Carrega imediatamente o cache existente (SEM PISCAR NADA FALSO)
+    const cacheSalvo = localStorage.getItem(CLIMA_CACHE_KEY);
+    if (cacheSalvo) {
+        try {
+            const dadosCache = JSON.parse(cacheSalvo);
+            renderizarDadosClima(dadosCache);
+        } catch(e) {}
+    }
 
     try {
         const opcoesData = { weekday: 'long', day: 'numeric', month: 'short' };
@@ -174,132 +183,100 @@ async function carregarPrevisaoBelem() {
         const dados = await res.json();
 
         if (dados && dados.current) {
-            const tempAtual = Math.round(dados.current.temperature_2m);
-            const umidade = dados.current.relative_humidity_2m || 82;
-            const vento = Math.round(dados.current.wind_speed_10m) || 10;
-            const codeAtual = dados.current.weather_code;
-            const isDayAtual = dados.current.is_day;
-
-            let sensacaoReal = Math.round(dados.current.apparent_temperature);
-            if (umidade >= 75 && tempAtual >= 26) {
-                sensacaoReal = Math.max(sensacaoReal, tempAtual + 5);
-            }
-
-            const maxHoje = Math.round(dados.daily.temperature_2m_max[0]) || 33;
-            const minHoje = Math.round(dados.daily.temperature_2m_min[0]) || 24;
-
-            const horaAtual = new Date().getHours();
-            const chuvaAgora = dados.hourly.precipitation_probability[horaAtual] || 0;
-
-            document.getElementById('temp-agora').innerText = tempAtual;
-            const traducao = traduzirClimaComPeriodo(codeAtual, isDayAtual);
-            document.getElementById('condicao-agora').innerText = traducao.texto;
-            document.getElementById('google-icone-hero').innerText = traducao.icone;
-            document.getElementById('clima-sensacao').innerText = `${sensacaoReal}°`;
-            document.getElementById('temp-hoje-max').innerText = maxHoje;
-            document.getElementById('temp-hoje-min').innerText = minHoje;
-
-            document.getElementById('clima-chuva-hoje').innerText = `${chuvaAgora}%`;
-            document.getElementById('clima-vento-hoje').innerText = `${vento} km/h`;
-            document.getElementById('clima-umidade-hoje').innerText = `${umidade}%`;
-            document.getElementById('clima-ar-hoje').innerText = "26 • Boa";
-
-            renderizarCenarioAtmosferico(codeAtual, isDayAtual);
-
-            // Timeline Horária Consecutiva
-            const containerTimeline = document.getElementById('container-timeline-horas');
-            containerTimeline.innerHTML = '';
-
-            for (let offset = 0; offset <= 4; offset++) {
-                const indexHora = horaAtual + offset;
-                if (dados.hourly && dados.hourly.time && dados.hourly.time[indexHora]) {
-                    const tempH = Math.round(dados.hourly.temperature_2m[indexHora]);
-                    const codeH = dados.hourly.weather_code[indexHora];
-                    const isDayH = dados.hourly.is_day[indexHora];
-                    const chuvaH = dados.hourly.precipitation_probability[indexHora] || 0;
-                    const infoH = traduzirClimaComPeriodo(codeH, isDayH);
-                    
-                    const labelHora = offset === 0 ? 'Agora' : `${String(indexHora % 24).padStart(2, '0')}:00`;
-                    const chuvaLabel = chuvaH > 15 ? `${chuvaH}%` : '';
-
-                    containerTimeline.innerHTML += `
-                        <div class="g-hora-col">
-                            <span class="g-hora-txt">${labelHora}</span>
-                            <span class="g-hora-chuva">${chuvaLabel}</span>
-                            <div class="g-hora-ico">${infoH.icone}</div>
-                            <span class="g-hora-graus">${tempH}°</span>
-                        </div>
-                    `;
-                }
-            }
-
-            // Próximos 5 Dias
-            const containerDias = document.getElementById('container-previsao-dias');
-            containerDias.innerHTML = '';
-            const nomesDias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-
-            for (let d = 1; d <= 5; d++) {
-                if (dados.daily && dados.daily.time && dados.daily.time[d]) {
-                    const dataD = new Date(dados.daily.time[d] + 'T00:00:00-03:00');
-                    const nomeDia = nomesDias[dataD.getDay()];
-                    const codeD = dados.daily.weather_code[d];
-                    const maxD = Math.round(dados.daily.temperature_2m_max[d]);
-                    const minD = Math.round(dados.daily.temperature_2m_min[d]);
-                    const infoD = traduzirClimaComPeriodo(codeD, 1);
-
-                    containerDias.innerHTML += `
-                        <div class="g-dia-col">
-                            <span class="g-dia-nome">${nomeDia}</span>
-                            <div class="g-dia-ico">${infoD.icone}</div>
-                            <span class="g-dia-extremos"><strong>${maxD}°</strong>/${minD}°</span>
-                        </div>
-                    `;
-                }
-            }
+            // Salva em cache para a próxima inicialização ser 100% instantânea
+            localStorage.setItem(CLIMA_CACHE_KEY, JSON.stringify(dados));
+            renderizarDadosClima(dados);
         }
     } catch (err) {
-        console.error("Usando dados de contingência de Belém:", err);
+        console.warn("Utilizando dados do cache de Belém:", err);
     }
 }
 
-function preencherClimaFallback() {
-    const h = new Date().getHours();
-    const isNoite = (h >= 18 || h < 6);
+function renderizarDadosClima(dados) {
+    const tempAtual = Math.round(dados.current.temperature_2m);
+    const umidade = dados.current.relative_humidity_2m || 82;
+    const vento = Math.round(dados.current.wind_speed_10m) || 10;
+    const codeAtual = dados.current.weather_code;
+    const isDayAtual = dados.current.is_day;
 
-    document.getElementById('temp-agora').innerText = "28";
-    document.getElementById('condicao-agora').innerText = isNoite ? "Céu limpo com períodos nublados" : "Sol com períodos nublados";
-    document.getElementById('google-icone-hero').innerText = isNoite ? "🌙" : "⛅";
-    document.getElementById('clima-sensacao').innerText = "33°";
-    document.getElementById('temp-hoje-max').innerText = "33";
-    document.getElementById('temp-hoje-min').innerText = "24";
-
-    document.getElementById('clima-chuva-hoje').innerText = "0%";
-    document.getElementById('clima-vento-hoje').innerText = "10 km/h";
-    document.getElementById('clima-umidade-hoje').innerText = "82%";
-    document.getElementById('clima-ar-hoje').innerText = "26 • Boa";
-
-    renderizarCenarioAtmosferico(1, isNoite ? 0 : 1);
-
-    const containerTimeline = document.getElementById('container-timeline-horas');
-    if (containerTimeline && containerTimeline.children.length === 0) {
-        containerTimeline.innerHTML = `
-            <div class="g-hora-col"><span class="g-hora-txt">Agora</span><span class="g-hora-chuva"></span><div class="g-hora-ico">🌙</div><span class="g-hora-graus">28°</span></div>
-            <div class="g-hora-col"><span class="g-hora-txt">${String((h+1)%24).padStart(2,'0')}:00</span><span class="g-hora-chuva">30%</span><div class="g-hora-ico">🌧️</div><span class="g-hora-graus">28°</span></div>
-            <div class="g-hora-col"><span class="g-hora-txt">${String((h+2)%24).padStart(2,'0')}:00</span><span class="g-hora-chuva">50%</span><div class="g-hora-ico">🌧️</div><span class="g-hora-graus">27°</span></div>
-            <div class="g-hora-col"><span class="g-hora-txt">${String((h+3)%24).padStart(2,'0')}:00</span><span class="g-hora-chuva"></span><div class="g-hora-ico">🌙</div><span class="g-hora-graus">27°</span></div>
-            <div class="g-hora-col"><span class="g-hora-txt">${String((h+4)%24).padStart(2,'0')}:00</span><span class="g-hora-chuva"></span><div class="g-hora-ico">🌙</div><span class="g-hora-graus">26°</span></div>
-        `;
+    let sensacaoReal = Math.round(dados.current.apparent_temperature);
+    if (umidade >= 75 && tempAtual >= 26) {
+        sensacaoReal = Math.max(sensacaoReal, tempAtual + 5);
     }
 
+    const maxHoje = Math.round(dados.daily.temperature_2m_max[0]) || 33;
+    const minHoje = Math.round(dados.daily.temperature_2m_min[0]) || 24;
+
+    const horaAtual = new Date().getHours();
+    const chuvaAgora = (dados.hourly && dados.hourly.precipitation_probability) ? (dados.hourly.precipitation_probability[horaAtual] || 0) : 0;
+
+    document.getElementById('temp-agora').innerText = tempAtual;
+    const traducao = traduzirClimaComPeriodo(codeAtual, isDayAtual);
+    document.getElementById('condicao-agora').innerText = traducao.texto;
+    document.getElementById('google-icone-hero').innerText = traducao.icone;
+    document.getElementById('clima-sensacao').innerText = `${sensacaoReal}°`;
+    document.getElementById('temp-hoje-max').innerText = maxHoje;
+    document.getElementById('temp-hoje-min').innerText = minHoje;
+
+    document.getElementById('clima-chuva-hoje').innerText = `${chuvaAgora}%`;
+    document.getElementById('clima-vento-hoje').innerText = `${vento} km/h`;
+    document.getElementById('clima-umidade-hoje').innerText = `${umidade}%`;
+    document.getElementById('clima-ar-hoje').innerText = "26 • Boa";
+
+    renderizarCenarioAtmosferico(codeAtual, isDayAtual);
+
+    // Timeline Horária Consecutiva
+    const containerTimeline = document.getElementById('container-timeline-horas');
+    if (containerTimeline && dados.hourly && dados.hourly.time) {
+        containerTimeline.innerHTML = '';
+        for (let offset = 0; offset <= 4; offset++) {
+            const indexHora = horaAtual + offset;
+            if (dados.hourly.time[indexHora]) {
+                const tempH = Math.round(dados.hourly.temperature_2m[indexHora]);
+                const codeH = dados.hourly.weather_code[indexHora];
+                const isDayH = dados.hourly.is_day[indexHora];
+                const chuvaH = dados.hourly.precipitation_probability ? (dados.hourly.precipitation_probability[indexHora] || 0) : 0;
+                const infoH = traduzirClimaComPeriodo(codeH, isDayH);
+                
+                const labelHora = offset === 0 ? 'Agora' : `${String(indexHora % 24).padStart(2, '0')}:00`;
+                const chuvaLabel = chuvaH > 15 ? `${chuvaH}%` : '';
+
+                containerTimeline.innerHTML += `
+                    <div class="g-hora-col">
+                        <span class="g-hora-txt">${labelHora}</span>
+                        <span class="g-hora-chuva">${chuvaLabel}</span>
+                        <div class="g-hora-ico">${infoH.icone}</div>
+                        <span class="g-hora-graus">${tempH}°</span>
+                    </div>
+                `;
+            }
+        }
+    }
+
+    // Previsão dos Próximos 5 Dias
     const containerDias = document.getElementById('container-previsao-dias');
-    if (containerDias && containerDias.children.length === 0) {
-        containerDias.innerHTML = `
-            <div class="g-dia-col"><span class="g-dia-nome">Seg</span><div class="g-dia-ico">🌙</div><span class="g-dia-extremos"><strong>32°</strong>/24°</span></div>
-            <div class="g-dia-col"><span class="g-dia-nome">Ter</span><div class="g-dia-ico">☀️</div><span class="g-dia-extremos"><strong>33°</strong>/25°</span></div>
-            <div class="g-dia-col"><span class="g-dia-nome">Qua</span><div class="g-dia-ico">☀️</div><span class="g-dia-extremos"><strong>34°</strong>/25°</span></div>
-            <div class="g-dia-col"><span class="g-dia-nome">Qui</span><div class="g-dia-ico">☀️</div><span class="g-dia-extremos"><strong>33°</strong>/24°</span></div>
-            <div class="g-dia-col"><span class="g-dia-nome">Sex</span><div class="g-dia-ico">⛅</div><span class="g-dia-extremos"><strong>33°</strong>/24°</span></div>
-        `;
+    if (containerDias && dados.daily && dados.daily.time) {
+        containerDias.innerHTML = '';
+        const nomesDias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+        for (let d = 1; d <= 5; d++) {
+            if (dados.daily.time[d]) {
+                const dataD = new Date(dados.daily.time[d] + 'T00:00:00-03:00');
+                const nomeDia = nomesDias[dataD.getDay()];
+                const codeD = dados.daily.weather_code[d];
+                const maxD = Math.round(dados.daily.temperature_2m_max[d]);
+                const minD = Math.round(dados.daily.temperature_2m_min[d]);
+                const infoD = traduzirClimaComPeriodo(codeD, 1);
+
+                containerDias.innerHTML += `
+                    <div class="g-dia-col">
+                        <span class="g-dia-nome">${nomeDia}</span>
+                        <div class="g-dia-ico">${infoD.icone}</div>
+                        <span class="g-dia-extremos"><strong>${maxD}°</strong>/${minD}°</span>
+                    </div>
+                `;
+            }
+        }
     }
 }
 
@@ -394,47 +371,49 @@ function traduzirClimaComPeriodo(codigo, isDay) {
     return { texto: "Tempo nublado", icone: "☁️" };
 }
 
-// 7. ACERVO EXPANDIDO DE NOTÍCIAS & TENDÊNCIAS
+// ==========================================================================
+// 7. ACERVO EDITORIAL DE BELEZA, VISAGISMO E CLIMA AMAZÔNICO (100% CORRETO)
+// ==========================================================================
 const acervoBelezaEstilo = [
     {
-        tag: "COLORAÇÃO & TENDÊNCIA",
-        titulo: "Saiba quais tendências de coloração vão dominar os cabelos na primavera",
-        resumo: "De acordo com o embaixador master Du Nunes, interpretações contemporâneas renovam e iluminam os fios com profundidade e acabamento natural.",
+        chapeu: "Tendências de Primavera • CNN Brasil",
+        titulo: "Colorações luminosas dominam as preferências em salões de alto padrão",
+        resumo: "Segundo o embaixador master Du Nunes, mechas com profundidade e contraste suave valorizam o movimento natural sem sobrecarregar a estrutura capilar.",
         origem: "Keune + CNN Brasil",
         imagem: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
     },
     {
-        tag: "TERAPIA CAPILAR",
-        titulo: "Ozonioterapia capilar e hidratação profunda restauram a saúde dos fios danificados",
-        resumo: "Protocolos com vapor de ozônio ativam a circulação no couro cabeludo e garantem nutrição intensa desde a primeira sessão.",
-        origem: "Vogue Beleza",
+        chapeu: "Saúde Capilar no Clima Tropical",
+        titulo: "Ozonioterapia capilar combate os efeitos da alta umidade de Belém",
+        resumo: "O vapor com ozônio medicinal purifica o couro cabeludo, reduz a oleosidade típica do clima paraense e fortalece a fibra capilar desde o lavatório.",
+        origem: "Vogue Beleza & Saúde",
         imagem: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80"
     },
     {
-        tag: "BARBA & GROOMING",
-        titulo: "Barba Terapia: a combinação de toalhas quentes e óleos essenciais para o homem moderno",
-        resumo: "Mais do que alinhamento dos fios, o tratamento previne foliculite e transforma o momento do barbear em uma experiência relaxante.",
-        origem: "GQ Brasil",
+        chapeu: "Grooming Executivo • Doca & Umarizal",
+        titulo: "Barba Terapia com toalhas quentes transforma a rotina masculina de cuidados",
+        resumo: "Abertura dos poros com vapor aromático, óleos vegetais nobres e navalhamento milimétrico previnem irritações e transmitem autoridade imediata.",
+        origem: "GQ Brasil • Edição Homem",
         imagem: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=80"
     },
     {
-        tag: "WELLNESS & BODYTECH",
-        titulo: "Blindagem capilar pré e pós-treino: como proteger os fios do suor diário na academia",
-        resumo: "Especialistas indicam o uso de finalizadores com barreira lipídica antes das atividades físicas para preservar o brilho e maciez.",
-        origem: "Forbes Life",
+        chapeu: "Performance & Academia • Bodytech",
+        titulo: "Como blindar os fios contra o suor diário de treinos intensos",
+        resumo: "Especialistas recomendam finalizadores com barreira lipídica antes das sessões de musculação para evitar o ressecamento causado pelos sais da transpiração.",
+        origem: "Forbes Life • Wellness",
         imagem: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80"
     },
     {
-        tag: "VISAGISMO EXECUTIVO",
-        titulo: "O corte sob medida como instrumento de autoridade e imagem profissional",
-        resumo: "O estudo das proporções faciais permite definir linhas de corte que valorizam os traços e transmitem sofisticação imediata.",
-        origem: "Estilo & Imagem",
+        chapeu: "Visagismo Personalizado",
+        titulo: "Corte sob medida harmoniza traços faciais e posicionamento profissional",
+        resumo: "A análise geométrica do rosto determina linhas de corte que valorizam a mandíbula e o olhar, criando uma imagem pessoal marcante para reuniões e negócios.",
+        origem: "Revista Estilo & Imagem",
         imagem: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=1200&q=80"
     },
     {
-        tag: "LOIROS PERFEITOS",
-        titulo: "Infinite Blonde: a tecnologia que clareia até 8 tons preservando a integridade capilar",
-        resumo: "Com ativos protetores de ponta, o clareamento uniforme alcança tons platinados e dourados sem quebra da fibra.",
+        chapeu: "Tecnologia de Clareamento",
+        titulo: "Infinite Blonde clareia até 8 tons preservando a maciez dos fios",
+        resumo: "Desenvolvido com agentes protetores de última geração, o pó descolorante alcança tons frios e dourados sofisticados sem quebra ou perda de brilho.",
         origem: "Keune Haircosmetics",
         imagem: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=80"
     }
@@ -446,10 +425,10 @@ function trocarNoticiaVisual() {
     const p = acervoBelezaEstilo[indexInfo];
     const fotoEl = document.getElementById('noticia-foto');
     if (fotoEl) {
-        fotoEl.src = p.imagem; // Atribui direto para evitar flash
+        fotoEl.src = p.imagem;
     }
 
-    document.getElementById('noticia-tag').innerText = p.tag;
+    document.getElementById('noticia-chapeu').innerText = p.chapeu;
     document.getElementById('noticia-titulo').innerText = p.titulo;
     document.getElementById('noticia-resumo').innerText = p.resumo;
     document.getElementById('noticia-origem-label').innerText = p.origem;
@@ -457,39 +436,51 @@ function trocarNoticiaVisual() {
     indexInfo = (indexInfo + 1) % acervoBelezaEstilo.length;
 }
 
-// 8. ACERVO EXPANDIDO: CIRCUITO BELÉM
+// ==========================================================================
+// 8. CIRCUITO BELÉM: GASTRONOMIA & CULTURA HIPERLOCAL AUTÊNTICA (100% BELÉM)
+// ==========================================================================
 const acervoToursBelem = [
     {
-        tag: "SUNSET & GASTRONOMIA",
         local: "Estação das Docas • Baía do Guajará",
-        titulo: "O pôr do sol mais icônico de Belém com alta gastronomia amazônica e cervejarias artesanais",
-        desc: "Galpões portuários de 1870 restaurados oferecem vista panorâmica para o rio, feiras de artesanato nobre e o melhor do peixe regional com técnicas modernas.",
-        curadoria: "VisioFlow City Guide",
+        titulo: "Pôr do sol à beira da baía com cervejarias artesanais e alta gastronomia",
+        desc: "Galpões ingleses do século XIX restaurados reúnem o chope com infusão de bacuri da Amazon Beer, o tradicional sorvete da Cairu e restaurantes com vista panorâmica para o rio.",
+        curadoria: "Roteiro Gastronômico da Baía",
         imagem: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1200&q=80"
     },
     {
-        tag: "CULTURA & ARQUITETURA",
         local: "Praça da República • Centro Histórico",
-        titulo: "Theatro da Paz: A imponência da Belle Époque amazônica em concertos e visitas guiadas",
-        desc: "Uma das joias neoclássicas do Brasil, inaugurado em 1878 no apogeu da borracha, conta com lustres de cristal francês e acústica incomparável.",
-        curadoria: "Circuito das Artes",
+        titulo: "Theatro da Paz: A acústica perfeita da Belle Époque amazônica",
+        desc: "Inaugurado em 1878 no auge do ciclo da borracha, o teatro é uma obra-prima neoclássica com lustres de cristal francês, afrescos italianos e piso de madeiras nobres da floresta.",
+        curadoria: "Circuito das Artes e Concertos",
         imagem: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=80"
     },
     {
-        tag: "ECOTURISMO & SABORES",
-        local: "Ilha do Combu • Travessia Náutica",
-        titulo: "Passeios fluviais e alta culinária ribeirinha: a rota do cacau selvagem a minutos de Belém",
-        desc: "A poucos metros da capital, restaurantes rústicos sobre as águas e produções artesanais de chocolate orgânico proporcionam imersão sensorial única.",
-        curadoria: "Experiências Náuticas",
+        local: "Ilha do Combu • Travessia Náutica pelo Guamá",
+        titulo: "Restaurantes ribeirinhos e a rota do cacau selvagem a 15 minutos da cidade",
+        desc: "Embarque nas lanchas da Praça Princesa Isabel para degustar o filhote na brasa sobre as águas e conhecer a fábrica de chocolates 100% orgânicos da Dona Nena na floresta.",
+        curadoria: "Experiências Náuticas e Sabores",
         imagem: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80"
     },
     {
-        tag: "NATUREZA & PATRIMÔNIO",
-        local: "Cidade Velha • Margens do Guamá",
-        titulo: "Mangal das Garças: Oásis ecológico com vista de 360° no topo do Farol de Belém",
-        desc: "Parque botânico com borboletário, aves livres e arquitetura paisagística premiada às margens do rio, ideal para uma pausa tranquila ao entardecer.",
-        curadoria: "Parques & Paisagens",
+        local: "Mangal das Garças • Cidade Velha",
+        titulo: "Oásis ecológico com vista de 360° no topo do Farol de Belém",
+        desc: "Parque naturalístico às margens do Rio Guamá com borboletário, guarás vermelhos em revoada livre e o prestigiado buffet regional do Restaurante Manjar das Garças.",
+        curadoria: "Parques e Patrimônio Ambiental",
         imagem: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        local: "São José Liberto • Cidade Velha",
+        titulo: "Polo Joalheiro: Gemas da Amazônia lapidadas em convento do século XVIII",
+        desc: "Antigo presídio histórico transformado no templo do design autoral paraense, unindo ouro nobre, gemas vegetais e sementes em peças de prestígio internacional.",
+        curadoria: "Design e Joalheria Paraense",
+        imagem: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        local: "Marco & Umarizal • Rota dos Sabores",
+        titulo: "Remanso do Peixe: A consagração da alta culinária amazônica",
+        desc: "A cozinha autoral comandada pela família Castanho reinventa o pirarucu, o tucupi e o açaí com técnica contemporânea, atraindo chefs e viajantes do mundo inteiro.",
+        curadoria: "Guia da Alta Cozinha Amazônica",
+        imagem: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
     }
 ];
 
@@ -502,7 +493,6 @@ function trocarAgendaVisual() {
         fotoEl.src = tour.imagem;
     }
 
-    document.getElementById('agenda-tag').innerText = tour.tag;
     document.getElementById('agenda-local').innerText = `📍 ${tour.local}`;
     document.getElementById('agenda-titulo').innerText = tour.titulo;
     document.getElementById('agenda-desc').innerText = tour.desc;
@@ -541,10 +531,10 @@ async function carregarCambio() {
 }
 
 // ==========================================================================
-// 10. MÁQUINA DE TRANSMISSÃO EM 10 FASES (GRADE COMPLETA + WATCHDOG)
+// 10. MÁQUINA DE TRANSMISSÃO EM 10 FASES (NOVA ORDEM COM AS 2 ÚLTIMAS TELAS)
 // 1. Salão ➔ 2. Clima ➔ 3. Notícias ➔ 4. Keune ➔ 5. Circuito Belém 
-// ➔ 6. Anuncie VisioFlow ➔ 7. Produto L'Oréal ➔ 8. Vídeo Extra 
-// ➔ 9. Avaliações Google 5 Estrelas ➔ 10. World Clock ➔ Reinicia
+// ➔ 6. Anuncie VisioFlow ➔ 7. Produto L'Oréal ➔ 8. World Clock 
+// ➔ 9. Vídeo Novo Extra ➔ 10. Feedback 5 Estrelas ➔ Reinicia no Salão
 // ==========================================================================
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
@@ -553,9 +543,9 @@ const telaAnuncio = document.getElementById('fase-anuncio');
 const telaAgenda = document.getElementById('fase-agenda');
 const telaAnuncieAqui = document.getElementById('fase-anuncie-aqui');
 const telaProduto = document.getElementById('fase-produto');
+const telaRelogio = document.getElementById('fase-relogio-mundial');
 const telaVideoExtra = document.getElementById('fase-video-extra');
 const telaFeedback = document.getElementById('fase-feedback');
-const telaRelogio = document.getElementById('fase-relogio-mundial');
 
 const videoSalao = document.getElementById('player-video');
 const videoAnuncio = document.getElementById('player-anuncio');
@@ -564,7 +554,7 @@ const videoExtra = document.getElementById('player-video-extra');
 
 const todasAsTelas = [
     telaVideo, telaClima, telaNoticias, telaAnuncio, telaAgenda, 
-    telaAnuncieAqui, telaProduto, telaVideoExtra, telaFeedback, telaRelogio
+    telaAnuncieAqui, telaProduto, telaRelogio, telaVideoExtra, telaFeedback
 ];
 
 function ativarApenas(telaAlvo) {
@@ -574,21 +564,21 @@ function ativarApenas(telaAlvo) {
     if (telaAlvo) telaAlvo.classList.add('ativa');
 }
 
-// 1 ➔ 2
+// 1 ➔ 2 (Vídeo Salão ➔ Clima)
 function irParaClima() {
     ativarApenas(telaClima);
     carregarPrevisaoBelem();
     setTimeout(irParaNoticias, 12000);
 }
 
-// 2 ➔ 3
+// 2 ➔ 3 (Clima ➔ Notícias)
 function irParaNoticias() {
     trocarNoticiaVisual();
     ativarApenas(telaNoticias);
     setTimeout(irParaAnuncio, 12000);
 }
 
-// 3 ➔ 4
+// 3 ➔ 4 (Notícias ➔ Anúncio Keune)
 function irParaAnuncio() {
     ativarApenas(telaAnuncio);
     registrarAuditoria('anuncio');
@@ -598,9 +588,7 @@ function irParaAnuncio() {
         videoAnuncio.currentTime = 0;
         videoAnuncio.play().then(() => {
             videoIniciou = true;
-        }).catch(() => {
-            console.warn("Autoplay bloqueado. Avançando...");
-        });
+        }).catch(() => {});
     }
 
     setTimeout(() => {
@@ -610,20 +598,20 @@ function irParaAnuncio() {
     }, 2500);
 }
 
-// 4 ➔ 5
+// 4 ➔ 5 (Anúncio Keune ➔ Circuito Belém)
 function irParaAgenda() {
     trocarAgendaVisual();
     ativarApenas(telaAgenda);
     setTimeout(irParaAnuncieAqui, 12000);
 }
 
-// 5 ➔ 6
+// 5 ➔ 6 (Circuito Belém ➔ Anuncie na VisioFlow)
 function irParaAnuncieAqui() {
     ativarApenas(telaAnuncieAqui);
     setTimeout(irParaProduto, 11000);
 }
 
-// 6 ➔ 7
+// 6 ➔ 7 (Anuncie VisioFlow ➔ Vídeo Produto L'Oréal)
 function irParaProduto() {
     ativarApenas(telaProduto);
     registrarAuditoria('produto_salao');
@@ -633,19 +621,24 @@ function irParaProduto() {
         videoProduto.currentTime = 0;
         videoProduto.play().then(() => {
             videoIniciou = true;
-        }).catch(() => {
-            console.warn("Autoplay bloqueado. Avançando...");
-        });
+        }).catch(() => {});
     }
 
     setTimeout(() => {
         if (!videoIniciou || (videoProduto && videoProduto.paused)) {
-            irParaVideoExtra();
+            irParaRelogioMundial();
         }
     }, 2500);
 }
 
-// 7 ➔ 8 (Novo Vídeo)
+// 7 ➔ 8 (Produto L'Oréal ➔ World Clock)
+function irParaRelogioMundial() {
+    ativarApenas(telaRelogio);
+    atualizarRelogiosMundiais();
+    setTimeout(irParaVideoExtra, 11000);
+}
+
+// 8 ➔ 9 (World Clock ➔ Vídeo Novo Extra)
 function irParaVideoExtra() {
     ativarApenas(telaVideoExtra);
 
@@ -654,12 +647,10 @@ function irParaVideoExtra() {
         videoExtra.currentTime = 0;
         videoExtra.play().then(() => {
             videoIniciou = true;
-        }).catch(() => {
-            console.warn("Vídeo extra não encontrado ou bloqueado. Pulando para Feedback...");
-        });
+        }).catch(() => {});
     }
 
-    // Se o vídeo não estiver no repositório ainda, o Cão de Guarda pula em 2 segundos!
+    // Se o vídeo novo ainda não foi subido no repositório, o Cão de Guarda pula em 2s!
     setTimeout(() => {
         if (!videoIniciou || (videoExtra && videoExtra.paused)) {
             irParaFeedback();
@@ -667,20 +658,13 @@ function irParaVideoExtra() {
     }, 2000);
 }
 
-// 8 ➔ 9 (Feedback 5 Estrelas no Google Maps)
+// 9 ➔ 10 (Vídeo Extra ➔ Feedback: "Gostou da experiência?")
 function irParaFeedback() {
     ativarApenas(telaFeedback);
-    setTimeout(irParaRelogioMundial, 12000);
-}
-
-// 9 ➔ 10 (World Clock)
-function irParaRelogioMundial() {
-    ativarApenas(telaRelogio);
-    atualizarRelogiosMundiais();
     setTimeout(voltarParaVideoPrincipal, 12000);
 }
 
-// 10 ➔ 1 (Reinicia o ciclo completo no Vídeo Principal)
+// 10 ➔ 1 (Feedback ➔ Reinicia no Vídeo do Salão)
 function voltarParaVideoPrincipal() {
     ativarApenas(telaVideo);
     registrarAuditoria('ciclo_fechado');
@@ -691,9 +675,7 @@ function voltarParaVideoPrincipal() {
         videoSalao.currentTime = 0;
         videoSalao.play().then(() => {
             videoIniciou = true;
-        }).catch(() => {
-            console.warn("Autoplay inicial bloqueado. Pulando para o clima...");
-        });
+        }).catch(() => {});
     }
 
     setTimeout(() => {
@@ -706,13 +688,13 @@ function voltarParaVideoPrincipal() {
 // Listeners de Término Real de Vídeo
 if (videoSalao) videoSalao.onended = irParaClima;
 if (videoAnuncio) videoAnuncio.onended = irParaAgenda;
-if (videoProduto) videoProduto.onended = irParaVideoExtra;
+if (videoProduto) videoProduto.onended = irParaRelogioMundial;
 if (videoExtra) videoExtra.onended = irParaFeedback;
 
-// Fallbacks de proteção imediata
+// Fallbacks de proteção
 if (videoSalao) videoSalao.onerror = () => setTimeout(irParaClima, 2500);
 if (videoAnuncio) videoAnuncio.onerror = () => setTimeout(irParaAgenda, 2500);
-if (videoProduto) videoProduto.onerror = () => setTimeout(irParaVideoExtra, 2500);
+if (videoProduto) videoProduto.onerror = () => setTimeout(irParaRelogioMundial, 2500);
 if (videoExtra) videoExtra.onerror = () => setTimeout(irParaFeedback, 2000);
 
 // Inicialização Global
