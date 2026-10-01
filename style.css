@@ -148,7 +148,7 @@ body, html {
     background-color: var(--fundo-preto);
 }
 
-/* TRANSIÇÃO ANTI-JUMPSCARE */
+/* TRANSIÇÃO ANTI-JUMPSCARE: CROSSFADE LIMPO VIA GPU */
 .tela-fase {
     position: absolute;
     top: 0;
@@ -170,7 +170,7 @@ body, html {
     z-index: 5;
 }
 
-/* FASES DE VÍDEO (1, 4, 7 E 9) - LIMPÍSSIMAS SEM TARJAS */
+/* FASES DE VÍDEO (1, 4, 7 E 9) - 100% LIMPAS SEM TARJAS */
 #fase-video, #fase-anuncio, #fase-produto, #fase-video-extra {
     background-color: var(--fundo-preto);
     justify-content: center;
@@ -219,7 +219,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 2: CLIMA GOOGLE WEATHER EDITION
+   FASE 2: CLIMA GOOGLE WEATHER COM TIPOGRAFIA AMPLIADA
    ========================================================================== */
 #fase-clima {
     overflow: hidden;
@@ -559,7 +559,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 3: NOTÍCIAS (TOPO LIMPO SEM TARJA)
+   FASE 3: NOTÍCIAS FULL BLEED (SEM TARJAS NO TOPO)
    ========================================================================== */
 #fase-noticias {
     overflow: hidden;
@@ -657,7 +657,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 5: CIRCUITO BELÉM (TOPO LIMPO SEM TARJA)
+   FASE 5: CIRCUITO BELÉM (SEM TARJAS NO TOPO)
    ========================================================================== */
 #fase-agenda {
     overflow: hidden;
@@ -758,7 +758,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 6: ANUNCIE AQUI
+   FASE 6: ANUNCIE AQUI (COM ANIMAÇÃO SUAVE ESCALONADA)
    ========================================================================== */
 #fase-anuncie-aqui {
     overflow: hidden;
@@ -841,6 +841,48 @@ body, html {
     justify-content: space-evenly;
     padding: 4vh 5vw;
     text-align: center;
+}
+
+/* REVELAÇÃO ESCALONADA DOS ELEMENTOS DA VISIONFLOW */
+.vf-anim-item {
+    opacity: 0;
+    transform: translateY(22px);
+}
+
+#fase-anuncie-aqui.ativa .logo-oficial {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.1s;
+}
+
+#fase-anuncie-aqui.ativa .badge-premium {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.25s;
+}
+
+#fase-anuncie-aqui.ativa .titulo-principal {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.4s;
+}
+
+#fase-anuncie-aqui.ativa .subtitulo {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.55s;
+}
+
+#fase-anuncie-aqui.ativa .qr-card {
+    animation: fadeSlideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.7s;
+}
+
+@keyframes fadeSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .logo-oficial {
@@ -987,7 +1029,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 8: WORLD CLOCK PROFISSIONAL (PÁGINA LIMPA)
+   FASE 8: WORLD CLOCK PROFISSIONAL (PÁGINA FINAL LIMPA)
    ========================================================================== */
 #fase-relogio-mundial {
     overflow: hidden;
@@ -1158,7 +1200,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 10: GOSTOU DA EXPERIÊNCIA? (FEEDBACK 5 ESTRELAS LUXO)
+   FASE 10: GOSTOU DA EXPERIÊNCIA? (COM REVELAÇÃO ESCALONADA 5 ESTRELAS)
    ========================================================================== */
 #fase-feedback {
     background-color: #05070f;
@@ -1194,6 +1236,61 @@ body, html {
     text-align: center;
 }
 
+/* REVELAÇÃO ESCALONADA DA PÁGINA DE FEEDBACK */
+.fb-anim-item {
+    opacity: 0;
+    transform: translateY(22px);
+}
+
+#fase-feedback.ativa .logo-container {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.1s;
+}
+
+#fase-feedback.ativa .estrelas-douradas {
+    animation: popEstrelas 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.25s;
+}
+
+@keyframes popEstrelas {
+    0% {
+        opacity: 0;
+        transform: scale(0.65);
+    }
+    70% {
+        transform: scale(1.15);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#fase-feedback.ativa .nota-google {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.4s;
+}
+
+#fase-feedback.ativa .feedback-titulo {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.55s;
+}
+
+#fase-feedback.ativa .feedback-subtitulo {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.7s;
+}
+
+#fase-feedback.ativa .qr-feedback-card {
+    animation: fadeSlideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.85s;
+}
+
+#fase-feedback.ativa .rodape-local {
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 1s;
+}
+
 .feedback-hero {
     display: flex;
     flex-direction: column;
@@ -1225,7 +1322,7 @@ body, html {
 
 .feedback-titulo {
     font-family: 'Playfair Display', serif;
-    font-size: 3rem;
+    font-size: 3.2rem;
     font-weight: 900;
     color: #ffffff;
     line-height: 1.15;
