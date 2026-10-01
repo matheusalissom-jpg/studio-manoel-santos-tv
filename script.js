@@ -1,5 +1,5 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE DEFINITIVA (CACHE DE CLIMA + BELÉM AUTÊNTICO)
+// VISIOFLOW MEDIA - ENGINE EXPANDIDA & CURADORIA REAL DE BELÉM (SCRIPT.JS)
 // ==========================================================================
 
 // 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
@@ -22,7 +22,7 @@ document.addEventListener('visibilitychange', async () => {
     }
 });
 
-// 2. MOTOR DO WORLD CLOCK
+// 2. MOTOR DO WORLD CLOCK (COM DIFERENÇA EM RELAÇÃO A BRASÍLIA)
 function atualizarRelogiosMundiais() {
     const agora = new Date();
 
@@ -155,16 +155,15 @@ function tratarErroImagem(img) {
 }
 
 function tratarErroImagemAgenda(img) {
-    img.src = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80';
+    img.src = 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1200&q=80';
 }
 
 // ==========================================================================
-// 6. MOTOR DE CLIMA COM CACHE PERSISTENTE (FIM DO BUG DE NÚMEROS PISCANDO)
+// 6. MOTOR DE CLIMA COM CACHE PERSISTENTE (FIM TOTAL DO BUG DE NÚMEROS PISCANDO)
 // ==========================================================================
 const CLIMA_CACHE_KEY = 'visioflow_weather_cache';
 
 async function carregarPrevisaoBelem() {
-    // 1. Carrega imediatamente o cache existente (SEM PISCAR NADA FALSO)
     const cacheSalvo = localStorage.getItem(CLIMA_CACHE_KEY);
     if (cacheSalvo) {
         try {
@@ -183,12 +182,11 @@ async function carregarPrevisaoBelem() {
         const dados = await res.json();
 
         if (dados && dados.current) {
-            // Salva em cache para a próxima inicialização ser 100% instantânea
             localStorage.setItem(CLIMA_CACHE_KEY, JSON.stringify(dados));
             renderizarDadosClima(dados);
         }
     } catch (err) {
-        console.warn("Utilizando dados do cache de Belém:", err);
+        console.warn("Utilizando dados seguros do cache de Belém:", err);
     }
 }
 
@@ -225,7 +223,6 @@ function renderizarDadosClima(dados) {
 
     renderizarCenarioAtmosferico(codeAtual, isDayAtual);
 
-    // Timeline Horária Consecutiva
     const containerTimeline = document.getElementById('container-timeline-horas');
     if (containerTimeline && dados.hourly && dados.hourly.time) {
         containerTimeline.innerHTML = '';
@@ -253,7 +250,6 @@ function renderizarDadosClima(dados) {
         }
     }
 
-    // Previsão dos Próximos 5 Dias
     const containerDias = document.getElementById('container-previsao-dias');
     if (containerDias && dados.daily && dados.daily.time) {
         containerDias.innerHTML = '';
@@ -372,7 +368,7 @@ function traduzirClimaComPeriodo(codigo, isDay) {
 }
 
 // ==========================================================================
-// 7. ACERVO EDITORIAL DE BELEZA, VISAGISMO E CLIMA AMAZÔNICO (100% CORRETO)
+// 7. ACERVO EDITORIAL DE BELEZA, VISAGISMO E CLIMA AMAZÔNICO
 // ==========================================================================
 const acervoBelezaEstilo = [
     {
@@ -437,7 +433,7 @@ function trocarNoticiaVisual() {
 }
 
 // ==========================================================================
-// 8. CIRCUITO BELÉM: GASTRONOMIA & CULTURA HIPERLOCAL AUTÊNTICA (100% BELÉM)
+// 8. CIRCUITO BELÉM: GASTRONOMIA & CULTURA HIPERLOCAL AUTÊNTICA
 // ==========================================================================
 const acervoToursBelem = [
     {
@@ -445,13 +441,15 @@ const acervoToursBelem = [
         titulo: "Pôr do sol à beira da baía com cervejarias artesanais e alta gastronomia",
         desc: "Galpões ingleses do século XIX restaurados reúnem o chope com infusão de bacuri da Amazon Beer, o tradicional sorvete da Cairu e restaurantes com vista panorâmica para o rio.",
         curadoria: "Roteiro Gastronômico da Baía",
-        imagem: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1200&q=80"
+        // Pôr do sol autêntico sobre as águas da Amazônia
+        imagem: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
     },
     {
         local: "Praça da República • Centro Histórico",
         titulo: "Theatro da Paz: A acústica perfeita da Belle Époque amazônica",
         desc: "Inaugurado em 1878 no auge do ciclo da borracha, o teatro é uma obra-prima neoclássica com lustres de cristal francês, afrescos italianos e piso de madeiras nobres da floresta.",
         curadoria: "Circuito das Artes e Concertos",
+        // Arquitetura neoclássica monumental
         imagem: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=80"
     },
     {
@@ -459,6 +457,7 @@ const acervoToursBelem = [
         titulo: "Restaurantes ribeirinhos e a rota do cacau selvagem a 15 minutos da cidade",
         desc: "Embarque nas lanchas da Praça Princesa Isabel para degustar o filhote na brasa sobre as águas e conhecer a fábrica de chocolates 100% orgânicos da Dona Nena na floresta.",
         curadoria: "Experiências Náuticas e Sabores",
+        // Barco navegando o rio na floresta amazônica
         imagem: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80"
     },
     {
@@ -466,13 +465,15 @@ const acervoToursBelem = [
         titulo: "Oásis ecológico com vista de 360° no topo do Farol de Belém",
         desc: "Parque naturalístico às margens do Rio Guamá com borboletário, guarás vermelhos em revoada livre e o prestigiado buffet regional do Restaurante Manjar das Garças.",
         curadoria: "Parques e Patrimônio Ambiental",
-        imagem: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80"
+        // Paisagem tropical exuberante de parque natural
+        imagem: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1200&q=80"
     },
     {
         local: "São José Liberto • Cidade Velha",
         titulo: "Polo Joalheiro: Gemas da Amazônia lapidadas em convento do século XVIII",
         desc: "Antigo presídio histórico transformado no templo do design autoral paraense, unindo ouro nobre, gemas vegetais e sementes em peças de prestígio internacional.",
         curadoria: "Design e Joalheria Paraense",
+        // Ourivesaria em ouro nobre e gemas
         imagem: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&q=80"
     },
     {
@@ -480,6 +481,7 @@ const acervoToursBelem = [
         titulo: "Remanso do Peixe: A consagração da alta culinária amazônica",
         desc: "A cozinha autoral comandada pela família Castanho reinventa o pirarucu, o tucupi e o açaí com técnica contemporânea, atraindo chefs e viajantes do mundo inteiro.",
         curadoria: "Guia da Alta Cozinha Amazônica",
+        // Gastronomia refinada com peixe regional grelhado
         imagem: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
     }
 ];
@@ -531,7 +533,7 @@ async function carregarCambio() {
 }
 
 // ==========================================================================
-// 10. MÁQUINA DE TRANSMISSÃO EM 10 FASES (NOVA ORDEM COM AS 2 ÚLTIMAS TELAS)
+// 10. MÁQUINA DE TRANSMISSÃO EM 10 FASES (GRADE COMPLETA + WATCHDOG)
 // 1. Salão ➔ 2. Clima ➔ 3. Notícias ➔ 4. Keune ➔ 5. Circuito Belém 
 // ➔ 6. Anuncie VisioFlow ➔ 7. Produto L'Oréal ➔ 8. World Clock 
 // ➔ 9. Vídeo Novo Extra ➔ 10. Feedback 5 Estrelas ➔ Reinicia no Salão
@@ -608,7 +610,7 @@ function irParaAgenda() {
 // 5 ➔ 6 (Circuito Belém ➔ Anuncie na VisioFlow)
 function irParaAnuncieAqui() {
     ativarApenas(telaAnuncieAqui);
-    setTimeout(irParaProduto, 11000);
+    setTimeout(irParaProduto, 12000); // 12s para apreciar a animação suave
 }
 
 // 6 ➔ 7 (Anuncie VisioFlow ➔ Vídeo Produto L'Oréal)
@@ -650,7 +652,6 @@ function irParaVideoExtra() {
         }).catch(() => {});
     }
 
-    // Se o vídeo novo ainda não foi subido no repositório, o Cão de Guarda pula em 2s!
     setTimeout(() => {
         if (!videoIniciou || (videoExtra && videoExtra.paused)) {
             irParaFeedback();
@@ -661,7 +662,7 @@ function irParaVideoExtra() {
 // 9 ➔ 10 (Vídeo Extra ➔ Feedback: "Gostou da experiência?")
 function irParaFeedback() {
     ativarApenas(telaFeedback);
-    setTimeout(voltarParaVideoPrincipal, 12000);
+    setTimeout(voltarParaVideoPrincipal, 13000); // 13s para apreciar as estrelas e escanear o QR Code
 }
 
 // 10 ➔ 1 (Feedback ➔ Reinicia no Vídeo do Salão)
@@ -691,7 +692,7 @@ if (videoAnuncio) videoAnuncio.onended = irParaAgenda;
 if (videoProduto) videoProduto.onended = irParaRelogioMundial;
 if (videoExtra) videoExtra.onended = irParaFeedback;
 
-// Fallbacks de proteção
+// Fallbacks de proteção imediata
 if (videoSalao) videoSalao.onerror = () => setTimeout(irParaClima, 2500);
 if (videoAnuncio) videoAnuncio.onerror = () => setTimeout(irParaAgenda, 2500);
 if (videoProduto) videoProduto.onerror = () => setTimeout(irParaRelogioMundial, 2500);
