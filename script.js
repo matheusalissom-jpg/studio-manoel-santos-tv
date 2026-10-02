@@ -1,5 +1,5 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE DEFINITIVA (G1 PARÁ AO VIVO + FOTOS REAIS BELÉM)
+// VISIOFLOW MEDIA - ENGINE DEFINITIVA (TRAVA ELEITORAL + FOTOS REAIS BELÉM)
 // ==========================================================================
 
 // 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
@@ -150,16 +150,17 @@ function aplicarLogoSVG(elementoImg) {
     `;
 }
 
+// Imagens reais de alta resolução de Belém (sem bloqueio 403)
 function tratarErroImagem(img) {
-    img.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Theatro_da_Paz%2C_Bel%C3%A9m%2C_Par%C3%A1%2C_Brasil_%282022%29_01.jpg/1280px-Theatro_da_Paz%2C_Bel%C3%A9m%2C_Par%C3%A1%2C_Brasil_%282022%29_01.jpg';
+    img.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80';
 }
 
 function tratarErroImagemAgenda(img) {
-    img.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Esta%C3%A7%C3%A3o_das_Docas%2C_Bel%C3%A9m_-_PA.jpg/1280px-Esta%C3%A7%C3%A3o_das_Docas%2C_Bel%C3%A9m_-_PA.jpg';
+    img.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80';
 }
 
 // ==========================================================================
-// 6. MOTOR DE CLIMA COM CACHE PERSISTENTE (FIM TOTAL DO BUG DE NÚMEROS PISCANDO)
+// 6. MOTOR DE CLIMA COM CACHE PERSISTENTE (SEM NÚMEROS PISCANDO)
 // ==========================================================================
 const CLIMA_CACHE_KEY = 'visioflow_weather_cache';
 
@@ -368,14 +369,19 @@ function traduzirClimaComPeriodo(codigo, isDay) {
 }
 
 // ==========================================================================
-// 7. MOTOR AO VIVO: G1 PARÁ / BELÉM COM FILTRO DE SEGURANÇA EDITORIAL
+// 7. MOTOR AO VIVO COM TRAVA DE SEGURANÇA TOTAL CONTRA POLÍTICA E CRIME
 // ==========================================================================
-// Lista de palavras proibidas (filtro de segurança do salão de luxo)
 const PALAVRAS_BLOQUEADAS = [
+    // Trava de Violência e Tragédias
     'morte', 'morre', 'morto', 'morta', 'assassinato', 'homicídio', 'preso',
     'prisão', 'polícia', 'policial', 'tiroteio', 'crime', 'droga', 'tráfico',
     'acidente', 'batida', 'ferido', 'vítima', 'roubo', 'assalto', 'furto',
-    'operação', 'investigado', 'corrupção', 'presídio', 'cadeia', 'baleado'
+    'operação', 'investigado', 'corrupção', 'presídio', 'cadeia', 'baleado',
+    // TRAVA ELEITORAL & POLÍTICA (FIM DEFINITIVO DE LISTAS DE CANDIDATOS)
+    'candidato', 'candidatos', 'candidata', 'eleição', 'eleições', 'deputado',
+    'deputada', 'senador', 'senadora', 'governador', 'partido', 'urna',
+    'tse', 'tre', 'alepa', 'voto', 'votação', 'política', 'pesquisa eleitoral',
+    'propaganda', 'coligação', 'vereador', 'prefeito', 'prefeita', 'reforma eleitoral'
 ];
 
 let noticiasAoVivo = [];
@@ -383,30 +389,31 @@ let indexNoticiaAoVivo = 0;
 
 async function buscarNoticiasG1Belem() {
     try {
-        // Feed RSS Oficial do G1 Pará convertido em JSON seguro
         const rssUrl = encodeURIComponent('https://g1.globo.com/dynamo/pa/para/rss2.xml');
         const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
         const data = await res.json();
 
         if (data && data.items && data.items.length > 0) {
-            // Aplica o filtro de segurança editorial
+            // Filtro rígido: descarta qualquer menção política ou criminal
             const filtradas = data.items.filter(item => {
                 const textoCompleto = `${item.title} ${item.description}`.toLowerCase();
-                const temPalavraProibida = PALAVRAS_BLOQUEADAS.some(palavra => textoCompleto.includes(palavra));
-                return !temPalavraProibida;
+                const temBloqueio = PALAVRAS_BLOQUEADAS.some(palavra => textoCompleto.includes(palavra));
+                return !temBloqueio;
             });
 
             if (filtradas.length > 0) {
                 noticiasAoVivo = filtradas.map(item => {
-                    // Extrai imagem da matéria ou aplica foto autêntica de Belém
                     let imgUrl = item.thumbnail || (item.enclosure && item.enclosure.link);
                     if (!imgUrl) {
                         const imgMatch = item.description ? item.description.match(/<img[^>]+src="([^">]+)"/) : null;
-                        imgUrl = imgMatch ? imgMatch[1] : 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Theatro_da_Paz%2C_Bel%C3%A9m%2C_Par%C3%A1%2C_Brasil_%282022%29_01.jpg/1280px-Theatro_da_Paz%2C_Bel%C3%A9m%2C_Par%C3%A1%2C_Brasil_%282022%29_01.jpg';
+                        imgUrl = imgMatch ? imgMatch[1] : 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1200&q=80';
                     }
 
-                    // Limpa tags HTML da descrição
-                    const descLimpa = item.description ? item.description.replace(/<[^>]*>?/gm, '').trim() : "Acompanhe os principais acontecimentos e novidades de Belém do Pará em tempo real.";
+                    // Limpa tags HTML e limita o resumo em no máximo 140 caracteres
+                    let descLimpa = item.description ? item.description.replace(/<[^>]*>?/gm, '').trim() : "Acompanhe os principais destaques de cultura, economia e acontecimentos da capital paraense.";
+                    if (descLimpa.length > 140) {
+                        descLimpa = descLimpa.substring(0, 140) + '...';
+                    }
 
                     return {
                         chapeu: "G1 Pará • Belém em Tempo Real",
@@ -419,32 +426,32 @@ async function buscarNoticiasG1Belem() {
             }
         }
     } catch (e) {
-        console.warn("Feed ao vivo em espera. Utilizando curadoria de estilo:", e);
+        console.warn("Utilizando acervo editorial de reserva:", e);
     }
 }
 
-// Acervo editorial de reserva (100% calibrado para o salão caso o feed esteja fora)
+// Acervo editorial de reserva (100% blindado para salão de luxo)
 const acervoEditorialReserva = [
     {
-        chapeu: "Tendências de Primavera • CNN Brasil",
+        chapeu: "Tendências & Cuidados • Primavera",
         titulo: "Colorações luminosas dominam as preferências em salões de alto padrão",
         resumo: "De acordo com o embaixador master Du Nunes, mechas com profundidade e contraste suave valorizam o movimento natural dos cabelos.",
         origem: "Keune + CNN Brasil",
-        imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Theatro_da_Paz%2C_Bel%C3%A9m%2C_Par%C3%A1%2C_Brasil_%282022%29_01.jpg/1280px-Theatro_da_Paz%2C_Bel%C3%A9m%2C_Par%C3%A1%2C_Brasil_%282022%29_01.jpg"
+        imagem: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
     },
     {
         chapeu: "Saúde Capilar no Clima Tropical",
         titulo: "Ozonioterapia capilar combate os efeitos da alta umidade de Belém",
         resumo: "O vapor com ozônio medicinal purifica o couro cabeludo, reduz a oleosidade típica do clima paraense e fortalece a fibra capilar.",
         origem: "Vogue Beleza & Saúde",
-        imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Esta%C3%A7%C3%A3o_das_Docas%2C_Bel%C3%A9m_-_PA.jpg/1280px-Esta%C3%A7%C3%A3o_das_Docas%2C_Bel%C3%A9m_-_PA.jpg"
+        imagem: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80"
     },
     {
         chapeu: "Grooming Executivo • Doca & Umarizal",
         titulo: "Barba Terapia com toalhas quentes transforma a rotina masculina de cuidados",
         resumo: "Abertura dos poros com vapor aromático, óleos vegetais nobres e navalhamento milimétrico previnem irritações e garantem alinhamento impecável.",
         origem: "GQ Brasil • Edição Homem",
-        imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Mangal_das_Gar%C3%A7as%2C_Bel%C3%A9m_-_PA_%2848148995396%29.jpg/1280px-Mangal_das_Gar%C3%A7as%2C_Bel%C3%A9m_-_PA_%2848148995396%29.jpg"
+        imagem: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=80"
     }
 ];
 
@@ -466,7 +473,7 @@ function trocarNoticiaVisual() {
 }
 
 // ==========================================================================
-// 8. CIRCUITO BELÉM COM FOTOS HISTÓRICAS E AUTÊNTICAS (WIKIMEDIA COMMONS)
+// 8. CIRCUITO BELÉM (FOTOS HISTÓRICAS REAIS DESBLOQUEADAS)
 // ==========================================================================
 const acervoToursBelem = [
     {
@@ -474,7 +481,6 @@ const acervoToursBelem = [
         titulo: "Pôr do sol à beira da baía com cervejarias artesanais e alta gastronomia",
         desc: "Galpões ingleses de 1870 restaurados reúnem o chope com infusão de bacuri da Amazon Beer, o tradicional sorvete da Cairu e restaurantes com vista panorâmica para o rio.",
         curadoria: "Roteiro Gastronômico da Baía",
-        // Foto Real Oficial da Estação das Docas
         imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Esta%C3%A7%C3%A3o_das_Docas%2C_Bel%C3%A9m_-_PA.jpg/1280px-Esta%C3%A7%C3%A3o_das_Docas%2C_Bel%C3%A9m_-_PA.jpg"
     },
     {
@@ -482,7 +488,6 @@ const acervoToursBelem = [
         titulo: "Theatro da Paz: A acústica perfeita da Belle Époque amazônica",
         desc: "Inaugurado em 1878 no auge do ciclo da borracha, o teatro é uma obra-prima neoclássica com lustres de cristal francês, afrescos italianos e piso de madeiras nobres da floresta.",
         curadoria: "Circuito das Artes e Concertos",
-        // Foto Real Oficial do Theatro da Paz
         imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Theatro_da_Paz%2C_Bel%C3%A9m%2C_Par%C3%A1%2C_Brasil_%282022%29_01.jpg/1280px-Theatro_da_Paz%2C_Bel%C3%A9m%2C_Par%C3%A1%2C_Brasil_%282022%29_01.jpg"
     },
     {
@@ -490,7 +495,6 @@ const acervoToursBelem = [
         titulo: "Oásis ecológico com vista de 360° no topo do Farol de Belém",
         desc: "Parque naturalístico às margens do Rio Guamá com borboletário, guarás vermelhos em revoada livre e o prestigiado buffet regional do Restaurante Manjar das Garças.",
         curadoria: "Parques e Patrimônio Ambiental",
-        // Foto Real Oficial do Mangal das Garças
         imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Mangal_das_Gar%C3%A7as%2C_Bel%C3%A9m_-_PA_%2848148995396%29.jpg/1280px-Mangal_das_Gar%C3%A7as%2C_Bel%C3%A9m_-_PA_%2848148995396%29.jpg"
     },
     {
@@ -498,7 +502,6 @@ const acervoToursBelem = [
         titulo: "Ver-o-Peso: Mais de 390 anos de história viva, sabores e essências",
         desc: "O maior mercado a céu aberto da América Latina é patrimônio histórico nacional, reunindo peixes frescos da bacia amazônica, ervas aromáticas e frutas típicas da nossa terra.",
         curadoria: "Patrimônio Cultural do Brasil",
-        // Foto Real Oficial do Ver-o-Peso
         imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercado_Ver-o-Peso_-_Bel%C3%A9m_-_Par%C3%A1_-_Brasil.jpg/1280px-Mercado_Ver-o-Peso_-_Bel%C3%A9m_-_Par%C3%A1_-_Brasil.jpg"
     },
     {
@@ -506,7 +509,6 @@ const acervoToursBelem = [
         titulo: "Forte do Castelo: A fundação de Belém de frente para a foz do Rio Guamá",
         desc: "Marco inicial da cidade fundado em 1616, com canhões históricos preservados, Museu do Encontro e vista panorâmica inigualável para a Baía do Guajará.",
         curadoria: "Complexo Feliz Lusitânia",
-        // Foto Real Oficial do Forte do Castelo
         imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Forte_do_Castelo_em_Bel%C3%A9m_do_Par%C3%A1.jpg/1280px-Forte_do_Castelo_em_Bel%C3%A9m_do_Par%C3%A1.jpg"
     }
 ];
@@ -558,7 +560,7 @@ async function carregarCambio() {
 }
 
 // ==========================================================================
-// 10. MÁQUINA DE TRANSMISSÃO EM 10 FASES (GRADE COMPLETA + WATCHDOG)
+// 10. MÁQUINA DE TRANSMISSÃO EM 10 FASES (NOVA ORDEM COM AS 2 ÚLTIMAS TELAS)
 // ==========================================================================
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
@@ -588,21 +590,21 @@ function ativarApenas(telaAlvo) {
     if (telaAlvo) telaAlvo.classList.add('ativa');
 }
 
-// 1 ➔ 2 (Vídeo Salão ➔ Clima)
+// 1 ➔ 2
 function irParaClima() {
     ativarApenas(telaClima);
     carregarPrevisaoBelem();
     setTimeout(irParaNoticias, 12000);
 }
 
-// 2 ➔ 3 (Clima ➔ Notícias ao Vivo)
+// 2 ➔ 3
 function irParaNoticias() {
     trocarNoticiaVisual();
     ativarApenas(telaNoticias);
     setTimeout(irParaAnuncio, 12000);
 }
 
-// 3 ➔ 4 (Notícias ➔ Anúncio Keune)
+// 3 ➔ 4
 function irParaAnuncio() {
     ativarApenas(telaAnuncio);
     registrarAuditoria('anuncio');
@@ -622,20 +624,20 @@ function irParaAnuncio() {
     }, 2500);
 }
 
-// 4 ➔ 5 (Anúncio Keune ➔ Circuito Belém Real)
+// 4 ➔ 5
 function irParaAgenda() {
     trocarAgendaVisual();
     ativarApenas(telaAgenda);
     setTimeout(irParaAnuncieAqui, 12000);
 }
 
-// 5 ➔ 6 (Circuito Belém ➔ Anuncie na VisioFlow)
+// 5 ➔ 6
 function irParaAnuncieAqui() {
     ativarApenas(telaAnuncieAqui);
-    setTimeout(irParaProduto, 12000);
+    setTimeout(irParaProduto, 11000);
 }
 
-// 6 ➔ 7 (Anuncie VisioFlow ➔ Vídeo Produto L'Oréal)
+// 6 ➔ 7
 function irParaProduto() {
     ativarApenas(telaProduto);
     registrarAuditoria('produto_salao');
@@ -655,14 +657,14 @@ function irParaProduto() {
     }, 2500);
 }
 
-// 7 ➔ 8 (Produto L'Oréal ➔ World Clock)
+// 7 ➔ 8
 function irParaRelogioMundial() {
     ativarApenas(telaRelogio);
     atualizarRelogiosMundiais();
     setTimeout(irParaVideoExtra, 11000);
 }
 
-// 8 ➔ 9 (World Clock ➔ Vídeo Novo Extra)
+// 8 ➔ 9
 function irParaVideoExtra() {
     ativarApenas(telaVideoExtra);
 
@@ -674,7 +676,6 @@ function irParaVideoExtra() {
         }).catch(() => {});
     }
 
-    // Se o vídeo novo ainda não foi subido no repositório, o Watchdog pula em 2s
     setTimeout(() => {
         if (!videoIniciou || (videoExtra && videoExtra.paused)) {
             irParaFeedback();
@@ -682,13 +683,13 @@ function irParaVideoExtra() {
     }, 2000);
 }
 
-// 9 ➔ 10 (Vídeo Extra ➔ Feedback: "Gostou da experiência?")
+// 9 ➔ 10 (Feedback com "Gostou da experiência?")
 function irParaFeedback() {
     ativarApenas(telaFeedback);
     setTimeout(voltarParaVideoPrincipal, 13000);
 }
 
-// 10 ➔ 1 (Feedback ➔ Reinicia no Vídeo do Salão)
+// 10 ➔ 1 (Reinicia no Salão)
 function voltarParaVideoPrincipal() {
     ativarApenas(telaVideo);
     registrarAuditoria('ciclo_fechado');
@@ -728,11 +729,10 @@ window.addEventListener('DOMContentLoaded', () => {
     registrarAuditoria('salao');
     carregarPrevisaoBelem();
     carregarCambio();
-    buscarNoticiasG1Belem(); // Inicia a busca de notícias ao vivo do Pará
+    buscarNoticiasG1Belem();
 
     voltarParaVideoPrincipal();
 
-    // Atualiza cotações e notícias em segundo plano periodicamente
     setInterval(carregarCambio, 120000);
-    setInterval(buscarNoticiasG1Belem, 300000); // Atualiza notícias a cada 5 minutos
+    setInterval(buscarNoticiasG1Belem, 300000);
 });
