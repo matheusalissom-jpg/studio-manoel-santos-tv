@@ -148,7 +148,7 @@ body, html {
     background-color: var(--fundo-preto);
 }
 
-/* TRANSIÇÃO ANTI-JUMPSCARE: CROSSFADE LIMPO VIA GPU */
+/* TRANSIÇÃO ANTI-JUMPSCARE */
 .tela-fase {
     position: absolute;
     top: 0;
@@ -219,7 +219,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 2: CLIMA GOOGLE WEATHER COM TIPOGRAFIA AMPLIADA
+   FASE 2: CLIMA GOOGLE WEATHER EDITION
    ========================================================================== */
 #fase-clima {
     overflow: hidden;
@@ -351,6 +351,7 @@ body, html {
     margin-bottom: 5px;
 }
 
+/* HERO GOOGLE CLIMA */
 .google-hero-clima {
     background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(20px);
@@ -559,7 +560,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 3: NOTÍCIAS FULL BLEED (SEM TARJAS NO TOPO)
+   FASE 3: NOTÍCIAS FULL BLEED (TOPO LIMPO SEM TARJA)
    ========================================================================== */
 #fase-noticias {
     overflow: hidden;
@@ -657,7 +658,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 5: CIRCUITO BELÉM (SEM TARJAS NO TOPO)
+   FASE 5: CIRCUITO BELÉM (TOPO LIMPO SEM TARJA)
    ========================================================================== */
 #fase-agenda {
     overflow: hidden;
@@ -758,7 +759,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 6: ANUNCIE AQUI (COM ANIMAÇÃO SUAVE ESCALONADA)
+   FASE 6: ANUNCIE AQUI (COM ANIMAÇÃO ESCALONADA)
    ========================================================================== */
 #fase-anuncie-aqui {
     overflow: hidden;
@@ -843,7 +844,6 @@ body, html {
     text-align: center;
 }
 
-/* REVELAÇÃO ESCALONADA DOS ELEMENTOS DA VISIONFLOW */
 .vf-anim-item {
     opacity: 0;
     transform: translateY(22px);
@@ -1200,7 +1200,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 10: GOSTOU DA EXPERIÊNCIA? (COM REVELAÇÃO ESCALONADA 5 ESTRELAS)
+   FASE 10: GOSTOU DA EXPERIÊNCIA? (REVELAÇÃO ESCALONADA 5 ESTRELAS)
    ========================================================================== */
 #fase-feedback {
     background-color: #05070f;
@@ -1236,7 +1236,6 @@ body, html {
     text-align: center;
 }
 
-/* REVELAÇÃO ESCALONADA DA PÁGINA DE FEEDBACK */
 .fb-anim-item {
     opacity: 0;
     transform: translateY(22px);
