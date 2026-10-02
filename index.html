@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- DIRETIVA DE ENGENHARIA: Desbloqueia o carregamento de fotos reais externas sem erro 403 -->
+    <meta name="referrer" content="no-referrer">
     <!-- Auto-refresh preventivo a cada 40 minutos para limpeza de RAM na Smart TV -->
     <meta http-equiv="refresh" content="2400">
     <title>VisioFlow | Manoel Santos Studio Expresso</title>
 
-    <!-- Tipografia de Precisão: Outfit + Montserrat + Playfair Display -->
+    <!-- Fontes Oficiais: Inter + Outfit + Montserrat + Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
@@ -56,7 +58,7 @@
             <video id="player-video" src="video.mp4" autoplay muted playsinline preload="auto"></video>
         </section>
 
-        <!-- FASE 2: CLIMA GOOGLE WEATHER EDITION -->
+        <!-- FASE 2: CLIMA GOOGLE WEATHER COM INFORMAÇÕES AMPLIADAS -->
         <section class="tela-fase" id="fase-clima">
             <div class="vignette-topo"></div>
             <div id="cenario-clima"></div>
@@ -131,9 +133,9 @@
             </div>
         </section>
 
-        <!-- FASE 3: NOTÍCIAS AO VIVO DE BELÉM (G1 PARÁ + FILTRO EDITORIAL SEGURO) -->
+        <!-- FASE 3: NOTÍCIAS AO VIVO DE BELÉM (SEM POLÍTICA / TEXTO COM LIMITE SEGURO) -->
         <section class="tela-fase" id="fase-noticias">
-            <img class="noticia-bg-full" id="noticia-foto" src="" alt="Notícia Belém" onerror="tratarErroImagem(this)">
+            <img class="noticia-bg-full" id="noticia-foto" src="" alt="Notícia Belém" referrerpolicy="no-referrer" onerror="tratarErroImagem(this)">
             <div class="noticia-vignette-overlay"></div>
 
             <div class="noticia-topo-flutuante">
@@ -143,11 +145,11 @@
             </div>
 
             <div class="noticia-conteudo-full">
-                <div class="noticia-chapeu-tempo" id="noticia-chapeu">Belém em Tempo Real • Panorama Oficial</div>
+                <div class="noticia-chapeu-tempo" id="noticia-chapeu">Belém em Tempo Real • Cidade & Cultura</div>
                 <h1 class="noticia-titulo-full" id="noticia-titulo">Carregando notícias de Belém...</h1>
                 <p class="noticia-resumo-full" id="noticia-resumo">Atualizações verificadas sobre cultura, economia e acontecimentos da capital paraense.</p>
                 <div class="noticia-rodape-full">
-                    <div>Fonte Oficial: <span id="noticia-origem-label">G1 Pará / Belém</span></div>
+                    <div>Fonte Oficial: <span id="noticia-origem-label">G1 Pará / Cultura & Cidade</span></div>
                     <div>Edição em Tempo Real</div>
                 </div>
             </div>
@@ -158,9 +160,9 @@
             <video id="player-anuncio" src="anuncio.mp4" muted playsinline preload="auto"></video>
         </section>
 
-        <!-- FASE 5: CIRCUITO BELÉM (FOTOS HISTÓRICAS REAIS DE BELÉM) -->
+        <!-- FASE 5: CIRCUITO BELÉM (FOTOS HISTÓRICAS DESBLOQUEADAS SEM TELA PRETA) -->
         <section class="tela-fase" id="fase-agenda">
-            <img class="agenda-bg-full" id="agenda-foto" src="" alt="Turismo Belém" onerror="tratarErroImagemAgenda(this)">
+            <img class="agenda-bg-full" id="agenda-foto" src="" alt="Turismo Belém" referrerpolicy="no-referrer" onerror="tratarErroImagemAgenda(this)">
             <div class="agenda-vignette-overlay"></div>
 
             <div class="agenda-topo-flutuante">
