@@ -170,7 +170,7 @@ body, html {
     z-index: 5;
 }
 
-/* FASES DE VÍDEO (1, 4, 7 E 9) - 100% LIMPAS SEM TARJAS */
+/* FASES DE VÍDEO (1, 4, 7 E 9) */
 #fase-video, #fase-anuncio, #fase-produto, #fase-video-extra {
     background-color: var(--fundo-preto);
     justify-content: center;
@@ -351,7 +351,6 @@ body, html {
     margin-bottom: 5px;
 }
 
-/* HERO GOOGLE CLIMA */
 .google-hero-clima {
     background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(20px);
@@ -560,7 +559,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 3: NOTÍCIAS FULL BLEED (TOPO LIMPO SEM TARJA)
+   FASE 3: NOTÍCIAS (BLINDAGEM CONTRA TEXTO GIGANTE E OVERFLOW)
    ========================================================================== */
 #fase-noticias {
     overflow: hidden;
@@ -588,9 +587,9 @@ body, html {
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, 
-        rgba(0, 0, 0, 0.85) 0%, 
-        rgba(0, 0, 0, 0.25) 30%, 
-        rgba(0, 0, 0, 0.75) 60%, 
+        rgba(0, 0, 0, 0.88) 0%, 
+        rgba(0, 0, 0, 0.3) 30%, 
+        rgba(0, 0, 0, 0.8) 60%, 
         rgba(0, 0, 0, 0.98) 95%);
     z-index: 2;
 }
@@ -608,10 +607,10 @@ body, html {
 .noticia-conteudo-full {
     position: relative;
     z-index: 3;
-    padding: 0 45px 40px 45px;
+    padding: 0 45px 35px 45px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
     text-align: left;
 }
 
@@ -623,22 +622,32 @@ body, html {
     font-weight: 800;
 }
 
+/* TRAVA DE TÍTULO: NO MÁXIMO 2 LINHAS */
 .noticia-titulo-full {
     font-family: 'Playfair Display', serif;
-    font-size: 2.8rem;
+    font-size: 2.6rem;
     font-weight: 800;
     color: #ffffff;
     line-height: 1.25;
     letter-spacing: -0.5px;
     text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
+/* TRAVA DE RESUMO: NO MÁXIMO 3 LINHAS (NUNCA MAIS TOMA A TELA TODA) */
 .noticia-resumo-full {
-    font-size: 1.35rem;
-    line-height: 1.6;
+    font-size: 1.25rem;
+    line-height: 1.55;
     color: #e4e4e7;
     text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
     max-width: 95%;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .noticia-rodape-full {
@@ -646,8 +655,8 @@ body, html {
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(212, 175, 55, 0.25);
-    padding-top: 16px;
-    margin-top: 10px;
+    padding-top: 14px;
+    margin-top: 8px;
     font-size: 0.95rem;
     color: var(--texto-muted);
 }
@@ -658,11 +667,11 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 5: CIRCUITO BELÉM (TOPO LIMPO SEM TARJA)
+   FASE 5: CIRCUITO BELÉM (FOTOS DESBLOQUEADAS)
    ========================================================================== */
 #fase-agenda {
     overflow: hidden;
-    background-color: #000;
+    background-color: #0b0f19; /* Fundo de segurança elegante */
     flex-direction: column;
     justify-content: space-between;
 }
@@ -686,7 +695,7 @@ body, html {
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, 
-        rgba(0, 0, 0, 0.85) 0%, 
+        rgba(0, 0, 0, 0.88) 0%, 
         rgba(0, 0, 0, 0.25) 30%, 
         rgba(0, 0, 0, 0.75) 60%, 
         rgba(0, 0, 0, 0.98) 95%);
@@ -706,10 +715,10 @@ body, html {
 .agenda-conteudo-full {
     position: relative;
     z-index: 3;
-    padding: 0 45px 40px 45px;
+    padding: 0 45px 35px 45px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
     text-align: left;
 }
 
@@ -726,20 +735,28 @@ body, html {
 
 .agenda-titulo-full {
     font-family: 'Playfair Display', serif;
-    font-size: 2.7rem;
+    font-size: 2.6rem;
     font-weight: 800;
     color: #ffffff;
     line-height: 1.25;
     letter-spacing: -0.5px;
     text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .agenda-resumo-full {
-    font-size: 1.35rem;
-    line-height: 1.6;
+    font-size: 1.25rem;
+    line-height: 1.55;
     color: #e4e4e7;
     text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
     max-width: 95%;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .agenda-rodape-full {
@@ -747,8 +764,8 @@ body, html {
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(212, 175, 55, 0.25);
-    padding-top: 16px;
-    margin-top: 10px;
+    padding-top: 14px;
+    margin-top: 8px;
     font-size: 0.95rem;
     color: var(--texto-muted);
 }
@@ -759,7 +776,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 6: ANUNCIE AQUI (COM ANIMAÇÃO ESCALONADA)
+   FASE 6: ANUNCIE AQUI
    ========================================================================== */
 #fase-anuncie-aqui {
     overflow: hidden;
