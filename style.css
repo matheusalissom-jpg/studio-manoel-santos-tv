@@ -218,346 +218,64 @@ body, html {
     font-weight: 600;
 }
 
-/* ==========================================================================
-   FASE 2: CLIMA GOOGLE WEATHER COM TIPOGRAFIA AMPLIADA
-   ========================================================================== */
-#fase-clima {
-    overflow: hidden;
-    background-color: #0b0f19;
-    flex-direction: column;
-}
+function renderizarDadosClima(dados) {
+    const tempAtual = Math.round(dados.current.temperature_2m);
+    const umidade = dados.current.relative_humidity_2m || 82;
+    const vento = Math.round(dados.current.wind_speed_10m) || 10;
+    const codeAtual = dados.current.weather_code;
+    const isDayAtual = dados.current.is_day;
 
-#cenario-clima {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    transition: background 2s ease-in-out;
-}
+    let sensacaoReal = Math.round(dados.current.apparent_temperature);
+    if (umidade >= 75 && tempAtual >= 26) {
+        sensacaoReal = Math.max(sensacaoReal, tempAtual + 5);
+    }
 
-.vignette-topo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 25%;
-    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
-    z-index: 2;
-}
+    const maxHoje = Math.round(dados.daily.temperature_2m_max[0]) || 33;
+    const minHoje = Math.round(dados.daily.temperature_2m_min[0]) || 24;
 
-/* Astros e Partículas */
-.sol-vivo {
-    position: absolute;
-    top: 16%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, rgba(253, 224, 71, 0.8) 0%, rgba(234, 179, 8, 0.2) 50%, transparent 70%);
-    border-radius: 50%;
-    animation: pulsarSol 4s ease-in-out infinite alternate;
-}
+    const horaAtual = new Date().getHours();
+    const chuvaAgora = (dados.hourly && dados.hourly.precipitation_probability) ? (dados.hourly.precipitation_probability[horaAtual] || 0) : 0;
 
-.sol-poente {
-    position: absolute;
-    bottom: 20%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(251, 146, 60, 0.9) 0%, rgba(225, 29, 72, 0.4) 40%, transparent 70%);
-    border-radius: 50%;
-    animation: pulsarSol 5s ease-in-out infinite alternate;
-}
+    // Atualiza o Hero Restaurado
+    document.getElementById('temp-agora').innerText = tempAtual;
+    const traducao = traduzirClimaComPeriodo(codeAtual, isDayAtual);
+    document.getElementById('condicao-agora').innerText = traducao.texto;
+    document.getElementById('clima-sensacao').innerText = sensacaoReal;
+    document.getElementById('temp-hoje-max').innerText = maxHoje;
+    document.getElementById('temp-hoje-min').innerText = minHoje;
 
-.lua {
-    position: absolute;
-    top: 16%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(226, 232, 240, 0.6) 0%, rgba(148, 163, 184, 0.1) 60%, transparent 70%);
-    border-radius: 50%;
-    animation: pulsarSol 6s ease-in-out infinite alternate;
-}
+    // Atualiza os 4 Cards com Filetes Dourados
+    document.getElementById('clima-chuva-hoje').innerText = chuvaAgora;
+    document.getElementById('clima-umidade-hoje').innerText = umidade;
+    document.getElementById('clima-vento-hoje').innerText = vento;
 
-@keyframes pulsarSol {
-    0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; }
-    100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-}
+    renderizarCenarioAtmosferico(codeAtual, isDayAtual);
 
-.nuvem {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(18px);
-    animation: flutuarNuvem linear infinite;
-}
-.nuvem-branca { background: radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, transparent 70%); }
-.nuvem-cinza { background: radial-gradient(ellipse at center, rgba(148,163,184,0.6) 0%, transparent 70%); }
-.nuvem-rosada { background: radial-gradient(ellipse at center, rgba(251,146,60,0.4) 0%, transparent 70%); }
+    // Fita de Horas com a cápsula dourada
+    const containerHoras = document.getElementById('container-horas-capsula');
+    if (containerHoras && dados.hourly && dados.hourly.time) {
+        containerHoras.innerHTML = '';
+        let adicionados = 0;
+        for (let i = horaAtual + 2; i < horaAtual + 10 && adicionados < 4; i += 2) {
+            if (dados.hourly.time[i]) {
+                const tempHora = Math.round(dados.hourly.temperature_2m[i]);
+                const codeHora = dados.hourly.weather_code[i];
+                const isDayHora = dados.hourly.is_day[i];
+                const infoHora = traduzirClimaComPeriodo(codeHora, isDayHora);
+                const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
 
-@keyframes flutuarNuvem {
-    0% { transform: translateX(-150%); }
-    100% { transform: translateX(120vw); }
+                containerHoras.innerHTML += `
+                    <div class="capsula-hora">
+                        <div class="hora">${horaFormatada}</div>
+                        <div class="icone">${infoHora.icone}</div>
+                        <div class="temp">${tempHora}°</div>
+                    </div>
+                `;
+                adicionados++;
+            }
+        }
+    }
 }
-
-.estrela {
-    position: absolute;
-    background-color: #fff;
-    border-radius: 50%;
-    animation: piscar 3s infinite alternate;
-}
-
-@keyframes piscar {
-    0% { opacity: 0.2; transform: scale(0.5); }
-    100% { opacity: 1; transform: scale(1.2); }
-}
-
-.gota {
-    position: absolute;
-    width: 2px;
-    height: 35px;
-    background: linear-gradient(180deg, transparent, rgba(255,255,255,0.6));
-    animation: chover 0.8s linear infinite;
-}
-
-@keyframes chover {
-    0% { transform: translateY(-50px); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translateY(100vh); opacity: 0; }
-}
-
-.ui-container-clima {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 30px 25px 12px 25px;
-}
-
-.clima-local-tag {
-    font-size: 0.95rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--ouro-primario);
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 5px;
-}
-
-.google-hero-clima {
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 28px;
-    padding: 22px 26px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-    margin-bottom: 8px;
-}
-
-.google-temp-bloco {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.google-agora-label {
-    font-size: 0.95rem;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-}
-
-.google-temp-numero {
-    font-family: 'Outfit', sans-serif;
-    font-size: 7.2rem;
-    font-weight: 900;
-    line-height: 1;
-    color: #ffffff;
-    display: flex;
-    align-items: flex-start;
-    letter-spacing: -2px;
-}
-
-.google-grau {
-    font-size: 3.2rem;
-    color: var(--ouro-primario);
-    margin-top: 5px;
-}
-
-.google-icone-destaque {
-    font-size: 3.2rem;
-    margin-top: 4px;
-}
-
-.google-condicoes-bloco {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    max-width: 58%;
-    gap: 8px;
-}
-
-.google-condicao-titulo {
-    font-size: 1.9rem;
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.25;
-}
-
-.google-sensacao-texto {
-    font-size: 1.35rem;
-    color: #cbd5e1;
-    font-weight: 600;
-}
-
-.google-sensacao-texto strong {
-    color: var(--ouro-primario);
-    font-weight: 800;
-}
-
-.google-extremos-texto {
-    font-size: 1.35rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.google-timeline-horas {
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 22px;
-    padding: 16px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.g-hora-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.g-hora-txt {
-    font-size: 1rem;
-    color: #cbd5e1;
-    font-weight: 700;
-}
-
-.g-hora-chuva {
-    font-size: 0.85rem;
-    color: #38bdf8;
-    font-weight: 800;
-    min-height: 16px;
-}
-
-.g-hora-ico {
-    font-size: 2rem;
-}
-
-.g-hora-graus {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: #ffffff;
-    font-family: 'Outfit', sans-serif;
-}
-
-.google-previsao-dias {
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 22px;
-    padding: 14px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.g-dia-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.g-dia-nome {
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: #cbd5e1;
-    text-transform: uppercase;
-}
-
-.g-dia-ico {
-    font-size: 1.8rem;
-}
-
-.g-dia-extremos {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #94a3b8;
-}
-
-.g-dia-extremos strong {
-    color: var(--ouro-primario);
-}
-
-.google-grid-metricas {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    width: 100%;
-}
-
-.google-metrica-card {
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.g-icon {
-    font-size: 2.2rem;
-}
-
-.g-info {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-.g-label {
-    font-size: 0.9rem;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-}
-
-.g-valor {
-    font-size: 1.7rem;
-    font-weight: 800;
-    color: #ffffff;
-    font-family: 'Outfit', sans-serif;
-}
-
 /* ==========================================================================
    FASE 3: NOTÍCIAS FULL BLEED (SEM TARJAS NO TOPO)
    ========================================================================== */
