@@ -148,7 +148,7 @@ body, html {
     background-color: var(--fundo-preto);
 }
 
-/* TRANSIÇÃO ANTI-JUMPSCARE */
+/* TRANSIÇÃO ANTI-JUMPSCARE: CROSSFADE LIMPO VIA GPU */
 .tela-fase {
     position: absolute;
     top: 0;
@@ -170,7 +170,7 @@ body, html {
     z-index: 5;
 }
 
-/* FASES DE VÍDEO (1, 4, 7 E 9) */
+/* FASES DE VÍDEO (1, 4, 7 E 9) - 100% LIMPAS SEM TARJAS */
 #fase-video, #fase-anuncio, #fase-produto, #fase-video-extra {
     background-color: var(--fundo-preto);
     justify-content: center;
@@ -219,7 +219,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 2: CLIMA GOOGLE WEATHER EDITION
+   FASE 2: CLIMA GOOGLE WEATHER COM TIPOGRAFIA AMPLIADA
    ========================================================================== */
 #fase-clima {
     overflow: hidden;
@@ -559,7 +559,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 3: NOTÍCIAS (BLINDAGEM CONTRA TEXTO GIGANTE E OVERFLOW)
+   FASE 3: NOTÍCIAS FULL BLEED (SEM TARJAS NO TOPO)
    ========================================================================== */
 #fase-noticias {
     overflow: hidden;
@@ -587,9 +587,9 @@ body, html {
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, 
-        rgba(0, 0, 0, 0.88) 0%, 
-        rgba(0, 0, 0, 0.3) 30%, 
-        rgba(0, 0, 0, 0.8) 60%, 
+        rgba(0, 0, 0, 0.85) 0%, 
+        rgba(0, 0, 0, 0.25) 30%, 
+        rgba(0, 0, 0, 0.75) 60%, 
         rgba(0, 0, 0, 0.98) 95%);
     z-index: 2;
 }
@@ -607,10 +607,10 @@ body, html {
 .noticia-conteudo-full {
     position: relative;
     z-index: 3;
-    padding: 0 45px 35px 45px;
+    padding: 0 45px 40px 45px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
     text-align: left;
 }
 
@@ -622,32 +622,22 @@ body, html {
     font-weight: 800;
 }
 
-/* TRAVA DE TÍTULO: NO MÁXIMO 2 LINHAS */
 .noticia-titulo-full {
     font-family: 'Playfair Display', serif;
-    font-size: 2.6rem;
+    font-size: 2.8rem;
     font-weight: 800;
     color: #ffffff;
     line-height: 1.25;
     letter-spacing: -0.5px;
     text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
-/* TRAVA DE RESUMO: NO MÁXIMO 3 LINHAS (NUNCA MAIS TOMA A TELA TODA) */
 .noticia-resumo-full {
-    font-size: 1.25rem;
-    line-height: 1.55;
+    font-size: 1.35rem;
+    line-height: 1.6;
     color: #e4e4e7;
     text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
     max-width: 95%;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .noticia-rodape-full {
@@ -655,8 +645,8 @@ body, html {
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(212, 175, 55, 0.25);
-    padding-top: 14px;
-    margin-top: 8px;
+    padding-top: 16px;
+    margin-top: 10px;
     font-size: 0.95rem;
     color: var(--texto-muted);
 }
@@ -667,11 +657,11 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 5: CIRCUITO BELÉM (FOTOS DESBLOQUEADAS)
+   FASE 5: CIRCUITO BELÉM (SEM TARJAS NO TOPO)
    ========================================================================== */
 #fase-agenda {
     overflow: hidden;
-    background-color: #0b0f19; /* Fundo de segurança elegante */
+    background-color: #000;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -695,7 +685,7 @@ body, html {
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, 
-        rgba(0, 0, 0, 0.88) 0%, 
+        rgba(0, 0, 0, 0.85) 0%, 
         rgba(0, 0, 0, 0.25) 30%, 
         rgba(0, 0, 0, 0.75) 60%, 
         rgba(0, 0, 0, 0.98) 95%);
@@ -715,10 +705,10 @@ body, html {
 .agenda-conteudo-full {
     position: relative;
     z-index: 3;
-    padding: 0 45px 35px 45px;
+    padding: 0 45px 40px 45px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
     text-align: left;
 }
 
@@ -735,28 +725,20 @@ body, html {
 
 .agenda-titulo-full {
     font-family: 'Playfair Display', serif;
-    font-size: 2.6rem;
+    font-size: 2.7rem;
     font-weight: 800;
     color: #ffffff;
     line-height: 1.25;
     letter-spacing: -0.5px;
     text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .agenda-resumo-full {
-    font-size: 1.25rem;
-    line-height: 1.55;
+    font-size: 1.35rem;
+    line-height: 1.6;
     color: #e4e4e7;
     text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
     max-width: 95%;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .agenda-rodape-full {
@@ -764,8 +746,8 @@ body, html {
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(212, 175, 55, 0.25);
-    padding-top: 14px;
-    margin-top: 8px;
+    padding-top: 16px;
+    margin-top: 10px;
     font-size: 0.95rem;
     color: var(--texto-muted);
 }
@@ -776,7 +758,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 6: ANUNCIE AQUI
+   FASE 6: ANUNCIE AQUI (COM ANIMAÇÃO SUAVE ESCALONADA)
    ========================================================================== */
 #fase-anuncie-aqui {
     overflow: hidden;
@@ -861,6 +843,7 @@ body, html {
     text-align: center;
 }
 
+/* REVELAÇÃO ESCALONADA DOS ELEMENTOS DA VISIONFLOW */
 .vf-anim-item {
     opacity: 0;
     transform: translateY(22px);
@@ -1217,7 +1200,7 @@ body, html {
 }
 
 /* ==========================================================================
-   FASE 10: GOSTOU DA EXPERIÊNCIA? (REVELAÇÃO ESCALONADA 5 ESTRELAS)
+   FASE 10: GOSTOU DA EXPERIÊNCIA? (COM REVELAÇÃO ESCALONADA 5 ESTRELAS)
    ========================================================================== */
 #fase-feedback {
     background-color: #05070f;
@@ -1253,6 +1236,7 @@ body, html {
     text-align: center;
 }
 
+/* REVELAÇÃO ESCALONADA DA PÁGINA DE FEEDBACK */
 .fb-anim-item {
     opacity: 0;
     transform: translateY(22px);
