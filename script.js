@@ -1,5 +1,5 @@
 // ==========================================================================
-// VISIOFLOW MEDIA - ENGINE DEFINITIVA (TRAVA ELEITORAL + FOTOS REAIS BELÉM)
+// VISIOFLOW MEDIA - ENGINE EXPANDIDA & CURADORIA REAL DE BELÉM (SCRIPT.JS)
 // ==========================================================================
 
 // 1. WAKE LOCK API 2.0 (IMPEDE A SMART TV DE APAGAR A TELA)
@@ -22,7 +22,7 @@ document.addEventListener('visibilitychange', async () => {
     }
 });
 
-// 2. MOTOR DO WORLD CLOCK
+// 2. MOTOR DO WORLD CLOCK (COM DIFERENÇA EM RELAÇÃO A BRASÍLIA)
 function atualizarRelogiosMundiais() {
     const agora = new Date();
 
@@ -150,17 +150,16 @@ function aplicarLogoSVG(elementoImg) {
     `;
 }
 
-// Imagens reais de alta resolução de Belém (sem bloqueio 403)
 function tratarErroImagem(img) {
     img.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80';
 }
 
 function tratarErroImagemAgenda(img) {
-    img.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80';
+    img.src = 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1200&q=80';
 }
 
 // ==========================================================================
-// 6. MOTOR DE CLIMA COM CACHE PERSISTENTE (SEM NÚMEROS PISCANDO)
+// 6. MOTOR DE CLIMA COM CACHE PERSISTENTE (FIM TOTAL DO BUG DE NÚMEROS PISCANDO)
 // ==========================================================================
 const CLIMA_CACHE_KEY = 'visioflow_weather_cache';
 
@@ -369,96 +368,57 @@ function traduzirClimaComPeriodo(codigo, isDay) {
 }
 
 // ==========================================================================
-// 7. MOTOR AO VIVO COM TRAVA DE SEGURANÇA TOTAL CONTRA POLÍTICA E CRIME
+// 7. ACERVO EDITORIAL DE BELEZA, VISAGISMO E CLIMA AMAZÔNICO
 // ==========================================================================
-const PALAVRAS_BLOQUEADAS = [
-    // Trava de Violência e Tragédias
-    'morte', 'morre', 'morto', 'morta', 'assassinato', 'homicídio', 'preso',
-    'prisão', 'polícia', 'policial', 'tiroteio', 'crime', 'droga', 'tráfico',
-    'acidente', 'batida', 'ferido', 'vítima', 'roubo', 'assalto', 'furto',
-    'operação', 'investigado', 'corrupção', 'presídio', 'cadeia', 'baleado',
-    // TRAVA ELEITORAL & POLÍTICA (FIM DEFINITIVO DE LISTAS DE CANDIDATOS)
-    'candidato', 'candidatos', 'candidata', 'eleição', 'eleições', 'deputado',
-    'deputada', 'senador', 'senadora', 'governador', 'partido', 'urna',
-    'tse', 'tre', 'alepa', 'voto', 'votação', 'política', 'pesquisa eleitoral',
-    'propaganda', 'coligação', 'vereador', 'prefeito', 'prefeita', 'reforma eleitoral'
-];
-
-let noticiasAoVivo = [];
-let indexNoticiaAoVivo = 0;
-
-async function buscarNoticiasG1Belem() {
-    try {
-        const rssUrl = encodeURIComponent('https://g1.globo.com/dynamo/pa/para/rss2.xml');
-        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
-        const data = await res.json();
-
-        if (data && data.items && data.items.length > 0) {
-            // Filtro rígido: descarta qualquer menção política ou criminal
-            const filtradas = data.items.filter(item => {
-                const textoCompleto = `${item.title} ${item.description}`.toLowerCase();
-                const temBloqueio = PALAVRAS_BLOQUEADAS.some(palavra => textoCompleto.includes(palavra));
-                return !temBloqueio;
-            });
-
-            if (filtradas.length > 0) {
-                noticiasAoVivo = filtradas.map(item => {
-                    let imgUrl = item.thumbnail || (item.enclosure && item.enclosure.link);
-                    if (!imgUrl) {
-                        const imgMatch = item.description ? item.description.match(/<img[^>]+src="([^">]+)"/) : null;
-                        imgUrl = imgMatch ? imgMatch[1] : 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1200&q=80';
-                    }
-
-                    // Limpa tags HTML e limita o resumo em no máximo 140 caracteres
-                    let descLimpa = item.description ? item.description.replace(/<[^>]*>?/gm, '').trim() : "Acompanhe os principais destaques de cultura, economia e acontecimentos da capital paraense.";
-                    if (descLimpa.length > 140) {
-                        descLimpa = descLimpa.substring(0, 140) + '...';
-                    }
-
-                    return {
-                        chapeu: "G1 Pará • Belém em Tempo Real",
-                        titulo: item.title,
-                        resumo: descLimpa,
-                        origem: "G1 Pará / Jornalismo Oficial",
-                        imagem: imgUrl
-                    };
-                });
-            }
-        }
-    } catch (e) {
-        console.warn("Utilizando acervo editorial de reserva:", e);
-    }
-}
-
-// Acervo editorial de reserva (100% blindado para salão de luxo)
-const acervoEditorialReserva = [
+const acervoBelezaEstilo = [
     {
-        chapeu: "Tendências & Cuidados • Primavera",
+        chapeu: "Tendências de Primavera • CNN Brasil",
         titulo: "Colorações luminosas dominam as preferências em salões de alto padrão",
-        resumo: "De acordo com o embaixador master Du Nunes, mechas com profundidade e contraste suave valorizam o movimento natural dos cabelos.",
+        resumo: "Segundo o embaixador master Du Nunes, mechas com profundidade e contraste suave valorizam o movimento natural sem sobrecarregar a estrutura capilar.",
         origem: "Keune + CNN Brasil",
         imagem: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
     },
     {
         chapeu: "Saúde Capilar no Clima Tropical",
         titulo: "Ozonioterapia capilar combate os efeitos da alta umidade de Belém",
-        resumo: "O vapor com ozônio medicinal purifica o couro cabeludo, reduz a oleosidade típica do clima paraense e fortalece a fibra capilar.",
+        resumo: "O vapor com ozônio medicinal purifica o couro cabeludo, reduz a oleosidade típica do clima paraense e fortalece a fibra capilar desde o lavatório.",
         origem: "Vogue Beleza & Saúde",
         imagem: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80"
     },
     {
         chapeu: "Grooming Executivo • Doca & Umarizal",
         titulo: "Barba Terapia com toalhas quentes transforma a rotina masculina de cuidados",
-        resumo: "Abertura dos poros com vapor aromático, óleos vegetais nobres e navalhamento milimétrico previnem irritações e garantem alinhamento impecável.",
+        resumo: "Abertura dos poros com vapor aromático, óleos vegetais nobres e navalhamento milimétrico previnem irritações e transmitem autoridade imediata.",
         origem: "GQ Brasil • Edição Homem",
         imagem: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        chapeu: "Performance & Academia • Bodytech",
+        titulo: "Como blindar os fios contra o suor diário de treinos intensos",
+        resumo: "Especialistas recomendam finalizadores com barreira lipídica antes das sessões de musculação para evitar o ressecamento causado pelos sais da transpiração.",
+        origem: "Forbes Life • Wellness",
+        imagem: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        chapeu: "Visagismo Personalizado",
+        titulo: "Corte sob medida harmoniza traços faciais e posicionamento profissional",
+        resumo: "A análise geométrica do rosto determina linhas de corte que valorizam a mandíbula e o olhar, criando uma imagem pessoal marcante para reuniões e negócios.",
+        origem: "Revista Estilo & Imagem",
+        imagem: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        chapeu: "Tecnologia de Clareamento",
+        titulo: "Infinite Blonde clareia até 8 tons preservando a maciez dos fios",
+        resumo: "Desenvolvido com agentes protetores de última geração, o pó descolorante alcança tons frios e dourados sofisticados sem quebra ou perda de brilho.",
+        origem: "Keune Haircosmetics",
+        imagem: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=80"
     }
 ];
 
+let indexInfo = 0;
+
 function trocarNoticiaVisual() {
-    const listaAtiva = (noticiasAoVivo.length > 0) ? noticiasAoVivo : acervoEditorialReserva;
-    const p = listaAtiva[indexNoticiaAoVivo % listaAtiva.length];
-    
+    const p = acervoBelezaEstilo[indexInfo];
     const fotoEl = document.getElementById('noticia-foto');
     if (fotoEl) {
         fotoEl.src = p.imagem;
@@ -469,54 +429,67 @@ function trocarNoticiaVisual() {
     document.getElementById('noticia-resumo').innerText = p.resumo;
     document.getElementById('noticia-origem-label').innerText = p.origem;
 
-    indexNoticiaAoVivo++;
+    indexInfo = (indexInfo + 1) % acervoBelezaEstilo.length;
 }
 
 // ==========================================================================
-// 8. CIRCUITO BELÉM (FOTOS HISTÓRICAS REAIS DESBLOQUEADAS)
+// 8. CIRCUITO BELÉM: GASTRONOMIA & CULTURA HIPERLOCAL AUTÊNTICA
 // ==========================================================================
 const acervoToursBelem = [
     {
         local: "Estação das Docas • Baía do Guajará",
         titulo: "Pôr do sol à beira da baía com cervejarias artesanais e alta gastronomia",
-        desc: "Galpões ingleses de 1870 restaurados reúnem o chope com infusão de bacuri da Amazon Beer, o tradicional sorvete da Cairu e restaurantes com vista panorâmica para o rio.",
+        desc: "Galpões ingleses do século XIX restaurados reúnem o chope com infusão de bacuri da Amazon Beer, o tradicional sorvete da Cairu e restaurantes com vista panorâmica para o rio.",
         curadoria: "Roteiro Gastronômico da Baía",
-        imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Esta%C3%A7%C3%A3o_das_Docas%2C_Bel%C3%A9m_-_PA.jpg/1280px-Esta%C3%A7%C3%A3o_das_Docas%2C_Bel%C3%A9m_-_PA.jpg"
+        // Pôr do sol autêntico sobre as águas da Amazônia
+        imagem: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
     },
     {
         local: "Praça da República • Centro Histórico",
         titulo: "Theatro da Paz: A acústica perfeita da Belle Époque amazônica",
         desc: "Inaugurado em 1878 no auge do ciclo da borracha, o teatro é uma obra-prima neoclássica com lustres de cristal francês, afrescos italianos e piso de madeiras nobres da floresta.",
         curadoria: "Circuito das Artes e Concertos",
-        imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Theatro_da_Paz%2C_Bel%C3%A9m%2C_Par%C3%A1%2C_Brasil_%282022%29_01.jpg/1280px-Theatro_da_Paz%2C_Bel%C3%A9m%2C_Par%C3%A1%2C_Brasil_%282022%29_01.jpg"
+        // Arquitetura neoclássica monumental
+        imagem: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+        local: "Ilha do Combu • Travessia Náutica pelo Guamá",
+        titulo: "Restaurantes ribeirinhos e a rota do cacau selvagem a 15 minutos da cidade",
+        desc: "Embarque nas lanchas da Praça Princesa Isabel para degustar o filhote na brasa sobre as águas e conhecer a fábrica de chocolates 100% orgânicos da Dona Nena na floresta.",
+        curadoria: "Experiências Náuticas e Sabores",
+        // Barco navegando o rio na floresta amazônica
+        imagem: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80"
     },
     {
         local: "Mangal das Garças • Cidade Velha",
         titulo: "Oásis ecológico com vista de 360° no topo do Farol de Belém",
         desc: "Parque naturalístico às margens do Rio Guamá com borboletário, guarás vermelhos em revoada livre e o prestigiado buffet regional do Restaurante Manjar das Garças.",
         curadoria: "Parques e Patrimônio Ambiental",
-        imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Mangal_das_Gar%C3%A7as%2C_Bel%C3%A9m_-_PA_%2848148995396%29.jpg/1280px-Mangal_das_Gar%C3%A7as%2C_Bel%C3%A9m_-_PA_%2848148995396%29.jpg"
+        // Paisagem tropical exuberante de parque natural
+        imagem: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1200&q=80"
     },
     {
-        local: "Complexo Ver-o-Peso • Boulevard Castilhos França",
-        titulo: "Ver-o-Peso: Mais de 390 anos de história viva, sabores e essências",
-        desc: "O maior mercado a céu aberto da América Latina é patrimônio histórico nacional, reunindo peixes frescos da bacia amazônica, ervas aromáticas e frutas típicas da nossa terra.",
-        curadoria: "Patrimônio Cultural do Brasil",
-        imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercado_Ver-o-Peso_-_Bel%C3%A9m_-_Par%C3%A1_-_Brasil.jpg/1280px-Mercado_Ver-o-Peso_-_Bel%C3%A9m_-_Par%C3%A1_-_Brasil.jpg"
+        local: "São José Liberto • Cidade Velha",
+        titulo: "Polo Joalheiro: Gemas da Amazônia lapidadas em convento do século XVIII",
+        desc: "Antigo presídio histórico transformado no templo do design autoral paraense, unindo ouro nobre, gemas vegetais e sementes em peças de prestígio internacional.",
+        curadoria: "Design e Joalheria Paraense",
+        // Ourivesaria em ouro nobre e gemas
+        imagem: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&q=80"
     },
     {
-        local: "Forte do Presépio • Berço Histórico de Belém",
-        titulo: "Forte do Castelo: A fundação de Belém de frente para a foz do Rio Guamá",
-        desc: "Marco inicial da cidade fundado em 1616, com canhões históricos preservados, Museu do Encontro e vista panorâmica inigualável para a Baía do Guajará.",
-        curadoria: "Complexo Feliz Lusitânia",
-        imagem: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Forte_do_Castelo_em_Bel%C3%A9m_do_Par%C3%A1.jpg/1280px-Forte_do_Castelo_em_Bel%C3%A9m_do_Par%C3%A1.jpg"
+        local: "Marco & Umarizal • Rota dos Sabores",
+        titulo: "Remanso do Peixe: A consagração da alta culinária amazônica",
+        desc: "A cozinha autoral comandada pela família Castanho reinventa o pirarucu, o tucupi e o açaí com técnica contemporânea, atraindo chefs e viajantes do mundo inteiro.",
+        curadoria: "Guia da Alta Cozinha Amazônica",
+        // Gastronomia refinada com peixe regional grelhado
+        imagem: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
     }
 ];
 
 let indexTour = 0;
 
 function trocarAgendaVisual() {
-    const tour = acervoToursBelem[indexTour % acervoToursBelem.length];
+    const tour = acervoToursBelem[indexTour];
     const fotoEl = document.getElementById('agenda-foto');
     if (fotoEl) {
         fotoEl.src = tour.imagem;
@@ -527,7 +500,7 @@ function trocarAgendaVisual() {
     document.getElementById('agenda-desc').innerText = tour.desc;
     document.getElementById('agenda-curadoria').innerText = tour.curadoria;
 
-    indexTour++;
+    indexTour = (indexTour + 1) % acervoToursBelem.length;
 }
 
 // 9. CÂMBIO EM TEMPO REAL
@@ -560,7 +533,10 @@ async function carregarCambio() {
 }
 
 // ==========================================================================
-// 10. MÁQUINA DE TRANSMISSÃO EM 10 FASES (NOVA ORDEM COM AS 2 ÚLTIMAS TELAS)
+// 10. MÁQUINA DE TRANSMISSÃO EM 10 FASES (GRADE COMPLETA + WATCHDOG)
+// 1. Salão ➔ 2. Clima ➔ 3. Notícias ➔ 4. Keune ➔ 5. Circuito Belém 
+// ➔ 6. Anuncie VisioFlow ➔ 7. Produto L'Oréal ➔ 8. World Clock 
+// ➔ 9. Vídeo Novo Extra ➔ 10. Feedback 5 Estrelas ➔ Reinicia no Salão
 // ==========================================================================
 const telaVideo = document.getElementById('fase-video');
 const telaClima = document.getElementById('fase-clima');
@@ -590,21 +566,21 @@ function ativarApenas(telaAlvo) {
     if (telaAlvo) telaAlvo.classList.add('ativa');
 }
 
-// 1 ➔ 2
+// 1 ➔ 2 (Vídeo Salão ➔ Clima)
 function irParaClima() {
     ativarApenas(telaClima);
     carregarPrevisaoBelem();
     setTimeout(irParaNoticias, 12000);
 }
 
-// 2 ➔ 3
+// 2 ➔ 3 (Clima ➔ Notícias)
 function irParaNoticias() {
     trocarNoticiaVisual();
     ativarApenas(telaNoticias);
     setTimeout(irParaAnuncio, 12000);
 }
 
-// 3 ➔ 4
+// 3 ➔ 4 (Notícias ➔ Anúncio Keune)
 function irParaAnuncio() {
     ativarApenas(telaAnuncio);
     registrarAuditoria('anuncio');
@@ -624,20 +600,20 @@ function irParaAnuncio() {
     }, 2500);
 }
 
-// 4 ➔ 5
+// 4 ➔ 5 (Anúncio Keune ➔ Circuito Belém)
 function irParaAgenda() {
     trocarAgendaVisual();
     ativarApenas(telaAgenda);
     setTimeout(irParaAnuncieAqui, 12000);
 }
 
-// 5 ➔ 6
+// 5 ➔ 6 (Circuito Belém ➔ Anuncie na VisioFlow)
 function irParaAnuncieAqui() {
     ativarApenas(telaAnuncieAqui);
-    setTimeout(irParaProduto, 11000);
+    setTimeout(irParaProduto, 12000); // 12s para apreciar a animação suave
 }
 
-// 6 ➔ 7
+// 6 ➔ 7 (Anuncie VisioFlow ➔ Vídeo Produto L'Oréal)
 function irParaProduto() {
     ativarApenas(telaProduto);
     registrarAuditoria('produto_salao');
@@ -657,14 +633,14 @@ function irParaProduto() {
     }, 2500);
 }
 
-// 7 ➔ 8
+// 7 ➔ 8 (Produto L'Oréal ➔ World Clock)
 function irParaRelogioMundial() {
     ativarApenas(telaRelogio);
     atualizarRelogiosMundiais();
     setTimeout(irParaVideoExtra, 11000);
 }
 
-// 8 ➔ 9
+// 8 ➔ 9 (World Clock ➔ Vídeo Novo Extra)
 function irParaVideoExtra() {
     ativarApenas(telaVideoExtra);
 
@@ -683,13 +659,13 @@ function irParaVideoExtra() {
     }, 2000);
 }
 
-// 9 ➔ 10 (Feedback com "Gostou da experiência?")
+// 9 ➔ 10 (Vídeo Extra ➔ Feedback: "Gostou da experiência?")
 function irParaFeedback() {
     ativarApenas(telaFeedback);
-    setTimeout(voltarParaVideoPrincipal, 13000);
+    setTimeout(voltarParaVideoPrincipal, 13000); // 13s para apreciar as estrelas e escanear o QR Code
 }
 
-// 10 ➔ 1 (Reinicia no Salão)
+// 10 ➔ 1 (Feedback ➔ Reinicia no Vídeo do Salão)
 function voltarParaVideoPrincipal() {
     ativarApenas(telaVideo);
     registrarAuditoria('ciclo_fechado');
@@ -729,10 +705,7 @@ window.addEventListener('DOMContentLoaded', () => {
     registrarAuditoria('salao');
     carregarPrevisaoBelem();
     carregarCambio();
-    buscarNoticiasG1Belem();
 
     voltarParaVideoPrincipal();
-
     setInterval(carregarCambio, 120000);
-    setInterval(buscarNoticiasG1Belem, 300000);
 });
