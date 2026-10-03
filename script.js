@@ -208,69 +208,42 @@ function renderizarDadosClima(dados) {
     const horaAtual = new Date().getHours();
     const chuvaAgora = (dados.hourly && dados.hourly.precipitation_probability) ? (dados.hourly.precipitation_probability[horaAtual] || 0) : 0;
 
+    // Atualiza o Hero Restaurado
     document.getElementById('temp-agora').innerText = tempAtual;
     const traducao = traduzirClimaComPeriodo(codeAtual, isDayAtual);
     document.getElementById('condicao-agora').innerText = traducao.texto;
-    document.getElementById('google-icone-hero').innerText = traducao.icone;
-    document.getElementById('clima-sensacao').innerText = `${sensacaoReal}°`;
+    document.getElementById('clima-sensacao').innerText = sensacaoReal;
     document.getElementById('temp-hoje-max').innerText = maxHoje;
     document.getElementById('temp-hoje-min').innerText = minHoje;
 
-    document.getElementById('clima-chuva-hoje').innerText = `${chuvaAgora}%`;
-    document.getElementById('clima-vento-hoje').innerText = `${vento} km/h`;
-    document.getElementById('clima-umidade-hoje').innerText = `${umidade}%`;
-    document.getElementById('clima-ar-hoje').innerText = "26 • Boa";
+    // Atualiza os 4 Cards com Filetes Dourados
+    document.getElementById('clima-chuva-hoje').innerText = chuvaAgora;
+    document.getElementById('clima-umidade-hoje').innerText = umidade;
+    document.getElementById('clima-vento-hoje').innerText = vento;
 
     renderizarCenarioAtmosferico(codeAtual, isDayAtual);
 
-    const containerTimeline = document.getElementById('container-timeline-horas');
-    if (containerTimeline && dados.hourly && dados.hourly.time) {
-        containerTimeline.innerHTML = '';
-        for (let offset = 0; offset <= 4; offset++) {
-            const indexHora = horaAtual + offset;
-            if (dados.hourly.time[indexHora]) {
-                const tempH = Math.round(dados.hourly.temperature_2m[indexHora]);
-                const codeH = dados.hourly.weather_code[indexHora];
-                const isDayH = dados.hourly.is_day[indexHora];
-                const chuvaH = dados.hourly.precipitation_probability ? (dados.hourly.precipitation_probability[indexHora] || 0) : 0;
-                const infoH = traduzirClimaComPeriodo(codeH, isDayH);
-                
-                const labelHora = offset === 0 ? 'Agora' : `${String(indexHora % 24).padStart(2, '0')}:00`;
-                const chuvaLabel = chuvaH > 15 ? `${chuvaH}%` : '';
+    // Fita de Horas com a cápsula dourada
+    const containerHoras = document.getElementById('container-horas-capsula');
+    if (containerHoras && dados.hourly && dados.hourly.time) {
+        containerHoras.innerHTML = '';
+        let adicionados = 0;
+        for (let i = horaAtual + 2; i < horaAtual + 10 && adicionados < 4; i += 2) {
+            if (dados.hourly.time[i]) {
+                const tempHora = Math.round(dados.hourly.temperature_2m[i]);
+                const codeHora = dados.hourly.weather_code[i];
+                const isDayHora = dados.hourly.is_day[i];
+                const infoHora = traduzirClimaComPeriodo(codeHora, isDayHora);
+                const horaFormatada = `${String(i % 24).padStart(2, '0')}:00`;
 
-                containerTimeline.innerHTML += `
-                    <div class="g-hora-col">
-                        <span class="g-hora-txt">${labelHora}</span>
-                        <span class="g-hora-chuva">${chuvaLabel}</span>
-                        <div class="g-hora-ico">${infoH.icone}</div>
-                        <span class="g-hora-graus">${tempH}°</span>
+                containerHoras.innerHTML += `
+                    <div class="capsula-hora">
+                        <div class="hora">${horaFormatada}</div>
+                        <div class="icone">${infoHora.icone}</div>
+                        <div class="temp">${tempHora}°</div>
                     </div>
                 `;
-            }
-        }
-    }
-
-    const containerDias = document.getElementById('container-previsao-dias');
-    if (containerDias && dados.daily && dados.daily.time) {
-        containerDias.innerHTML = '';
-        const nomesDias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-
-        for (let d = 1; d <= 5; d++) {
-            if (dados.daily.time[d]) {
-                const dataD = new Date(dados.daily.time[d] + 'T00:00:00-03:00');
-                const nomeDia = nomesDias[dataD.getDay()];
-                const codeD = dados.daily.weather_code[d];
-                const maxD = Math.round(dados.daily.temperature_2m_max[d]);
-                const minD = Math.round(dados.daily.temperature_2m_min[d]);
-                const infoD = traduzirClimaComPeriodo(codeD, 1);
-
-                containerDias.innerHTML += `
-                    <div class="g-dia-col">
-                        <span class="g-dia-nome">${nomeDia}</span>
-                        <div class="g-dia-ico">${infoD.icone}</div>
-                        <span class="g-dia-extremos"><strong>${maxD}°</strong>/${minD}°</span>
-                    </div>
-                `;
+                adicionados++;
             }
         }
     }
