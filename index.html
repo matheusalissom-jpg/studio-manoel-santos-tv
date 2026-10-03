@@ -57,77 +57,79 @@
         </section>
 
         <!-- FASE 2: CLIMA GOOGLE WEATHER EDITION -->
+        <!-- FASE 2: CLIMA LUXO MANOEL SANTOS (DESIGN ANTERIOR RESTAURADO) -->
         <section class="tela-fase" id="fase-clima">
-            <div class="vignette-topo"></div>
-            <div id="cenario-clima"></div>
+            <div class="cenario-atmosferico" id="cenario-clima"></div>
 
-            <div class="ui-container-clima">
+            <div class="clima-header-destaque">
                 <div class="logo-container" onclick="registrarCliqueLogo()">
                     <img src="logo.png" alt="Manoel Santos Studio Expresso" onerror="aplicarLogoSVG(this)">
                 </div>
+                <div class="badge-data-hoje" id="clima-data-hoje">
+                    Hoje • Belém, PA
+                </div>
+            </div>
 
-                <div class="clima-local-tag" id="clima-data-hoje">Belém, PA • Tempo Agora</div>
+            <div class="clima-hero-monumental">
+                <div class="bloco-temp-gigante">
+                    <span class="temp-valor-enorme" id="temp-agora">--</span>
+                    <span class="temp-simbolo-enorme">°C</span>
+                </div>
+                <div class="condicao-destaque-hoje" id="condicao-agora">Atualizando tempo...</div>
+                
+                <div class="extremos-hoje-pill">
+                    <span class="extremos-max">▲ <span id="temp-hoje-max">--</span>° Máxima</span>
+                    <span style="color: rgba(212, 175, 55, 0.3);">|</span>
+                    <span class="extremos-min">▼ <span id="temp-hoje-min">--</span>° Mínima</span>
+                </div>
+            </div>
 
-                <!-- Hero Estilo Google Clima -->
-                <div class="google-hero-clima">
-                    <div class="google-temp-bloco">
-                        <span class="google-agora-label">Agora</span>
-                        <div class="google-temp-numero">
-                            <span id="temp-agora">28</span><span class="google-grau">°</span>
-                        </div>
-                        <div class="google-icone-destaque" id="google-icone-hero">🌙</div>
-                    </div>
-                    <div class="google-condicoes-bloco">
-                        <h2 class="google-condicao-titulo" id="condicao-agora">Céu limpo com períodos nublados</h2>
-                        <div class="google-sensacao-texto">Sensação térmica: <strong id="clima-sensacao">33°</strong></div>
-                        <div class="google-extremos-texto">
-                            <span style="color:#eab308;">▲ <span id="temp-hoje-max">33</span>°</span>
-                            <span style="color:#cbd5e1;">▼ <span id="temp-hoje-min">24</span>°</span>
-                        </div>
+            <div class="grid-metricas-hoje">
+                <div class="card-metrica-hoje">
+                    <div class="card-metrica-icone">🌡️</div>
+                    <div class="card-metrica-textos">
+                        <span class="card-metrica-label">Sensação Real</span>
+                        <span class="card-metrica-valor"><span id="clima-sensacao">--</span>°C</span>
                     </div>
                 </div>
 
-                <!-- Linha do Tempo Horária Consecutiva com Chuva % -->
-                <div class="google-timeline-horas" id="container-timeline-horas"></div>
-
-                <!-- Previsão dos Próximos 5 Dias -->
-                <div class="google-previsao-dias" id="container-previsao-dias"></div>
-
-                <!-- Grid de Métricas Oficiais -->
-                <div class="google-grid-metricas">
-                    <div class="google-metrica-card">
-                        <span class="g-icon">🌧️</span>
-                        <div class="g-info">
-                            <span class="g-label">Chuva</span>
-                            <strong class="g-valor" id="clima-chuva-hoje">0%</strong>
-                        </div>
-                    </div>
-                    <div class="google-metrica-card">
-                        <span class="g-icon">💨</span>
-                        <div class="g-info">
-                            <span class="g-label">Vento</span>
-                            <strong class="g-valor" id="clima-vento-hoje">10 km/h</strong>
-                        </div>
-                    </div>
-                    <div class="google-metrica-card">
-                        <span class="g-icon">💧</span>
-                        <div class="g-info">
-                            <span class="g-label">Umidade</span>
-                            <strong class="g-valor" id="clima-umidade-hoje">82%</strong>
-                        </div>
-                    </div>
-                    <div class="google-metrica-card">
-                        <span class="g-icon">🍃</span>
-                        <div class="g-info">
-                            <span class="g-label">Qualidade do Ar</span>
-                            <strong class="g-valor" id="clima-ar-hoje">26 • Boa</strong>
-                        </div>
+                <div class="card-metrica-hoje">
+                    <div class="card-metrica-icone">🌧️</div>
+                    <div class="card-metrica-textos">
+                        <span class="card-metrica-label">Prob. Chuva</span>
+                        <span class="card-metrica-valor"><span id="clima-chuva-hoje">--</span>%</span>
                     </div>
                 </div>
 
-                <div class="rodape-local">
-                    <div class="bodytech-tag">Unidade Bodytech Belém</div>
+                <div class="card-metrica-hoje">
+                    <div class="card-metrica-icone">💧</div>
+                    <div class="card-metrica-textos">
+                        <span class="card-metrica-label">Umidade do Ar</span>
+                        <span class="card-metrica-valor"><span id="clima-umidade-hoje">--</span>%</span>
+                    </div>
                 </div>
+
+                <div class="card-metrica-hoje">
+                    <div class="card-metrica-icone">💨</div>
+                    <div class="card-metrica-textos">
+                        <span class="card-metrica-label">Veloc. Vento</span>
+                        <span class="card-metrica-valor"><span id="clima-vento-hoje">--</span> km/h</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="secao-evolucao-dia">
+                <div class="evolucao-titulo">Clima no restante do dia</div>
+                <div class="fita-horas-capsula" id="container-horas-capsula">
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
+                    <div class="capsula-hora"><div class="hora">--:00</div><div class="icone">🌙</div><div class="temp">--°</div></div>
+                </div>
+            </div>
+
+            <div class="rodape-local">
+                <div class="bodytech-tag">Unidade Bodytech Belém</div>
             </div>
         </section>
 
