@@ -221,8 +221,6 @@ function renderizarDadosClima(dados) {
     document.getElementById('clima-umidade-hoje').innerText = umidade;
     document.getElementById('clima-vento-hoje').innerText = vento;
 
-    renderizarCenarioAtmosferico(codeAtual, isDayAtual);
-
     // Fita de Horas com a cápsula dourada
     const containerHoras = document.getElementById('container-horas-capsula');
     if (containerHoras && dados.hourly && dados.hourly.time) {
